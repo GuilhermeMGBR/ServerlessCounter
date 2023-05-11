@@ -1,11 +1,13 @@
 {
-  "name": "",
+  "name": "serverlesscounter",
   "version": "1.0.0",
   "description": "",
+  "license": "MIT",
   "scripts": {
     "build": "tsc",
+    "postbuild": "cp -R node_modules ../dist/node_modules",
     "watch": "tsc -w",
-    "prestart": "npm run build",
+    "prestart": "yarn run build",
     "start": "func start",
     "test": "echo \"No tests yet...\""
   },
