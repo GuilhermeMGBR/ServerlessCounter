@@ -49,3 +49,7 @@ __azurite_db*__.json
 
 # macOs only
 **/.DS_Store
+
+# SonarQube
+.scannerwork
+test-report.xml

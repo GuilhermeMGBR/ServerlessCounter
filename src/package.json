@@ -9,7 +9,9 @@
     "watch": "tsc -w",
     "prestart": "yarn run build",
     "start": "func start",
-    "test": "echo \"No tests yet...\""
+    "test": "echo \"No tests yet...\"",
+    "coverage": "echo \"No coverage yet...\"",
+    "sonar": "yarn coverage; npx sonarqube-scanner"
   },
   "dependencies": {
     "mysql2": "^3.3.0",
