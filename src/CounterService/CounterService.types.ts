@@ -2,8 +2,8 @@ import {z} from 'zod';
 import {Invalid, zodStringWithLettersOrNumbers} from '../shared/types';
 
 export const counterParamsSchema = z.object({
-  namespace: zodStringWithLettersOrNumbers.max(255),
-  name: zodStringWithLettersOrNumbers.max(255),
+  namespace: zodStringWithLettersOrNumbers.min(1).max(255),
+  name: zodStringWithLettersOrNumbers.min(1).max(255),
 });
 
 export type CounterParams = z.infer<typeof counterParamsSchema>;
