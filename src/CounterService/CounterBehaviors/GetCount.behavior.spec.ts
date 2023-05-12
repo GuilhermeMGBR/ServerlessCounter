@@ -5,7 +5,6 @@ import {getCountBehavior} from './GetCount.behavior';
 describe('getCountBehavior', () => {
   it.each([
     ['all undefined', undefined, undefined],
-    ['all null', null, null],
     ['empty name', 'a', ''],
     ['empty namespace', '', 'b'],
   ])(

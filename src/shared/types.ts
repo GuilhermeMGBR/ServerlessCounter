@@ -1,7 +1,7 @@
 import {z, ZodSchema} from 'zod';
 import {Context, Logger as AzureLogger} from '@azure/functions';
 
-export type Invalid<T> = T & 'invalid';
+export type Invalid<T> = Partial<T>;
 export type ILogger = AzureLogger;
 export type RequestResponse = Context['res'];
 
