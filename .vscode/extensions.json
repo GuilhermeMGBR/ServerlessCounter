@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "sonarsource.sonarlint-vscode",
+    "dbaeumer.vscode-eslint",
+    "usernamehw.errorlens",
+    "yoavbls.pretty-ts-errors",
+    "esbenp.prettier-vscode",
+    "ryanluker.vscode-coverage-gutters",
+    "cweijan.vscode-mysql-client2",
+    "rangav.vscode-thunder-client"
+  ]
+}
