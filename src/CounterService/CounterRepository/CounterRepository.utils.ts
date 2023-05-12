@@ -1,7 +1,6 @@
-import {Connection, Pool, RowDataPacket} from 'mysql2/promise';
+import {RowDataPacket} from 'mysql2/promise';
 import {
   createDbConnection,
-  createDbConnectionPool,
   getConnectionConfig,
   getExecuteSingleHandler,
   getPooledHandlers,
@@ -14,17 +13,14 @@ const connectionConfig = () =>
     process.env.DB_COUNTER_CONNECTIONSTRING,
   );
 
-export const getCounterDbConnection = async (): Promise<Connection> =>
-  createDbConnection(connectionConfig());
-
-export const getCounterDbConnectionPool = async (): Promise<Pool> =>
-  createDbConnectionPool(connectionConfig());
+const getCounterDbConnection = async () =>
+  await createDbConnection(connectionConfig());
 
 export const counterQueryHandler = async <TResult extends RowDataPacket>() =>
-  await getQueryHandler<TResult>(await getCounterDbConnection());
+  getQueryHandler<TResult>(await getCounterDbConnection());
 
 export const counterExecuteSingleHandler = async () =>
-  await getExecuteSingleHandler(await getCounterDbConnection());
+  getExecuteSingleHandler(await getCounterDbConnection());
 
-export const getCounterPooledHandlers = async () =>
-  await getPooledHandlers(connectionConfig());
+export const getCounterPooledHandlers = () =>
+  getPooledHandlers(connectionConfig());

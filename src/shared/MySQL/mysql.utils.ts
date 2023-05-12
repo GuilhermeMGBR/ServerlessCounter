@@ -23,16 +23,16 @@ export const getConnectionConfig = (
 
 export const createDbConnection = async (
   config: ConnectionOptions,
-): Promise<Connection> => createConnection(config);
+): Promise<Connection> => await createConnection(config);
 
-export const createDbConnectionPool = async (
+export const createDbConnectionPool = (
   config: ConnectionOptions,
-): Promise<Pool> => createPool(config);
+): Pool => createPool(config);
 
 export const getQueryHandler: <T extends RowDataPacket>(
   connection: Connection,
-) => Promise<IQueryHandler<T>> =
-  async (connection: Connection) =>
+) => IQueryHandler<T> =
+  (connection: Connection) =>
   async <T extends RowDataPacket>(sql: string, values: string[]) => {
     await connection.connect();
 
@@ -42,10 +42,10 @@ export const getQueryHandler: <T extends RowDataPacket>(
     return result;
   };
 
-export const getPooledQueryHandlerBase: <T extends RowDataPacket>(
+const getPooledQueryHandlerBase: <T extends RowDataPacket>(
   connection: PoolConnection,
-) => Promise<IQueryHandler<T>> =
-  async (connection: PoolConnection) =>
+) => IQueryHandler<T> =
+  (connection: PoolConnection) =>
   async <T extends RowDataPacket>(sql: string, values: string[]) => {
     await connection.connect();
 
@@ -76,8 +76,8 @@ const executeSingle = async (
 
 export const getExecuteSingleHandler: (
   connection: Connection,
-) => Promise<IExecuteHandler> =
-  async (connection: Connection) =>
+) => IExecuteHandler =
+  (connection: Connection) =>
   async (sql: string, values: string[]): Promise<[OkPacket, FieldPacket[]]> => {
     const result = await executeSingle(connection, sql, values);
 
@@ -86,10 +86,10 @@ export const getExecuteSingleHandler: (
     return result;
   };
 
-export const getPooledExecuteSingleHandlerBase: (
+const getPooledExecuteSingleHandlerBase: (
   connection: PoolConnection,
-) => Promise<IExecuteHandler> =
-  async (connection: PoolConnection) =>
+) => IExecuteHandler =
+  (connection: PoolConnection) =>
   async (sql: string, values: string[]): Promise<[OkPacket, FieldPacket[]]> => {
     const result = await executeSingle(connection, sql, values);
 
@@ -98,8 +98,8 @@ export const getPooledExecuteSingleHandlerBase: (
     return result;
   };
 
-export const getPooledHandlers = async (config: ConnectionOptions) => {
-  const pool = await createDbConnectionPool(config);
+export const getPooledHandlers = (config: ConnectionOptions) => {
+  const pool = createDbConnectionPool(config);
 
   const getPooledQueryHandler = async <TData extends RowDataPacket>() =>
     getPooledQueryHandlerBase<TData>(await pool.getConnection());
