@@ -11,6 +11,7 @@
     "postbuild": "cp -R node_modules ../dist/node_modules",
     "prestart": "yarn run build",
     "start": "func start",
+    "pretest": "yarn build",
     "test": "jest --verbose",
     "coverage": "echo \"No coverage yet...\"",
     "sonar": "yarn coverage; npx sonarqube-scanner",
