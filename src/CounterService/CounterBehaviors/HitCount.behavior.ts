@@ -1,5 +1,9 @@
-import {Context} from '@azure/functions';
-import {IServiceBehavior, unwrapInvalidData} from '../../shared/types';
+import {
+  ILogger,
+  IServiceBehavior,
+  ParamValidationResponse,
+  unwrapInvalidData,
+} from '../../shared/types';
 import {
   insertCounter,
   insertCounterHit,
@@ -18,21 +22,23 @@ export const hitCountBehavior: IServiceBehavior<
   ValidHitCountParams,
   InvalidHitCountParams
 > = {
-  unwrapInvalidParams: (
-    context: Context,
+  validateParams: (
     params: ValidHitCountParams | InvalidHitCountParams,
-  ): params is InvalidHitCountParams => {
+    logger: ILogger,
+  ): ParamValidationResponse<ValidHitCountParams> => {
     if (unwrapInvalidData(counterParamsSchema)(params)) {
-      context.log.warn(`Invalid hit params: ${JSON.stringify(params)}`);
+      logger.warn(`Invalid get params: ${JSON.stringify(params)}`);
 
-      context.res = {body: 'Invalid hit params', status: 400};
-      return true;
+      return {
+        valid: false,
+        invalidParamsResponse: {body: 'Invalid hit params', status: 400},
+      };
     }
 
-    return false;
+    return {valid: true, validParams: params};
   },
 
-  run: async (context: Context, params: ValidHitCountParams) => {
+  run: async (params: ValidHitCountParams, logger: ILogger) => {
     const {pool, getPooledQueryHandler, getPooledExecuteSingleHandler} =
       await getCounterPooledHandlers();
 
@@ -48,7 +54,7 @@ export const hitCountBehavior: IServiceBehavior<
         : current[0].id;
 
     if (counterId === 0) {
-      context.log.info(`Creating ${params.namespace}/${params.name}`);
+      logger.info(`Creating ${params.namespace}/${params.name}`);
 
       const [details] = await insertCounter(
         params.namespace,
@@ -68,6 +74,6 @@ export const hitCountBehavior: IServiceBehavior<
 
     await pool.end();
 
-    context.res = getCounterValueResponse(result[0].hits);
+    return getCounterValueResponse(result[0].hits);
   },
 };

@@ -1,4 +1,5 @@
-import {mockContext} from '../../libs/azure-functions.mocks';
+import {createLoggerMock} from '../../shared/logger.mock';
+import {InvalidValidationResponse} from '../../shared/types';
 import {getCountBehavior} from './GetCount.behavior';
 
 describe('getCountBehavior', () => {
@@ -10,16 +11,20 @@ describe('getCountBehavior', () => {
   ])(
     'blocks behavior execution when unwraping invalid params (%s)',
     (_case: string, namespace?: string, name?: string) => {
-      const blocked = getCountBehavior.unwrapInvalidParams(mockContext, {
-        namespace,
-        name,
-      });
+      const mockLogger = createLoggerMock();
 
-      expect(blocked).toBe(true);
-      expect(mockContext.log.warn).toHaveBeenCalledWith(
+      const validation = getCountBehavior.validateParams(
+        {namespace, name},
+        mockLogger,
+      );
+
+      expect(validation.valid).toBe(false);
+      expect(mockLogger.warn).toHaveBeenCalledWith(
         expect.stringContaining('Invalid get params:'),
       );
-      expect(mockContext.res).toStrictEqual({
+      expect(
+        (validation as InvalidValidationResponse).invalidParamsResponse,
+      ).toStrictEqual({
         body: 'Invalid get params',
         status: 400,
       });

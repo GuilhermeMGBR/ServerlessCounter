@@ -1,5 +1,9 @@
-import {Context} from '@azure/functions';
-import {IServiceBehavior, unwrapInvalidData} from '../../shared/types';
+import {
+  ILogger,
+  IServiceBehavior,
+  ParamValidationResponse,
+  unwrapInvalidData,
+} from '../../shared/types';
 import {selectHitCount} from '../CounterRepository';
 import {
   counterParamsSchema,
@@ -12,30 +16,31 @@ export const getCountBehavior: IServiceBehavior<
   ValidGetCountParams,
   InvalidGetCountParams
 > = {
-  unwrapInvalidParams: (
-    context: Context,
+  validateParams: (
     params: ValidGetCountParams | InvalidGetCountParams,
-  ): params is InvalidGetCountParams => {
+    logger: ILogger,
+  ): ParamValidationResponse<ValidGetCountParams> => {
     if (unwrapInvalidData(counterParamsSchema)(params)) {
-      context.log.warn(`Invalid get params: ${JSON.stringify(params)}`);
+      logger.warn(`Invalid get params: ${JSON.stringify(params)}`);
 
-      context.res = {body: 'Invalid get params', status: 400};
-      return true;
+      return {
+        valid: false,
+        invalidParamsResponse: {body: 'Invalid get params', status: 400},
+      };
     }
 
-    return false;
+    return {valid: true, validParams: params};
   },
 
-  run: async function (context: Context, params: ValidGetCountParams) {
+  run: async function (params: ValidGetCountParams, logger: ILogger) {
     const [result] = await selectHitCount(params.namespace, params.name);
 
     if (!result || result.length === 0) {
-      context.log.warn(`Not Found: ${JSON.stringify(params)}`);
+      logger.warn(`Not Found: ${JSON.stringify(params)}`);
 
-      context.res = {body: 'Not Found', status: 404};
-      return;
+      return {body: 'Not Found', status: 404};
     }
 
-    context.res = getCounterValueResponse(result[0].hits);
+    return getCounterValueResponse(result[0].hits);
   },
 };

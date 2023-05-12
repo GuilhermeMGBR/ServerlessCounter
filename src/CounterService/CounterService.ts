@@ -8,6 +8,7 @@ import {
   ValidGetCountParams,
   ValidHitCountParams,
 } from './CounterService.types';
+import {hasInvalidParams} from './CounterService.utils';
 
 export const behaviorWrapper: AzureFunction = async function <TValid, TInvalid>(
   context: Context,
@@ -15,11 +16,15 @@ export const behaviorWrapper: AzureFunction = async function <TValid, TInvalid>(
   behavior: IServiceBehavior<TValid, TInvalid>,
 ): Promise<void> {
   try {
-    if (behavior.unwrapInvalidParams(context, req.params)) {
+    const validation = behavior.validateParams(req.params, context.log);
+
+    if (hasInvalidParams(validation)) {
+      context.res = validation.invalidParamsResponse;
       return;
     }
 
-    await behavior.run(context, req.params);
+    context.res = await behavior.run(validation.validParams, context.log);
+    return;
   } catch (err) {
     context.log.error(err);
     throw err;
