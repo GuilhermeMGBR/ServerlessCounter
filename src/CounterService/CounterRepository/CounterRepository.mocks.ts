@@ -1,7 +1,5 @@
 import {Connection} from 'mysql2/promise';
 import {
-  getHitCountResult,
-  getSelectIdResult,
   HitCountResult,
   SelectIdResult,
 } from '@CounterService/CounterRepository/CounterRepository.types';
