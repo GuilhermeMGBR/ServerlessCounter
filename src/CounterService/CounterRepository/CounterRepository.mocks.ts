@@ -81,9 +81,6 @@ export const getInsertCounterMock =
       Promise.resolve(getExecuteSingleHandlerMock(mockProps)({} as Connection)),
     );
 
-export var testSelectIdResult1 = [getSelectIdResult(DEFAULT_MOCK_ID)];
-export var testHitCountResult1 = [getHitCountResult(DEFAULT_MOCK_HIT_COUNT)];
-
 export const getCounterRepositoryMock = () => ({
   selectId: jest.fn(),
   selectHitCount: jest.fn(),
