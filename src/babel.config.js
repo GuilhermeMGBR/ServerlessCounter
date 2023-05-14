@@ -46,8 +46,9 @@ const babelConfig = {
         alias: convertToBabelAliases(compilerOptions?.paths),
       },
     ],
+    ['inline-json-import', {}],
   ],
-  ignore: [/node_modules/, '**/*.spec.ts', '**/*.mocks.ts'],
+  ignore: [/node_modules/],
 };
 
 module.exports = babelConfig;

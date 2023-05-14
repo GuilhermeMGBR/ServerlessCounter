@@ -17,8 +17,23 @@ import {
 import {createLoggerMock} from '@shared/logger.mocks';
 import {InvalidValidationResponse} from '@shared/types';
 import {hitCountBehavior} from './HitCount.behavior';
-import {OkPacket} from 'mysql2/promise';
-import {mockConnectionPool_End} from '@shared/MySQL/mysql.mocks';
+import {ConnectionOptions, OkPacket} from 'mysql2/promise';
+
+jest.mock('@CounterService/CounterRepository', () => ({
+  selectId: jest.fn(),
+  insertCounter: jest.fn(),
+  insertCounterHit: jest.fn(),
+  selectHitCountById: jest.fn(),
+}));
+
+const mockConnectionPool_End = jest.fn();
+jest.mock('@shared/MySQL', () => ({
+  ...jest.requireActual('@shared/MySQL'),
+  createDbConnectionPool: (_config: ConnectionOptions) => ({
+    end: mockConnectionPool_End,
+    getConnection: jest.fn(),
+  }),
+}));
 
 describe('HitCountBehavior', () => {
   it.each([

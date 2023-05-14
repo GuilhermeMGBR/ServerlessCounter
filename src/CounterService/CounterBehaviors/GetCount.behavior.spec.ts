@@ -1,4 +1,3 @@
-import {selectHitCount} from '@CounterService/CounterRepository';
 import {getSelectHitCountMock} from '@CounterService/CounterRepository/CounterRepository.mocks';
 import {
   getHitCountResult,
@@ -7,6 +6,11 @@ import {
 import {createLoggerMock} from '@shared/logger.mocks';
 import {InvalidValidationResponse} from '@shared/types';
 import {getCountBehavior} from './GetCount.behavior';
+import {selectHitCount} from '@CounterService/CounterRepository';
+
+jest.mock('@CounterService/CounterRepository', () => ({
+  selectHitCount: jest.fn(),
+}));
 
 describe('getCountBehavior', () => {
   it.each([
