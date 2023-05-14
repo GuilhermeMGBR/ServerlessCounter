@@ -1,4 +1,12 @@
-import {Connection, FieldPacket, OkPacket, RowDataPacket} from 'mysql2/promise';
+import {
+  Connection,
+  FieldPacket,
+  OkPacket,
+  Pool,
+  RowDataPacket,
+} from 'mysql2/promise';
+
+export type PoolHandler = Pick<Pool, 'end' | 'getConnection'>;
 
 export type IQueryResult = Awaited<ReturnType<Connection['query']>>[0];
 

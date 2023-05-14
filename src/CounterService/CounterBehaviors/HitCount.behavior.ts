@@ -1,16 +1,20 @@
 import {
+  getPooledExecuteSingleHandler,
+  getPooledQueryHandler,
+} from '@shared/MySQL';
+import {
   ILogger,
   IServiceBehavior,
   ParamValidationResponse,
   unwrapInvalidData,
-} from '../../shared/types';
+} from '@shared/types';
 import {
   insertCounter,
   insertCounterHit,
   selectHitCountById,
   selectId,
 } from '../CounterRepository';
-import {getCounterPooledHandlers} from '../CounterRepository/CounterRepository.utils';
+import {createCounterDbConnectionPool} from '../CounterRepository/CounterRepository.utils';
 import {
   counterParamsSchema,
   InvalidHitCountParams,
@@ -27,7 +31,7 @@ export const hitCountBehavior: IServiceBehavior<
     logger: ILogger,
   ): ParamValidationResponse<ValidHitCountParams> => {
     if (unwrapInvalidData(counterParamsSchema)(params)) {
-      logger.warn(`Invalid get params: ${JSON.stringify(params)}`);
+      logger.warn(`Invalid hit params: ${JSON.stringify(params)}`);
 
       return {
         valid: false,
@@ -39,13 +43,12 @@ export const hitCountBehavior: IServiceBehavior<
   },
 
   run: async (params: ValidHitCountParams, logger: ILogger) => {
-    const {pool, getPooledQueryHandler, getPooledExecuteSingleHandler} =
-      await getCounterPooledHandlers();
+    const pool = createCounterDbConnectionPool();
 
     const [current] = await selectId(
       params.namespace,
       params.name,
-      getPooledQueryHandler(),
+      getPooledQueryHandler(pool),
     );
 
     let counterId =
@@ -59,17 +62,17 @@ export const hitCountBehavior: IServiceBehavior<
       const [details] = await insertCounter(
         params.namespace,
         params.name,
-        getPooledExecuteSingleHandler(),
+        getPooledExecuteSingleHandler(pool),
       );
 
       counterId = details.insertId;
     }
 
-    await insertCounterHit(counterId, getPooledExecuteSingleHandler());
+    await insertCounterHit(counterId, getPooledExecuteSingleHandler(pool));
 
     const [result] = await selectHitCountById(
       counterId,
-      getPooledQueryHandler(),
+      getPooledQueryHandler(pool),
     );
 
     await pool.end();

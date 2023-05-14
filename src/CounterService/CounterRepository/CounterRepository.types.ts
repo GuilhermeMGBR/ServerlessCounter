@@ -7,3 +7,19 @@ export interface SelectIdResult extends RowDataPacket {
 export interface HitCountResult extends RowDataPacket {
   hits: number;
 }
+
+export function getSelectIdResult(id: number): SelectIdResult {
+  return {
+    constructor: {
+      name: 'RowDataPacket',
+    },
+    id,
+  };
+}
+
+export const getHitCountResult = (hits: number): HitCountResult => ({
+  constructor: {
+    name: 'RowDataPacket',
+  },
+  hits,
+});

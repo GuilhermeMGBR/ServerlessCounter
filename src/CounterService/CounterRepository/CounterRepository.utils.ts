@@ -1,11 +1,11 @@
 import {RowDataPacket} from 'mysql2/promise';
 import {
   createDbConnection,
+  createDbConnectionPool,
   getConnectionConfig,
   getExecuteSingleHandler,
-  getPooledHandlers,
   getQueryHandler,
-} from '../../shared/MySQL/mysql.utils';
+} from '@shared/MySQL';
 
 const connectionConfig = () =>
   getConnectionConfig(
@@ -16,11 +16,11 @@ const connectionConfig = () =>
 const getCounterDbConnection = async () =>
   await createDbConnection(connectionConfig());
 
+export const createCounterDbConnectionPool = () =>
+  createDbConnectionPool(connectionConfig());
+
 export const counterQueryHandler = async <TResult extends RowDataPacket>() =>
   getQueryHandler<TResult>(await getCounterDbConnection());
 
 export const counterExecuteSingleHandler = async () =>
   getExecuteSingleHandler(await getCounterDbConnection());
-
-export const getCounterPooledHandlers = () =>
-  getPooledHandlers(connectionConfig());

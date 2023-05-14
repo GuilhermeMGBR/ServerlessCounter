@@ -5,11 +5,10 @@ import {
   createPool,
   FieldPacket,
   OkPacket,
-  Pool,
   PoolConnection,
   RowDataPacket,
 } from 'mysql2/promise';
-import {IExecuteHandler, IQueryHandler} from './mysql.types';
+import {IExecuteHandler, IQueryHandler, PoolHandler} from './mysql.types';
 
 export const getConnectionConfig = (
   connectionString: string,
@@ -27,7 +26,7 @@ export const createDbConnection = async (
 
 export const createDbConnectionPool = (
   config: ConnectionOptions,
-): Pool => createPool(config);
+): PoolHandler => createPool(config);
 
 export const getQueryHandler: <T extends RowDataPacket>(
   connection: Connection,
@@ -98,14 +97,9 @@ const getPooledExecuteSingleHandlerBase: (
     return result;
   };
 
-export const getPooledHandlers = (config: ConnectionOptions) => {
-  const pool = createDbConnectionPool(config);
+export const getPooledQueryHandler = async <TQueryResult extends RowDataPacket>(
+  pool: PoolHandler,
+) => getPooledQueryHandlerBase<TQueryResult>(await pool.getConnection());
 
-  const getPooledQueryHandler = async <TData extends RowDataPacket>() =>
-    getPooledQueryHandlerBase<TData>(await pool.getConnection());
-
-  const getPooledExecuteSingleHandler = async () =>
-    getPooledExecuteSingleHandlerBase(await pool.getConnection());
-
-  return {pool, getPooledQueryHandler, getPooledExecuteSingleHandler};
-};
+export const getPooledExecuteSingleHandler = async (pool: PoolHandler) =>
+  getPooledExecuteSingleHandlerBase(await pool.getConnection());

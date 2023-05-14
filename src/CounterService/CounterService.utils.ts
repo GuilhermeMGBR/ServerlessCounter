@@ -1,7 +1,7 @@
 import {
   InvalidValidationResponse,
   ParamValidationResponse,
-} from '../shared/types';
+} from '@shared/types';
 
 export const hasInvalidParams = <TValid>(
   validation: ParamValidationResponse<TValid>,

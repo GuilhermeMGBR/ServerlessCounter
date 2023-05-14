@@ -1,5 +1,5 @@
 import {AzureFunction, Context, HttpRequest} from '@azure/functions';
-import {IServiceBehavior} from '../shared/types';
+import {IServiceBehavior} from '@shared/types';
 import {getCountBehavior} from './CounterBehaviors/GetCount.behavior';
 import {hitCountBehavior} from './CounterBehaviors/HitCount.behavior';
 import {

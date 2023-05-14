@@ -1,4 +1,4 @@
-import {IExecuteHandler, IQueryHandler} from '../../shared/MySQL/mysql.types';
+import {IExecuteHandler, IQueryHandler} from '@shared/MySQL/mysql.types';
 import {
   insertCounterHitSql,
   insertCounterSql,
