@@ -47,7 +47,7 @@ const babelConfig = {
       },
     ],
   ],
-  ignore: [/node_modules/, "**/*.spec.ts", "**/*.mocks.ts"],
+  ignore: [/node_modules/, '**/*.spec.ts', '**/*.mocks.ts'],
 };
 
 module.exports = babelConfig;
