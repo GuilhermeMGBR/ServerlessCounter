@@ -14,7 +14,7 @@ import {
   getSelectIdResult,
   SelectIdResult,
 } from '@CounterService/CounterRepository/CounterRepository.types';
-import {createLoggerMock} from '@shared/logger.mock';
+import {createLoggerMock} from '@shared/logger.mocks';
 import {InvalidValidationResponse} from '@shared/types';
 import {hitCountBehavior} from './HitCount.behavior';
 import {OkPacket} from 'mysql2/promise';

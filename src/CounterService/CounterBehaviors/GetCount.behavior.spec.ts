@@ -4,7 +4,7 @@ import {
   getHitCountResult,
   HitCountResult,
 } from '@CounterService/CounterRepository/CounterRepository.types';
-import {createLoggerMock} from '@shared/logger.mock';
+import {createLoggerMock} from '@shared/logger.mocks';
 import {InvalidValidationResponse} from '@shared/types';
 import {getCountBehavior} from './GetCount.behavior';
 
