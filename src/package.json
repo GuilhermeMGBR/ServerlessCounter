@@ -17,7 +17,7 @@
     "start:only": "func start",
     "test": "jest --verbose",
     "watch:test": "jest --verbose --watch",
-    "coverage": "echo \"No coverage yet...\"",
+    "coverage": "jest --coverage",
     "sonar": "yarn coverage; npx sonarqube-scanner",
     "pre-commit": "yarn type-check && yarn format-check && yarn test",
     "base:prettier": "yarn prettier --ignore-path .gitignore",

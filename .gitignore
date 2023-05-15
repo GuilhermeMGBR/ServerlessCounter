@@ -53,3 +53,4 @@ __azurite_db*__.json
 # SonarQube
 .scannerwork
 test-report.xml
+coverage
