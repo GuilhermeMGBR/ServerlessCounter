@@ -31,6 +31,10 @@ jobs:
       - name: SonarCloud Scan
         if: ${{ !env.ACT }} # skips this step when testing locally with 'act'
         uses: SonarSource/sonarcloud-github-action@master
+        with: 
+          args: >
+            -Dsonar.organization=${{ secrets.SONARCLOUD_ORGANIZATION }}
+            -Dsonar.projectKey=${{ secrets.SONARCLOUD_PROJECTKEY }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
