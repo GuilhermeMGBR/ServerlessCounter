@@ -21,6 +21,7 @@
     "sonar": "yarn coverage; npx sonarqube-scanner",
     "pre-commit": "yarn type-check && yarn format-check && yarn test",
     "base:prettier": "yarn prettier --ignore-path .gitignore",
+    "act": "cd ../; act --secret-file .secrets",
     "fmt": "yarn format",
     "pc": "yarn pre-commit",
     "bo": "yarn build:only",
