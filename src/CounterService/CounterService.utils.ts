@@ -6,7 +6,7 @@ import {
 export const hasInvalidParams = <TValid>(
   validation: ParamValidationResponse<TValid>,
 ): validation is InvalidValidationResponse => {
-  return false;
+  return !validation.valid;
 };
 
 export const getCounterValueResponse = (value: number) => ({
