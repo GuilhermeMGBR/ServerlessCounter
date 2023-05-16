@@ -16,6 +16,8 @@ env:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     steps:
       - name: "Checkout GitHub Action"
         uses: actions/checkout@v3
@@ -35,7 +37,7 @@ jobs:
           yarn build
         working-directory: ./${{ env.PACKAGE_JSON_PATH }}
 
-      - name: 'Az CLI login'
+      - name: "Az CLI login"
         if: ${{ !env.ACT }} # skips this step when testing locally with 'act'
         uses: azure/login@v1
         with:
@@ -51,7 +53,7 @@ jobs:
           mask-inputs: false
         id: settings
 
-      - name: 'Az CLI logout'
+      - name: "Az CLI logout"
         if: ${{ !env.ACT }} # skips this step when testing locally with 'act'
         uses: azure/CLI@v1
         with:
