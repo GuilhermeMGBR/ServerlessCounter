@@ -56,12 +56,10 @@ jobs:
 
       - name: "Az CLI logout"
         if: ${{ !env.ACT }} # skips this step when testing locally with 'act'
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-            az logout
-            az cache purge
-            az account clear
+        run: |
+          az logout
+          az cache purge
+          az account clear
 
       - name: "Zip and deploy to Azure"
         uses: Azure/functions-action@v1
