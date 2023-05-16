@@ -1,0 +1,25 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "shell",
+      "label": "Build with yarn",
+      "command": "yarn build",
+      "problemMatcher": "$tsc",
+      "options": {
+        "cwd": "${workspaceFolder}/src"
+      }
+    },
+    {
+      "type": "func",
+      "label": "func: host start",
+      "command": "host start",
+      "problemMatcher": "$func-node-watch",
+      "isBackground": true,
+      "dependsOn": "yarn build (functions)",
+      "options": {
+        "cwd": "${workspaceFolder}/src"
+      }
+    }
+  ]
+}
