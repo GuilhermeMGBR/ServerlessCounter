@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - azure_oidc_test
 
 env:
   APP_NAME: "serverless-counter" # Function app name on Azure
@@ -33,6 +34,31 @@ jobs:
         run: |
           yarn build
         working-directory: ./${{ env.PACKAGE_JSON_PATH }}
+
+      - name: 'Az CLI login'
+        if: ${{ !env.ACT }} # skips this step when testing locally with 'act'
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - uses: azure/appservice-settings@v1
+        if: ${{ !env.ACT }} # skips this step when testing locally with 'act'
+        with:
+          app-name: ${{ env.APP_NAME }}
+          app-settings-json: '[{ "name": "WEBSITE_RUN_FROM_PACKAGE", "value": "1" }]'
+          mask-inputs: false
+        id: settings
+
+      - name: 'Az CLI logout'
+        if: ${{ !env.ACT }} # skips this step when testing locally with 'act'
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az logout
+            az cache purge
+            az account clear
 
       - name: "Zip and deploy to Azure"
         uses: Azure/functions-action@v1
