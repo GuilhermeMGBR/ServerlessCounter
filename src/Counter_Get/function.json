@@ -14,5 +14,5 @@
       "name": "res"
     }
   ],
-  "scriptFile": "../../dist/Counter_Get/index.js"
+  "scriptFile": "./index.js"
 }

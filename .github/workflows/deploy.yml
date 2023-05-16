@@ -1,0 +1,44 @@
+name: Deploy Node.js project to Azure Function App
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  APP_NAME: "serverless-counter" # Function app name on Azure
+  NODE_VERSION: "16.x"
+  PACKAGE_JSON_PATH: "src"
+  BUILD_PATH: "dist"
+  PUBLISH_PROFILE: ${{secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE}}
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout GitHub Action"
+        uses: actions/checkout@v3
+
+      - name: Setup Node ${{ env.NODE_VERSION }} Environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install Yarn
+        if: ${{ !env.ACT }} # skips this step when testing locally with 'act'
+        run: npm install --global yarn
+
+      - name: "Build package with Yarn"
+        shell: bash
+        run: |
+          yarn build
+        working-directory: ./${{ env.PACKAGE_JSON_PATH }}
+
+      - name: "Zip and deploy to Azure"
+        uses: Azure/functions-action@v1
+        id: fa
+        with:
+          app-name: ${{ env.APP_NAME }}
+          package: ./${{ env.BUILD_PATH }}
+          publish-profile: ${{ env.PUBLISH_PROFILE }}
+          respect-funcignore: true
