@@ -1,14 +1,14 @@
-import {
+import {createConnection, createPool} from 'mysql2/promise';
+
+import type {
   Connection,
   ConnectionOptions,
-  createConnection,
-  createPool,
   FieldPacket,
   OkPacket,
   PoolConnection,
   RowDataPacket,
 } from 'mysql2/promise';
-import {IExecuteHandler, IQueryHandler, PoolHandler} from './mysql.types';
+import type {IExecuteHandler, IQueryHandler, PoolHandler} from './mysql.types';
 
 export const getConnectionConfig = (
   connectionString: string,

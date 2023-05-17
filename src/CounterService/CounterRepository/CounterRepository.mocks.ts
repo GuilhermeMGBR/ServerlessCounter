@@ -1,13 +1,6 @@
-import {Connection} from 'mysql2/promise';
-import {
-  HitCountResult,
-  SelectIdResult,
-} from '@CounterService/CounterRepository/CounterRepository.types';
 import {
   getExecuteSingleHandlerMock,
-  GetExecuteSingleHandlerMockProps,
   getQueryHandlerMock,
-  GetQueryHandlerMockProps,
 } from '@shared/MySQL/mysql.mocks';
 import {
   insertCounter,
@@ -15,6 +8,16 @@ import {
   selectHitCountById,
   selectId,
 } from './CounterRepository';
+
+import type {Connection} from 'mysql2/promise';
+import type {
+  GetExecuteSingleHandlerMockProps,
+  GetQueryHandlerMockProps,
+} from '@shared/MySQL/mysql.mocks';
+import type {
+  HitCountResult,
+  SelectIdResult,
+} from '@CounterService/CounterRepository/CounterRepository.types';
 
 export const DEFAULT_MOCK_ID = 10;
 export const DEFAULT_MOCK_HIT_COUNT = 12345678910;

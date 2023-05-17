@@ -1,4 +1,3 @@
-import {RowDataPacket} from 'mysql2/promise';
 import {
   createDbConnection,
   createDbConnectionPool,
@@ -6,6 +5,8 @@ import {
   getExecuteSingleHandler,
   getQueryHandler,
 } from '@shared/MySQL';
+
+import type {RowDataPacket} from 'mysql2/promise';
 
 const connectionConfig = () =>
   getConnectionConfig(

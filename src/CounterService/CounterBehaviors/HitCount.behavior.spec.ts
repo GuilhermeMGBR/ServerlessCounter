@@ -1,3 +1,4 @@
+import {ConnectionOptions, OkPacket} from 'mysql2/promise';
 import {
   insertCounter,
   insertCounterHit,
@@ -12,12 +13,12 @@ import {
 import {
   getHitCountResult,
   getSelectIdResult,
-  SelectIdResult,
 } from '@CounterService/CounterRepository/CounterRepository.types';
 import {createLoggerMock} from '@shared/logger.mocks';
-import {InvalidValidationResponse} from '@shared/types';
 import {hitCountBehavior} from './HitCount.behavior';
-import {ConnectionOptions, OkPacket} from 'mysql2/promise';
+
+import type {SelectIdResult} from '@CounterService/CounterRepository/CounterRepository.types';
+import type {InvalidValidationResponse} from '@shared/BaseService/BaseService.types';
 
 jest.mock('@CounterService/CounterRepository', () => ({
   selectId: jest.fn(),
@@ -35,13 +36,13 @@ jest.mock('@shared/MySQL', () => ({
   }),
 }));
 
-describe('HitCountBehavior', () => {
+describe('hitCountBehavior', () => {
   it.each([
     ['all undefined', undefined, undefined],
     ['empty name', 'a', ''],
     ['empty namespace', '', 'b'],
   ])(
-    'blocks behavior execution when unwraping invalid params (%s)',
+    'identifies invalid params (%s)',
     (_case: string, namespace?: string, name?: string) => {
       const mockLogger = createLoggerMock();
 

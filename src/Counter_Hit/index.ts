@@ -1,6 +1,7 @@
-import {AzureFunction, Context, HttpRequest} from '@azure/functions';
 import {hitCount} from '../CounterService';
-import {
+
+import type {AzureFunction, Context, HttpRequest} from '@azure/functions';
+import type {
   InvalidHitCountParams,
   ValidHitCountParams,
 } from '../CounterService/CounterService.types';

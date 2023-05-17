@@ -1,13 +1,12 @@
 import {selectHitCount} from '@CounterService/CounterRepository';
 import {getCounterValueResponse} from '@CounterService/CounterService.utils';
-import {
-  ILogger,
-  IServiceBehavior,
-  ParamValidationResponse,
-  unwrapInvalidData,
-} from '@shared/types';
-import {
-  counterParamsSchema,
+import {unwrapInvalidData} from '@shared/types';
+import {counterParamsSchema} from '../CounterService.types';
+
+import type {IServiceBehavior} from '@shared/BaseService/BaseServiceBehavior/BaseServiceBehavior.types';
+import type {ParamValidationResponse} from '@shared/BaseService/BaseService.types';
+import type {ILogger} from '@shared/logger.types';
+import type {
   InvalidGetCountParams,
   ValidGetCountParams,
 } from '../CounterService.types';

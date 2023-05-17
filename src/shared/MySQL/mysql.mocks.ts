@@ -1,15 +1,16 @@
 import {
+  createDbConnectionPool,
+  getExecuteSingleHandler,
+  getQueryHandler,
+} from './mysql';
+
+import type {
   Connection,
   ConnectionOptions,
   FieldPacket,
   OkPacket,
   RowDataPacket,
 } from 'mysql2/promise';
-import {
-  createDbConnectionPool,
-  getExecuteSingleHandler,
-  getQueryHandler,
-} from './mysql';
 
 export type GetQueryHandlerMockProps<TResult> = {
   rows?: TResult[];

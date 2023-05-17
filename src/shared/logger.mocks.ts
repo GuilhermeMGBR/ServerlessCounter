@@ -1,4 +1,4 @@
-import {ILogger} from './types';
+import type {ILogger} from './logger.types';
 
 export const createLoggerMock = (): ILogger =>
   Object.assign((...args: any[]) => jest.fn(...args), {

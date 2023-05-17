@@ -1,12 +1,11 @@
-import {getSelectHitCountMock} from '@CounterService/CounterRepository/CounterRepository.mocks';
-import {
-  getHitCountResult,
-  HitCountResult,
-} from '@CounterService/CounterRepository/CounterRepository.types';
-import {createLoggerMock} from '@shared/logger.mocks';
-import {InvalidValidationResponse} from '@shared/types';
-import {getCountBehavior} from './GetCount.behavior';
 import {selectHitCount} from '@CounterService/CounterRepository';
+import {getSelectHitCountMock} from '@CounterService/CounterRepository/CounterRepository.mocks';
+import {getHitCountResult} from '@CounterService/CounterRepository/CounterRepository.types';
+import {createLoggerMock} from '@shared/logger.mocks';
+import {getCountBehavior} from './GetCount.behavior';
+
+import type {HitCountResult} from '@CounterService/CounterRepository/CounterRepository.types';
+import type {InvalidValidationResponse} from '@shared/BaseService/BaseService.types';
 
 jest.mock('@CounterService/CounterRepository', () => ({
   selectHitCount: jest.fn(),
@@ -18,7 +17,7 @@ describe('getCountBehavior', () => {
     ['empty name', 'a', ''],
     ['empty namespace', '', 'b'],
   ])(
-    'blocks behavior execution when unwraping invalid params (%s)',
+    'identifies invalid params (%s)',
     (_case: string, namespace?: string, name?: string) => {
       const mockLogger = createLoggerMock();
 

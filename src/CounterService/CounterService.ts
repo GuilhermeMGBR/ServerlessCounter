@@ -1,37 +1,13 @@
-import {AzureFunction, Context, HttpRequest} from '@azure/functions';
-import {IServiceBehavior} from '@shared/types';
-import {getCountBehavior} from './CounterBehaviors/GetCount.behavior';
-import {hitCountBehavior} from './CounterBehaviors/HitCount.behavior';
-import {
+import {behaviorWrapper} from '@shared/BaseService';
+import {getCountBehavior, hitCountBehavior} from './CounterBehaviors';
+
+import type {AzureFunction, Context, HttpRequest} from '@azure/functions';
+import type {
   InvalidGetCountParams,
   InvalidHitCountParams,
   ValidGetCountParams,
   ValidHitCountParams,
 } from './CounterService.types';
-import {hasInvalidParams} from './CounterService.utils';
-
-export const behaviorWrapper: AzureFunction = async function <TValid, TInvalid>(
-  context: Context,
-  req: HttpRequest & {params: TValid | TInvalid},
-  behavior: IServiceBehavior<TValid, TInvalid>,
-): Promise<void> {
-  try {
-    const validation = behavior.validateParams(req.params, context.log);
-
-    if (hasInvalidParams(validation)) {
-      context.res = validation.invalidParamsResponse;
-      return;
-    }
-
-    context.res = await behavior.run(validation.validParams, context.log);
-    return;
-  } catch (err) {
-    context.log.error(err);
-    throw err;
-  } finally {
-    context.log.verbose('HTTP trigger function processed a request.');
-  }
-};
 
 export const getCount: AzureFunction = async function (
   context: Context,

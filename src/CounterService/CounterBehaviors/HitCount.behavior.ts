@@ -2,12 +2,7 @@ import {
   getPooledExecuteSingleHandler,
   getPooledQueryHandler,
 } from '@shared/MySQL';
-import {
-  ILogger,
-  IServiceBehavior,
-  ParamValidationResponse,
-  unwrapInvalidData,
-} from '@shared/types';
+import {unwrapInvalidData} from '@shared/types';
 import {
   insertCounter,
   insertCounterHit,
@@ -15,12 +10,16 @@ import {
   selectId,
 } from '../CounterRepository';
 import {createCounterDbConnectionPool} from '../CounterRepository/CounterRepository.utils';
-import {
-  counterParamsSchema,
+import {counterParamsSchema} from '../CounterService.types';
+import {getCounterValueResponse} from '../CounterService.utils';
+
+import type {IServiceBehavior} from '@shared/BaseService/BaseServiceBehavior/BaseServiceBehavior.types';
+import type {ParamValidationResponse} from '@shared/BaseService/BaseService.types';
+import type {ILogger} from '@shared/logger.types';
+import type {
   InvalidHitCountParams,
   ValidHitCountParams,
 } from '../CounterService.types';
-import {getCounterValueResponse} from '../CounterService.utils';
 
 export const hitCountBehavior: IServiceBehavior<
   ValidHitCountParams,

@@ -1,15 +1,16 @@
-import {IExecuteHandler, IQueryHandler} from '@shared/MySQL/mysql.types';
 import {
   insertCounterHitSql,
   insertCounterSql,
   selectHitCountSql,
   selectIdSql,
 } from './CounterRepository.consts';
-import {HitCountResult, SelectIdResult} from './CounterRepository.types';
 import {
   counterExecuteSingleHandler,
   counterQueryHandler,
 } from './CounterRepository.utils';
+
+import type {IExecuteHandler, IQueryHandler} from '@shared/MySQL/mysql.types';
+import type {HitCountResult, SelectIdResult} from './CounterRepository.types';
 
 export const selectId = async (
   namespace: string,
