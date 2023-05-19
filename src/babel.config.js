@@ -1,4 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires, no-undef
 const {compilerOptions} = require('./tsconfig.json');
 
 function removeSlash(string) {
@@ -51,4 +51,5 @@ const babelConfig = {
   ignore: [/node_modules/],
 };
 
+// eslint-disable-next-line no-undef
 module.exports = babelConfig;

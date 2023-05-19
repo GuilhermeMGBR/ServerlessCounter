@@ -27,7 +27,7 @@ describe('behaviorWrapper', () => {
       const runResultWhenValid = {a: 'xyz'};
 
       const mockLogger = createLoggerMock();
-      let context: Context = {log: mockLogger};
+      const context: Context = {log: mockLogger};
 
       const mockServiceBehavior = createServiceBehaviorMock<
         Required<TestParams>,
@@ -88,7 +88,6 @@ describe('behaviorWrapper', () => {
           throw runError;
         }),
       });
-
 
       await expect(
         behaviorWrapper(context, {params}, mockServiceBehavior),
