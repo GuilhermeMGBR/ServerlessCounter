@@ -43,7 +43,8 @@
 - [About the application](#about-the-application)
   - [Tecnologies](#tecnologies)
   - [Tools](#tools)
-- [Setup](#setup)
+- [Getting started](#getting-started)
+- [Usage](#usage)
 - [Development](#development)
 - [Continuous integration](#continuous-integration)
 - [License](#license)
@@ -73,7 +74,7 @@ A simple serverless counting API with Azure functions in Typescript. Proof of co
 
 <sup><a href="#index" title="Return to index">&UpArrowBar;</a></sup>
 
-## Setup
+## Getting started
 
 <details><summary>Environment configuration</summary>
 
@@ -94,7 +95,8 @@ A simple serverless counting API with Azure functions in Typescript. Proof of co
 
 - Configure your MySQL database of choice:
   - Replace `{{DEV_DB_CONNECTIONSTRING}}` with your connection string
-  </details>
+
+</details>
 
 <details><summary>Dependencies</summary>
 
@@ -116,6 +118,69 @@ yarn
 - [Thunder Client](https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client) - Lightweight Rest API Client
 - [MySQL client](https://marketplace.visualstudio.com/items?itemName=cweijan.vscode-mysql-client2) - MySQL database client
 - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) - Code formatter
+
+</details>
+
+<sup><a href="#index" title="Return to index">&UpArrowBar;</a></sup>
+
+## Usage
+
+Counters are identified by their `namespace`/`key` pair.
+
+- The namespace must be unique, keys can repeat across different namespaces
+- We can check the current counter value or add 1 to it.
+
+The API endpoints follow this URL structure:
+
+_`{{BaseURL}}`_`/api/`_`{{Action}}`_`/`_`{{Namespace}}`_`/`_`{{Key}}`_`?code=`_`{{Code}}`_
+
+Where:
+
+- {{BaseURL}} => URL to where the Azure function app is hosted
+  - Azure (sample): https://counter.azurewebsites.net
+  - Local: http://localhost:7071
+- {{Action}} => `get` to get the current value or `hit` to raise the count by 1
+- {{Namespace}} => namespace of the desired counter
+- {{Key}} => key of the desired counter
+- {{Code}} => code required to authenticate requests to a deployed Azure Function
+
+<details><summary>Get current value</summary>
+
+Request:
+
+```bash
+curl -X GET http://localhost:7071/api/get/namespace1/key1?code=ABC --header 'Accept: */*'
+```
+
+Response:
+
+```json
+{
+  "value": 1
+}
+```
+
+Getting the value of a non-existent counter will return 0.
+
+</details>
+
+<details><summary>Raise the count</summary>
+
+Request:
+
+```bash
+curl -X GET http://localhost:7071/api/hit/namespace1/key1?code=XYZ --header 'Accept: */*'
+```
+
+Response:
+
+```json
+{
+  "value": 2
+}
+```
+
+Raising the count of a non-existent counter will create the counter and raise the count to 1.
 
 </details>
 
