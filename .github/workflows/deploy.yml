@@ -1,10 +1,9 @@
-name: Deploy Node.js project to Azure Function App
+name: Deploy CI # Deploy Node.js project to Azure Function App
 
 on:
   push:
     branches:
       - main
-      - azure_oidc_test
 
 env:
   APP_NAME: "serverless-counter" # Function app name on Azure

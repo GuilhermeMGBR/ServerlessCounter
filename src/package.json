@@ -25,6 +25,7 @@
     "act:deploy": "cd ../; act -j build-and-deploy --secret-file .secrets",
     "act": "yarn act:sonarcloud",
     "fmt": "yarn format",
+    "tc": "yarn type-check",
     "pc": "yarn pre-commit",
     "bo": "yarn build:only",
     "so": "yarn start:only",

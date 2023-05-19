@@ -1,4 +1,4 @@
-name: SonarCloud Coverage
+name: SonarCloud CI # Sonar analysis with code coverage
 on:
   push:
     branches:
