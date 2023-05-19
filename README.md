@@ -13,9 +13,6 @@
   "https://sonarcloud.io/api/project_badges/measure?project=Serverless-Counter&metric=reliability_rating"
   alt="Reliability rating" /></a>
   <a href="https://sonarcloud.io/summary/new_code?id=Serverless-Counter"><img src=
-  "https://sonarcloud.io/api/project_badges/measure?project=Serverless-Counter&metric=sqale_rating"
-  alt="Maintainability rating" /></a>
-  <a href="https://sonarcloud.io/summary/new_code?id=Serverless-Counter"><img src=
   "https://sonarcloud.io/api/project_badges/measure?project=Serverless-Counter&metric=vulnerabilities"
   alt="Vulnerabilities" /></a>
   <a href="https://sonarcloud.io/summary/new_code?id=Serverless-Counter"><img src=
@@ -43,12 +40,14 @@
 
 ## Index
 
-1. [About the application](#about-the-application)
-   - [Tecnologies](#tecnologies)
-   - [Tools](#tools)
-2. [Setup](#setup)
-3. [Development](#development)
-4. [Continuous integration](#continuous-integration)
+- [About the application](#about-the-application)
+  - [Tecnologies](#tecnologies)
+  - [Tools](#tools)
+- [Setup](#setup)
+- [Development](#development)
+- [Continuous integration](#continuous-integration)
+- [License](#license)
+- [Acknowledgements](#acknowledgements)
 
 ## About the application
 
@@ -71,6 +70,8 @@ A simple serverless counting API with Azure functions in Typescript. Proof of co
 - [Sonar](https://www.sonarsource.com) for code analysis
 - [Docker](https://www.docker.com) for local testing and simulation
 - [Act](https://github.com/nektos/act) for local GitHub workflows testing and execution
+
+<sup><a href="#index" title="Return to index">&UpArrowBar;</a></sup>
 
 ## Setup
 
@@ -117,6 +118,8 @@ yarn
 - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) - Code formatter
 
 </details>
+
+<sup><a href="#index" title="Return to index">&UpArrowBar;</a></sup>
 
 ## Development
 
@@ -238,6 +241,8 @@ yarn act:deploy
 
 </details>
 
+<sup><a href="#index" title="Return to index">&UpArrowBar;</a></sup>
+
 ## Continuous integration
 
 <details><summary>Deploy</summary>
@@ -265,6 +270,22 @@ The following secrets must be configured on GitHub:
 This also follows the properties defined inside the `sonar-project.properties` file, overwriting duplicates.
 
 </details>
+
+<sup><a href="#index" title="Return to index">&UpArrowBar;</a></sup>
+
+## License
+
+This project is licensed under the **MIT license**. Feel free to edit and distribute this template as you like.
+
+See [LICENSE](LICENSE) for more information.
+
+<sup><a href="#index" title="Return to index">&UpArrowBar;</a></sup>
+
+## Acknowledgements
+
+The idea for this proof of concept emerged after using the free counting service [CountAPI](https://countapi.xyz) on some internal integration tests. We are using the same URL structure!
+
+<sup><a href="#index" title="Return to index">&UpArrowBar;</a></sup>
 
 <p align="right">
 <a href="https://sonarcloud.io/summary/new_code?id=Serverless-Counter"><img src=
