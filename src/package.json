@@ -21,7 +21,7 @@
     "watch:test": "jest --verbose --watch",
     "coverage": "jest --coverage",
     "sonar": "yarn coverage; npx sonarqube-scanner",
-    "pre-commit": "yarn type-check && yarn format-check && yarn test",
+    "pre-commit": "yarn type-check && yarn lint && yarn format-check && yarn test",
     "act:sonarcloud": "cd ../; act -j sonarcloud --secret-file .secrets",
     "act:deploy": "cd ../; act -j build-and-deploy --secret-file .secrets",
     "act": "yarn act:sonarcloud",
