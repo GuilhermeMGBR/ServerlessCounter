@@ -1,16 +1,23 @@
+import {mock} from 'jest-mock-extended';
 import {
   createDbConnectionPool,
   getExecuteSingleHandler,
   getQueryHandler,
-} from './mysql';
+} from './mysqlHelper';
 
 import type {
-  Connection,
   ConnectionOptions,
   FieldPacket,
   OkPacket,
   RowDataPacket,
 } from 'mysql2/promise';
+import {
+  IConnection,
+  IExecuteSingleConnection,
+  IPoolConnection,
+  IQueryConnection,
+  PoolHandler,
+} from './mysqlHelper.types';
 
 export type GetQueryHandlerMockProps<TResult> = {
   rows?: TResult[];
@@ -30,7 +37,7 @@ export const getQueryHandlerMock =
     errorMessage,
     fieldPacket,
   }: GetQueryHandlerMockProps<TResult>): typeof getQueryHandler<TResult> =>
-  (_connection: Connection) =>
+  (_connection: IQueryConnection) =>
   async (_sql: string, _values: string[]) => {
     if (rows) return Promise.resolve([rows, fieldPacket ?? []]);
 
@@ -43,7 +50,7 @@ export const getExecuteSingleHandlerMock =
     errorMessage,
     fieldPacket,
   }: GetExecuteSingleHandlerMockProps): typeof getExecuteSingleHandler =>
-  (_connection: Connection) =>
+  (_connection: IConnection) =>
   async (_sql: string, _values: string[]) => {
     if (okPacket) return Promise.resolve([okPacket, fieldPacket ?? []]);
 
@@ -64,3 +71,43 @@ export const getMySqlMock = () => ({
   ...jest.requireActual('@shared/MySQL'),
   createDbConnectionPool: createDbConnectionPoolMock,
 });
+
+export const getConnectionMock = () => mock<IConnection>();
+export const getQueryConnectionMock = () => mock<IQueryConnection>();
+
+export const getPoolConnectionMock = () => mock<IPoolConnection>();
+export const getPoolHandlerMock = () => mock<PoolHandler>();
+
+export const getExecuteSingleConnectionMock = () =>
+  mock<IExecuteSingleConnection>();
+
+export interface TestResult extends RowDataPacket {
+  value: string;
+}
+
+export const getTestResult = (value: string): TestResult => ({
+  constructor: {
+    name: 'RowDataPacket',
+  },
+  value,
+});
+
+export const getOkPacketMock = ({
+  affectedRows = 1,
+}: {
+  affectedRows?: number;
+}): OkPacket => ({
+  constructor: {
+    name: 'OkPacket',
+  },
+  fieldCount: 1,
+  affectedRows,
+  changedRows: 0,
+  insertId: 123,
+  serverStatus: 2,
+  warningCount: 0,
+  message: 'Executed successfully',
+  procotol41: true,
+});
+
+//

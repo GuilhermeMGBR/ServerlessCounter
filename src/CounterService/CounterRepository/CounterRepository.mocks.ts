@@ -1,7 +1,7 @@
 import {
   getExecuteSingleHandlerMock,
   getQueryHandlerMock,
-} from '@shared/MySQL/mysql.mocks';
+} from '@shared/MySQL/mysqlHelper.mocks';
 import {
   insertCounter,
   selectHitCount,
@@ -13,7 +13,7 @@ import type {Connection} from 'mysql2/promise';
 import type {
   GetExecuteSingleHandlerMockProps,
   GetQueryHandlerMockProps,
-} from '@shared/MySQL/mysql.mocks';
+} from '@shared/MySQL/mysqlHelper.mocks';
 import type {
   HitCountResult,
   SelectIdResult,

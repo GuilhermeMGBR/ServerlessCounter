@@ -9,7 +9,10 @@ import {
   counterQueryHandler,
 } from './CounterRepository.utils';
 
-import type {IExecuteHandler, IQueryHandler} from '@shared/MySQL/mysql.types';
+import type {
+  IExecuteHandler,
+  IQueryHandler,
+} from '@shared/MySQL/mysqlHelper.types';
 import type {HitCountResult, SelectIdResult} from './CounterRepository.types';
 
 export const selectId = async (
