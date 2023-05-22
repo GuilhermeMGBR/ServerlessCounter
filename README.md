@@ -137,7 +137,7 @@ _`{{BaseURL}}`_`/api/`_`{{Action}}`_`/`_`{{Namespace}}`_`/`_`{{Key}}`_`?code=`_`
 Where:
 
 - {{BaseURL}} => URL to where the Azure function app is hosted
-  - Azure (sample): https://counter.azurewebsites.net
+  - Azure (example): https://counter.azurewebsites.net
   - Local: http://localhost:7071
 - {{Action}} => `get` to get the current value or `hit` to raise the count by 1
 - {{Namespace}} => namespace of the desired counter
@@ -198,16 +198,6 @@ This will install the required dependencies, build and start!
 yarn start
 ```
 
-### Make HTTP requests to the local Azure functions:
-
-Getting the current value of the `testNamespace/testCounter` counter:
-
-```shell
-curl -X GET \
-  'http://localhost:7071/api/get/testNamespace/testCounter' \
-  --header 'Accept: */*'
-```
-
 - To start without installing dependencies or re-building the app:
 
 ```bash
@@ -242,6 +232,40 @@ yarn bo
 yarn watch:build
 OR
 yarn wb
+```
+
+</details>
+
+<details><summary>Linting</summary>
+
+### Run the lint command:
+
+```bash
+yarn lint
+OR
+yarn lt
+```
+
+</details>
+
+<details><summary>Formatting</summary>
+
+### Run the format command:
+
+This will automatically fix erros where possible
+
+```bash
+yarn format
+OR
+yarn fmt
+```
+
+- To check formatting erros without making changes to files:
+
+```bash
+yarn format:check
+OR
+yarn fc
 ```
 
 </details>
