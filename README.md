@@ -96,6 +96,14 @@ A simple serverless counting API with Azure functions in Typescript. Proof of co
 - Configure your MySQL database of choice:
   - Replace `{{DEV_DB_CONNECTIONSTRING}}` with your connection string
 
+#### Install [azure-functions-core-tools](https://github.com/Azure/azure-functions-core-tools) on your machine
+
+- To run and debug functions locally. Installation with yarn:
+
+```bash
+yarn global add azure-functions-core-tools
+```
+
 </details>
 
 <details><summary>Dependencies</summary>
