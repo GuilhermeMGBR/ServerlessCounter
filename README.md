@@ -6,36 +6,80 @@
 </p>
 
 <p align="center">
-  <a href="https://sonarcloud.io/summary/new_code?id=Serverless-Counter"><img src=
-  "https://sonarcloud.io/api/project_badges/measure?project=Serverless-Counter&metric=alert_status"
-  alt="Quality gate status" /></a>
-  <a href="https://sonarcloud.io/summary/new_code?id=Serverless-Counter"><img src=
-  "https://sonarcloud.io/api/project_badges/measure?project=Serverless-Counter&metric=reliability_rating"
-  alt="Reliability rating" /></a>
-  <a href="https://sonarcloud.io/summary/new_code?id=Serverless-Counter"><img src=
-  "https://sonarcloud.io/api/project_badges/measure?project=Serverless-Counter&metric=vulnerabilities"
-  alt="Vulnerabilities" /></a>
-  <a href="https://sonarcloud.io/summary/new_code?id=Serverless-Counter"><img src=
-  "https://sonarcloud.io/api/project_badges/measure?project=Serverless-Counter&metric=bugs"
-  alt="Bugs" /></a>
-  <a href="https://sonarcloud.io/summary/new_code?id=Serverless-Counter"><img src=
-  "https://sonarcloud.io/api/project_badges/measure?project=Serverless-Counter&metric=code_smells"
-  alt="Code smells" /></a>
-  <a href="https://sonarcloud.io/summary/new_code?id=Serverless-Counter"><img src=
-  "https://sonarcloud.io/api/project_badges/measure?project=Serverless-Counter&metric=coverage"
-  alt="Coverage" /></a>
+  <a href="https://sonarcloud.io/summary/overall?id=Serverless-Counter">
+    <img
+      src="https://sonarcloud.io/api/project_badges/measure?project=Serverless-Counter&metric=alert_status"
+      alt="Quality gate status"
+    />
+  </a>
+  <a
+    href="https://sonarcloud.io/component_measures?id=Serverless-Counter&metric=reliability_rating&view=list"
+    ><img
+      src="https://sonarcloud.io/api/project_badges/measure?project=Serverless-Counter&metric=reliability_rating"
+      alt="Reliability rating"
+  /></a>
+  <a
+    href="https://sonarcloud.io/project/issues?resolved=false&types=VULNERABILITY&id=Serverless-Counter"
+    ><img
+      src="https://sonarcloud.io/api/project_badges/measure?project=Serverless-Counter&metric=vulnerabilities"
+      alt="Vulnerabilities"
+  /></a>
+  <a
+    href="https://sonarcloud.io/project/issues?resolved=false&types=BUG&id=Serverless-Counter"
+    ><img
+      src="https://sonarcloud.io/api/project_badges/measure?project=Serverless-Counter&metric=bugs"
+      alt="Bugs"
+  /></a>
+  <a
+    href="https://sonarcloud.io/project/issues?resolved=false&types=CODE_SMELL&id=Serverless-Counter"
+    ><img
+      src="https://sonarcloud.io/api/project_badges/measure?project=Serverless-Counter&metric=code_smells"
+      alt="Code smells"
+  /></a>
+  <a
+    href="https://sonarcloud.io/component_measures?id=Serverless-Counter&metric=coverage&view=list"
+    ><img
+      src="https://sonarcloud.io/api/project_badges/measure?project=Serverless-Counter&metric=coverage"
+      alt="Coverage"
+  /></a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/GuilhermeMGBR/ServerlessCounter/actions?query=branch%3Amain"><img src="https://github.com/GuilhermeMGBR/ServerlessCounter/actions/workflows/sonarcloud-coverage.yml/badge.svg?event=push&branch=main" alt="SonarCloud CI status" /></a>
-  <a href="https://github.com/GuilhermeMGBR/ServerlessCounter/actions?query=branch%3Amain">
-    <img src="https://github.com/GuilhermeMGBR/ServerlessCounter/actions/workflows/deploy.yml/badge.svg?event=push&branch=main" alt="Deploy CI status" />
+  <a
+    href="https://github.com/GuilhermeMGBR/ServerlessCounter/actions/workflows/sonarcloud-coverage.yml?query=branch%3Amain"
+  >
+    <img
+      src="https://github.com/GuilhermeMGBR/ServerlessCounter/actions/workflows/sonarcloud-coverage.yml/badge.svg?event=push&branch=main"
+      alt="SonarCloud CI status"
+    />
   </a>
-  <img src="https://img.shields.io/badge/created%20by-@guilhermemgbr-4BBAAB.svg" alt="Created by Guilherme Garcia">
-  <a href="https://github.com/GuilhermeMGBR/ServerlessCounter" rel="nofollow"><img src=
-  "https://img.shields.io/github/package-json/v/GuilhermeMGBR/ServerlessCounter?filename=src/package.json&color=red"
-  alt="License"></a>
-  <a href="https://opensource.org/licenses/MIT" rel="nofollow"><img src="https://img.shields.io/github/license/GuilhermeMGBR/ServerlessCounter" alt="License"></a>
+  <a
+    href="https://github.com/GuilhermeMGBR/ServerlessCounter/actions/workflows/deploy.yml?query=branch%3Amain"
+  >
+    <img
+      src="https://github.com/GuilhermeMGBR/ServerlessCounter/actions/workflows/deploy.yml/badge.svg?event=push&branch=main"
+      alt="Deploy CI status"
+    />
+  </a>
+  <a
+    href="https://github.com/GuilhermeMGBR?tab=overview&from=2023-02-01&to=2023-02-28"
+  >
+    <img
+      src="https://img.shields.io/badge/created%20by-@guilhermemgbr-4BBAAB.svg"
+      alt="Created by Guilherme Garcia"
+    />
+  </a>
+  <a href="https://github.com/GuilhermeMGBR/ServerlessCounter" rel="nofollow">
+    <img
+      src="https://img.shields.io/github/package-json/v/GuilhermeMGBR/ServerlessCounter?filename=src/package.json&color=red"
+      alt="Version"
+    />
+  </a>
+  <a href="https://opensource.org/licenses/MIT" rel="nofollow"
+    ><img
+      src="https://img.shields.io/github/license/GuilhermeMGBR/ServerlessCounter"
+      alt="License"
+  /></a>
 </p>
 
 ## Index
