@@ -16,7 +16,7 @@
     "watch:build": "yarn build -w",
     "prestart": "yarn build",
     "start": "yarn start:only",
-    "start:only": "cd ../dist; func start",
+    "start:only": "cd ../dist; func start --typescript",
     "test": "jest --verbose",
     "watch:test": "jest --verbose --watch",
     "coverage": "jest --coverage",
