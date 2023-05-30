@@ -85,7 +85,7 @@
 ## Index
 
 - [About the application](#about-the-application)
-  - [Tecnologies](#tecnologies)
+  - [Technologies](#tecnologies)
   - [Tools](#tools)
 - [Getting started](#getting-started)
 - [Usage](#usage)
@@ -98,7 +98,7 @@
 
 A simple serverless counting API with Azure functions in Typescript. Proof of concept and template for greater APIs!
 
-### Tecnologies
+### Technologies
 
 - [Azure Functions](https://learn.microsoft.com/en-us/azure/azure-functions/functions-overview) as serverless infrastructure
 - [Node.js](https://nodejs.org) as cross-platform JavaScript runtime environment
@@ -304,7 +304,7 @@ yarn lt
 
 ### Run the format command:
 
-This will automatically fix erros where possible
+This will automatically fix errors where possible
 
 ```bash
 yarn format
@@ -312,7 +312,7 @@ OR
 yarn fmt
 ```
 
-- To check formatting erros without making changes to files:
+- To check formatting errors without making changes to files:
 
 ```bash
 yarn format:check
