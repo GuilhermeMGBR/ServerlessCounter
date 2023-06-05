@@ -4,4 +4,15 @@
     "azureFunctions.projectSubpath": "src",
     "azureFunctions.preDeployTask": "Build with yarn",
     "azureFunctions.deploySubpath": "dist",
+    "cSpell.words": [
+        "CONNECTIONSTRING",
+        "funcignore",
+        "maxdepth",
+        "Parens",
+        "postbuild",
+        "prestart",
+        "serverlesscounter",
+        "sonarcloud",
+        "sonarqube"
+    ],
 }
