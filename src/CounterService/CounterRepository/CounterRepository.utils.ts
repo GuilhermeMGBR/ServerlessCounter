@@ -11,7 +11,7 @@ import type {RowDataPacket} from 'mysql2/promise';
 const connectionConfig = () =>
   getConnectionConfig(
     process.env.DB_COUNTER_CONNECTIONSTRING,
-    process.env.DB_COUNTER_CONNECTIONSTRING,
+    process.env.DB_COUNTER_REJECTUNAUTHORIZED,
   );
 
 const getCounterDbConnection = async () =>
