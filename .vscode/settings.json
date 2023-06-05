@@ -11,6 +11,7 @@
         "Parens",
         "postbuild",
         "prestart",
+        "REJECTUNAUTHORIZED",
         "serverlesscounter",
         "sonarcloud",
         "sonarqube"

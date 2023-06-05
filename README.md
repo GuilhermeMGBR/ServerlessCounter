@@ -242,6 +242,21 @@ Raising the count of a non-existent counter will create the counter and raise th
 
 <details><summary>Running locally</summary>
 
+### Environment variables
+
+Create a 'local.settings.json' with the connection string to your MySQL database.
+```json
+{
+  "IsEncrypted": false,
+  "Values": {
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "NODE_ENV": "development",
+    "DB_COUNTER_CONNECTIONSTRING": "{{YOUR_CONNECTIONSTRING}}",
+    "DB_COUNTER_REJECTUNAUTHORIZED": "true"
+  }
+}
+```
+
 ### Build and run the App:
 
 This will install the required dependencies, build and start!
