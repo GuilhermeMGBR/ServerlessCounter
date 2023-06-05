@@ -122,31 +122,31 @@ A simple serverless counting API with Azure functions in Typescript. Proof of co
 
 <details><summary>Environment configuration</summary>
 
-#### Create a `local.settings.json` file
+#### Create a `local.settings.json` file inside the `./src` folder.
 
-- Inside the `./src` folder. Sample:
+- Replace `{{YOUR_CONNECTIONSTRING}}` with the connection string to your MySQL database of choice
 
 ```json
 {
   "IsEncrypted": false,
   "Values": {
     "FUNCTIONS_WORKER_RUNTIME": "node",
-    "AzureWebJobsStorage": "",
-    "DB_COUNTER_CONNECTIONSTRING": "{{DEV_DB_CONNECTIONSTRING}}"
+    "NODE_ENV": "development",
+    "DB_COUNTER_CONNECTIONSTRING": "{{YOUR_CONNECTIONSTRING}}",
+    "DB_COUNTER_REJECTUNAUTHORIZED": "true"
   }
 }
 ```
 
-- Configure your MySQL database of choice:
-  - Replace `{{DEV_DB_CONNECTIONSTRING}}` with your connection string
+#### To run and debug functions locally, install [azure-functions-core-tools](https://github.com/Azure/azure-functions-core-tools) on your machine
 
-#### Install [azure-functions-core-tools](https://github.com/Azure/azure-functions-core-tools) on your machine
-
-- To run and debug functions locally. Installation with yarn:
+Installation with yarn:
 
 ```bash
 yarn global add azure-functions-core-tools
 ```
+
+=> The 'devcontainer' comes with this preinstalled
 
 </details>
 
@@ -242,21 +242,6 @@ Raising the count of a non-existent counter will create the counter and raise th
 
 <details><summary>Running locally</summary>
 
-### Environment variables
-
-Create a 'local.settings.json' with the connection string to your MySQL database.
-```json
-{
-  "IsEncrypted": false,
-  "Values": {
-    "FUNCTIONS_WORKER_RUNTIME": "node",
-    "NODE_ENV": "development",
-    "DB_COUNTER_CONNECTIONSTRING": "{{YOUR_CONNECTIONSTRING}}",
-    "DB_COUNTER_REJECTUNAUTHORIZED": "true"
-  }
-}
-```
-
 ### Build and run the App:
 
 This will install the required dependencies, build and start!
@@ -272,6 +257,8 @@ yarn start:only
 OR
 yarn so
 ```
+
+=> Remember to follow the environment configuration from the [Getting started](#getting-started) before running the app!
 
 </details>
 
