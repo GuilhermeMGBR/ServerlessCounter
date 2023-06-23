@@ -380,6 +380,7 @@ We can run pipeline workflows/ jobs/ steps locally with the help of [Nektos/act]
 ```bash
 yarn act:sonarcloud
 yarn act:deploy
+yarn act:health-check
 ```
 
 </details>

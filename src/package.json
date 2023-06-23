@@ -24,6 +24,7 @@
     "pre-commit": "yarn type-check && yarn lint && yarn format-check && yarn test",
     "act:sonarcloud": "cd ../; act -j sonarcloud --secret-file .secrets",
     "act:deploy": "cd ../; act -j build-and-deploy --secret-file .secrets",
+    "act:health-check": "cd ../; act -j health-check --secret-file .secrets",
     "act": "yarn act:sonarcloud",
     "fmt": "yarn format",
     "fc": "yarn format-check",

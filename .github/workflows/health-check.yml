@@ -1,0 +1,33 @@
+name: Health Check
+
+on:
+  schedule:
+    - cron: "0 11 * * 1" # Mondays at 11 AM UTC (8 AM BRT)
+
+jobs:
+  health-check:
+    name: Health check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update
+        run: |
+          apt update
+          apt upgrade
+
+      - name: Install curl
+        run: |
+          apt -y install curl
+          curl --version
+
+      - name: Check the deployed service URL
+        id: health-check-request
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: ${{secrets.HEALTH_CHECK_URL}}
+          method: ${{secrets.HEALTH_CHECK_METHOD}}
+          retry: 12
+          retryWait: 5000
+
+      - name: Show Response
+        run: |
+          echo ${{ steps.health-check-request.outputs.response }}
