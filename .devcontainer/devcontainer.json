@@ -28,5 +28,5 @@
 
   "forwardPorts": [7071],
 
-  "postCreateCommand": "cd src; yarn install"
+  "postCreateCommand": "cd src; yarn install; npx husky install"
 }

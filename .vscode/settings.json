@@ -6,6 +6,7 @@
     "azureFunctions.deploySubpath": "dist",
     "cSpell.words": [
         "CONNECTIONSTRING",
+        "devcontainers",
         "funcignore",
         "maxdepth",
         "Parens",
@@ -14,6 +15,7 @@
         "REJECTUNAUTHORIZED",
         "serverlesscounter",
         "sonarcloud",
-        "sonarqube"
+        "sonarqube",
+        "sonarsource"
     ],
 }

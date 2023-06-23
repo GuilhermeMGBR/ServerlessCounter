@@ -119,6 +119,7 @@ A simple serverless counting API with Azure functions in Typescript. Proof of co
 - [Prettier](http://prettier.io) for code formatting and better commits/diffs
 - [Jest](http://jestjs.io) for testing
 - [Sonar](https://www.sonarsource.com) for code analysis
+- [Husky](https://typicode.github.io/husky/) for git hooks
 - [Docker](https://www.docker.com) for local testing and simulation
 - [Act](https://github.com/nektos/act) for local GitHub workflows testing and execution
 
