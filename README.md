@@ -91,7 +91,7 @@
 ## Index
 
 - [About the application](#about-the-application)
-  - [Technologies](#tecnologies)
+  - [Technologies](#technologies)
   - [Tools](#tools)
 - [Getting started](#getting-started)
 - [Usage](#usage)
@@ -103,6 +103,8 @@
 ## About the application
 
 A simple serverless counting API with Azure functions in Typescript. Proof of concept and template for greater APIs!
+- The `get` and `hit` endpoints are also stateless and can scale as far as your database and wallet allows.
+- The endpoint behaviors (located within a service) can be utilized and deployed using a conventional Node.js server.
 
 ### Technologies
 
