@@ -395,6 +395,19 @@ yarn act:health-check
 
 ## Continuous integration
 
+<details><summary>Code analysis</summary>
+
+Automatic code analysis with Sonarcloud. To include code coverage, follows the triggers set in the GitHub workflow.
+
+The following secrets must be configured on GitHub:
+
+- SONARCLOUD_ORGANIZATION
+- SONARCLOUD_TOKEN
+
+This also follows the properties defined inside the `sonar-project.properties` file, overwriting duplicates.
+
+</details>
+
 <details><summary>Deploy</summary>
 
 Automatic build and deploy. Follows the triggers set in the GitHub workflow.
@@ -408,17 +421,16 @@ The following secrets must be configured on GitHub:
 
 </details>
 
-<details><summary>Code analysis</summary>
+<details><summary>Health Check</summary>
 
-Automatic code analysis with Sonarcloud. To include code coverage, follows the triggers set in the GitHub workflow.
+A health check will be made after each deploy and can also be manually triggered.
 
 The following secrets must be configured on GitHub:
 
-- SONARCLOUD_ORGANIZATION
-- SONARCLOUD_TOKEN
+- HEALTH_CHECK_URL
+- HEALTH_CHECK_METHOD
 
-This also follows the properties defined inside the `sonar-project.properties` file, overwriting duplicates.
-
+For health checking, simply call a get or a hit endpoint of your selected namespace/key pair. In this way the `HEALTH_CHECK_URL` must include the authentication code and the `HEALTH_CHECK_METHOD` would be `GET`.
 </details>
 
 <sup><a href="#index" title="Return to index">&UpArrowBar;</a></sup>
