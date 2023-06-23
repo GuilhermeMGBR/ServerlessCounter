@@ -20,4 +20,6 @@
     ],
     "terminal.integrated.cwd": "${workspaceFolder}/src",
     "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "jest.rootPath": "src",
+    "jest.autoRun": "off"
 }
