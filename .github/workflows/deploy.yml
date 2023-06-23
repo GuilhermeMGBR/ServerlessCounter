@@ -69,5 +69,6 @@ jobs:
           respect-funcignore: true
 
   health-check-after-deploy:
+    needs: build-and-deploy
     uses: ./.github/workflows/health-check.yml
     secrets: inherit
