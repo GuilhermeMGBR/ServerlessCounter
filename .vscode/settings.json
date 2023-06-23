@@ -18,4 +18,5 @@
         "sonarqube",
         "sonarsource"
     ],
+    "terminal.integrated.cwd": "${workspaceFolder}/src",
 }
