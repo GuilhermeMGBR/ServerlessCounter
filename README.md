@@ -62,8 +62,14 @@
     />
   </a>
   <a
-    href="https://github.com/GuilhermeMGBR?tab=overview&from=2023-02-01&to=2023-02-28"
+    href="https://github.com/GuilhermeMGBR/ServerlessCounter/actions/workflows/health-check.yml?query=branch%3Amain"
   >
+    <img
+      src="https://github.com/GuilhermeMGBR/ServerlessCounter/actions/workflows/health-check.yml/badge.svg?branch=main"
+      alt="Health Check status"
+    />
+  </a>
+  <a  href="https://github.com/GuilhermeMGBR?tab=overview&from=2023-02-01&to=2023-02-28">
     <img
       src="https://img.shields.io/badge/created%20by-@guilhermemgbr-4BBAAB.svg"
       alt="Created by Guilherme Garcia"
