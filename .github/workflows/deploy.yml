@@ -69,6 +69,5 @@ jobs:
           respect-funcignore: true
 
   health-check-after-deploy:
-    runs-on: ubuntu-latest
     uses: ./.github/workflows/health-check.yml
     secrets: inherit
