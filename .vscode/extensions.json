@@ -5,6 +5,7 @@
     "usernamehw.errorlens",
     "yoavbls.pretty-ts-errors",
     "esbenp.prettier-vscode",
+    "eamodio.gitlens",
     "cweijan.vscode-mysql-client2",
     "rangav.vscode-thunder-client"
   ]
