@@ -10,14 +10,22 @@ jobs:
     name: Health check
     runs-on: ubuntu-latest
     steps:
-      - name: Update
+      - name: Update and install sudo for Act
+        if: ${{ env.ACT }} # runs this step only when testing locally with 'act'
         run: |
           apt update
           apt upgrade
+          apt install sudo
+
+      - name: Update
+        if: ${{ !env.ACT }} # skips this step when testing locally with 'act'
+        run: |
+          sudo apt-get update
+          sudo apt-get upgrade
 
       - name: Install curl
         run: |
-          apt -y install curl
+          sudo apt-get -y install curl
           curl --version
 
       - name: Check the deployed service URL
