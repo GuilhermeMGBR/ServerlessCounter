@@ -67,3 +67,8 @@ jobs:
           package: ./${{ env.BUILD_PATH }}
           publish-profile: ${{ env.PUBLISH_PROFILE }}
           respect-funcignore: true
+
+  health-check-after-deploy:
+    runs-on: ubuntu-latest
+    uses: ./.github/workflows/health-check.yml@main
+    secrets: inherit
