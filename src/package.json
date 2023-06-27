@@ -41,7 +41,7 @@
     "s": "yarn sonar",
     "ss": "yarn sonar-server:start",
     "ssp": "yarn sonar-server:start-persistent",
-    "base:prettier": "yarn prettier --ignore-path .gitignore"
+    "base:prettier": "yarn prettier --ignore-path .gitignore '!coverage'"
   },
   "dependencies": {
     "mysql2": "^3.3.0",
