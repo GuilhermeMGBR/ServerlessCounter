@@ -8,6 +8,7 @@
         "CONNECTIONSTRING",
         "devcontainers",
         "funcignore",
+        "JDBC",
         "maxdepth",
         "Parens",
         "postbuild",

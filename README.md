@@ -103,6 +103,7 @@
 ## About the application
 
 A simple serverless counting API with Azure functions in Typescript. Proof of concept and template for greater APIs!
+
 - The `get` and `hit` endpoints are also stateless and can scale as far as your database and wallet allows.
 - The endpoint behaviors (located within a service) can be utilized and deployed using a conventional Node.js server.
 
@@ -334,6 +335,28 @@ yarn fc
 
 </details>
 
+<details><summary>Type check</summary>
+
+Make sure to have installed dependencies from the initial setup
+
+### Run type check:
+
+```bash
+yarn type-check
+OR
+yarn tc
+```
+
+- The type check can re-run after each file save in watch mode
+
+```bash
+yarn watch:type-check
+OR
+yarn wtc
+```
+
+</details>
+
 <details><summary>Testing</summary>
 
 Make sure to have installed dependencies from the initial setup
@@ -354,24 +377,69 @@ yarn wt
 
 </details>
 
-<details><summary>Type check</summary>
+<details><summary>Sonar analysis</summary>
 
-Make sure to have installed dependencies from the initial setup
+An analysis is run automatically on `SonarCloud` for open `PRs` and changes to the `main` branch.
 
-### Run type check:
+To run an analysis locally with SonarQube and Docker:
+
+### Start a local SonarQube instance:
 
 ```bash
-yarn type-check
+yarn sonar-server:start
 OR
-yarn tc
+yarn ss
 ```
 
-- The type check can re-run after each file save in watch mode
+<details><summary>[Optional] Persist analysis results</summary>
+
+To persist the analysis results when running a local server of SonarQube:
+
+### Create a `.env.sonar-server.local` file inside the `./src` folder
+
+```sh
+SONAR_JDBC_URL={{YOUR_URL}} # sample: jdbc:postgresql://hostname.com/db_name
+SONAR_JDBC_USERNAME={{YOUR_USERNAME}}
+SONAR_JDBC_PASSWORD={{YOUR_PASSWORD}}
+```
+
+Replace placeholders with the connection values to your PostgreSQL instance:
+
+- `{{YOUR_URL}}`
+- `{{YOUR_USERNAME}}`
+- `{{YOUR_PASSWORD}}`
+
+=> It is possible to run an instance of PostgreSQL inside another docker container!
+
+### Start a local SonarQube instance with persistence:
 
 ```bash
-yarn watch:type-check
+yarn sonar-server:start-persistent
 OR
-yarn wtc
+yarn ssp
+```
+
+</details>
+
+### Sonar Scanner configuration
+
+Set environment variables with sonar server connection details:
+
+- SVRLSSCTR_SONARQUBE_LOCAL_HOSTURL
+- SVRLSSCTR_SONARQUBE_LOCAL_LOGIN
+
+=> They can be set inline, before the run command:
+
+```bash
+SVRLSSCTR_SONARQUBE_LOCAL_HOSTURL=https://your.local.url; SVRLSSCTR_SONARQUBE_LOCAL_LOGIN=sqp_yourtokenXYZ; yarn sonar
+```
+
+### Run Sonar Scanner
+
+```bash
+yarn sonar
+OR
+yarn s
 ```
 
 </details>
@@ -435,6 +503,7 @@ The following secrets must be configured on GitHub:
 - HEALTH_CHECK_METHOD
 
 For health checking, simply call a get or a hit endpoint of your selected namespace/key pair. In this way the `HEALTH_CHECK_URL` must include the authentication code and the `HEALTH_CHECK_METHOD` would be `GET`.
+
 </details>
 
 <sup><a href="#index" title="Return to index">&UpArrowBar;</a></sup>

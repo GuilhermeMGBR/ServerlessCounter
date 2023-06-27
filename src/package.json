@@ -21,6 +21,8 @@
     "watch:test": "jest --verbose --watch",
     "coverage": "jest --coverage",
     "sonar": "yarn coverage; npx sonarqube-scanner",
+    "sonar-server:start": "docker run --name sonarqube-server -p 127.0.0.1:9000:9000 --detach --rm sonarqube:lts-community",
+    "sonar-server:start-persistent": "docker run --name sonarqube-server -p 127.0.0.1:9000:9000 --detach --rm --env-file .env.sonar-server.local sonarqube:lts-community",
     "pre-commit": "yarn type-check && yarn lint && yarn format-check && yarn test",
     "act:sonarcloud": "cd ../; act -j sonarcloud --secret-file .secrets",
     "act:deploy": "cd ../; act -j build-and-deploy --secret-file .secrets",
@@ -36,6 +38,9 @@
     "wtc": "yarn watch:type-check",
     "wb": "yarn watch:build",
     "wt": "yarn watch:test",
+    "s": "yarn sonar",
+    "ss": "yarn sonar-server:start",
+    "ssp": "yarn sonar-server:start-persistent",
     "base:prettier": "yarn prettier --ignore-path .gitignore"
   },
   "dependencies": {
