@@ -1,26 +1,29 @@
 {
-    "azureFunctions.projectLanguage": "TypeScript",
-    "azureFunctions.projectRuntime": "~4",
-    "azureFunctions.projectSubpath": "src",
-    "azureFunctions.preDeployTask": "Build with yarn",
-    "azureFunctions.deploySubpath": "dist",
-    "cSpell.words": [
-        "CONNECTIONSTRING",
-        "devcontainers",
-        "funcignore",
-        "JDBC",
-        "maxdepth",
-        "Parens",
-        "postbuild",
-        "prestart",
-        "REJECTUNAUTHORIZED",
-        "serverlesscounter",
-        "sonarcloud",
-        "sonarqube",
-        "sonarsource"
-    ],
-    "terminal.integrated.cwd": "${workspaceFolder}/src",
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "jest.rootPath": "src",
-    "jest.autoRun": "off"
+  "azureFunctions.projectLanguage": "TypeScript",
+  "azureFunctions.projectRuntime": "~4",
+  "azureFunctions.projectSubpath": "src",
+  "azureFunctions.preDeployTask": "Build with yarn",
+  "azureFunctions.deploySubpath": "dist",
+  "cSpell.words": [
+    "CONNECTIONSTRING",
+    "devcontainers",
+    "funcignore",
+    "JDBC",
+    "maxdepth",
+    "Parens",
+    "postbuild",
+    "prestart",
+    "REJECTUNAUTHORIZED",
+    "serverlesscounter",
+    "sonarcloud",
+    "sonarqube",
+    "sonarsource"
+  ],
+  "terminal.integrated.cwd": "${workspaceFolder}/src",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "jest.rootPath": "src",
+  "jest.autoRun": "off"
 }
