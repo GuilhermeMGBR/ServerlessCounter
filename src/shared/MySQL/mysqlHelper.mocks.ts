@@ -110,4 +110,20 @@ export const getOkPacketMock = ({
   procotol41: true,
 });
 
-//
+export const prepareQueryHandlerMock = <T extends RowDataPacket[] | undefined>(
+  mockedQueryHandler: jest.Mock,
+  rows: T,
+) => {
+  mockedQueryHandler.mockResolvedValue(
+    getQueryHandlerMock({rows})({} as unknown as IConnection),
+  );
+};
+
+export const prepareExecuteSingleHandlerMock = (
+  mockedExecuteSingleHandler: jest.Mock,
+  mockProps: GetExecuteSingleHandlerMockProps,
+) => {
+  mockedExecuteSingleHandler.mockResolvedValue(
+    getExecuteSingleHandlerMock(mockProps)({} as unknown as IConnection),
+  );
+};
