@@ -379,7 +379,7 @@ yarn wt
 
 <details><summary>Sonar analysis</summary>
 
-An analysis is run automatically on `SonarCloud` for open `PRs` and changes to the `main` branch.
+> An analysis is run automatically on `SonarCloud` for open `PRs` and changes to the `main` branch.
 
 To run an analysis locally with SonarQube and Docker:
 
@@ -409,7 +409,7 @@ Replace placeholders with the connection values to your PostgreSQL instance:
 - `{{YOUR_USERNAME}}`
 - `{{YOUR_PASSWORD}}`
 
-=> It is possible to run an instance of PostgreSQL inside another docker container!
+> It is possible to run an instance of PostgreSQL inside another docker container!
 
 ### Start a local SonarQube instance with persistence:
 
@@ -428,11 +428,11 @@ Set environment variables with sonar server connection details:
 - SVRLSSCTR_SONARQUBE_LOCAL_HOSTURL
 - SVRLSSCTR_SONARQUBE_LOCAL_LOGIN
 
-=> They can be set inline, before the run command:
-
-```bash
-SVRLSSCTR_SONARQUBE_LOCAL_HOSTURL=https://your.local.url; SVRLSSCTR_SONARQUBE_LOCAL_LOGIN=sqp_yourtokenXYZ; yarn sonar
-```
+> They can be set inline, before the run command:
+> 
+> ```bash
+> SVRLSSCTR_SONARQUBE_LOCAL_HOSTURL=https://your.local.url; SVRLSSCTR_SONARQUBE_LOCAL_LOGIN=sqp_yourtokenXYZ; yarn sonar
+> ```
 
 ### Run Sonar Scanner
 
