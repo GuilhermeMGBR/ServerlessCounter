@@ -6,6 +6,7 @@
   "azureFunctions.deploySubpath": "dist",
   "cSpell.words": [
     "CONNECTIONSTRING",
+    "consts",
     "devcontainers",
     "funcignore",
     "JDBC",
@@ -17,7 +18,8 @@
     "serverlesscounter",
     "sonarcloud",
     "sonarqube",
-    "sonarsource"
+    "sonarsource",
+    "wtoc"
   ],
   "terminal.integrated.cwd": "${workspaceFolder}/src",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
