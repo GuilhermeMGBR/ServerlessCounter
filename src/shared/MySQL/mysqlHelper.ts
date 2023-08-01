@@ -23,7 +23,7 @@ export const getConnectionConfig = (
 ) => ({
   uri: connectionString,
   ssl: {
-    rejectUnauthorized: rejectUnauthorized === 'false' ? false : true,
+    rejectUnauthorized: rejectUnauthorized !== 'false',
   },
 });
 
