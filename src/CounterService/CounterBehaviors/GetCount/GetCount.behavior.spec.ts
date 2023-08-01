@@ -13,6 +13,8 @@ jest.mock('@CounterService/CounterRepository', () => ({
   selectHitCount: jest.fn(),
 }));
 
+const mockSelectHitCount = selectHitCount as jest.Mock;
+
 describe('getCountBehavior', () => {
   describe('validateParams', () => {
     it.each([
@@ -50,7 +52,7 @@ describe('getCountBehavior', () => {
     ])('returns %s', async (_case, dbResult, expectedValue) => {
       const mockLogger = createLoggerMock();
 
-      (selectHitCount as jest.Mock)
+      mockSelectHitCount
         .mockClear()
         .mockImplementationOnce(getSelectHitCountMock({rows: dbResult}));
 
@@ -67,7 +69,7 @@ describe('getCountBehavior', () => {
         );
       }
 
-      expect(selectHitCount).toHaveBeenCalledTimes(1);
+      expect(mockSelectHitCount).toHaveBeenCalledTimes(1);
     });
   });
 });

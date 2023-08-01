@@ -21,6 +21,10 @@ jest.mock('./CounterRepository.utils', () => ({
   counterQueryHandler: jest.fn(),
 }));
 
+const mockCounterExecuteSingleHandler =
+  counterExecuteSingleHandler as jest.Mock;
+const mockCounterQueryHandler = counterQueryHandler as jest.Mock;
+
 const TEST_NAMESPACE = 'Test_Namespace';
 const TEST_NAME = 'Test_Name';
 const TEST_ID = 1000;
@@ -35,13 +39,13 @@ describe('CounterRepository', () => {
     async (_case, callback) => {
       const mockResult = {rows: ['testResult']};
 
-      prepareQueryHandlerMock(counterQueryHandler as jest.Mock, [
+      prepareQueryHandlerMock(mockCounterQueryHandler, [
         mockResult as RowDataPacket,
       ]);
 
       const [result] = await callback();
 
-      expect(counterQueryHandler).toHaveBeenCalled();
+      expect(mockCounterQueryHandler).toHaveBeenCalled();
       expect(result).toStrictEqual([mockResult]);
     },
   );
@@ -54,14 +58,13 @@ describe('CounterRepository', () => {
     async (_case, callback) => {
       const mockResult = getOkPacketMock({});
 
-      prepareExecuteSingleHandlerMock(
-        counterExecuteSingleHandler as jest.Mock,
-        {okPacket: mockResult},
-      );
+      prepareExecuteSingleHandlerMock(mockCounterExecuteSingleHandler, {
+        okPacket: mockResult,
+      });
 
       const [result] = await callback();
 
-      expect(counterExecuteSingleHandler).toHaveBeenCalled();
+      expect(mockCounterExecuteSingleHandler).toHaveBeenCalled();
       expect(result).toStrictEqual(mockResult);
     },
   );

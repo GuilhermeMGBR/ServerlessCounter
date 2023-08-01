@@ -27,6 +27,11 @@ jest.mock('@CounterService/CounterRepository', () => ({
   selectHitCountById: jest.fn(),
 }));
 
+const mockSelectId = selectId as jest.Mock;
+const mockInsertCounter = insertCounter as jest.Mock;
+const mockInsertCounterHit = insertCounterHit as jest.Mock;
+const mockSelectHitCountById = selectHitCountById as jest.Mock;
+
 const mockConnectionPool_End = jest.fn();
 jest.mock('@shared/MySQL', () => ({
   ...jest.requireActual('@shared/MySQL'),
@@ -75,19 +80,19 @@ describe('hitCountBehavior', () => {
       async (_case, currentDbCounterId, previousValue) => {
         const mockLogger = createLoggerMock();
 
-        (selectId as jest.Mock)
+        mockSelectId
           .mockClear()
           .mockImplementationOnce(getSelectIdMock({rows: currentDbCounterId}));
 
-        (insertCounter as jest.Mock)
+        mockInsertCounter
           .mockClear()
           .mockImplementationOnce(
             getInsertCounterMock({okPacket: {insertId: 12345} as OkPacket}),
           );
 
-        (insertCounterHit as jest.Mock).mockClear();
+        mockInsertCounterHit.mockClear();
 
-        (selectHitCountById as jest.Mock).mockClear().mockImplementationOnce(
+        mockSelectHitCountById.mockClear().mockImplementationOnce(
           getSelectHitCountByIdMock({
             rows: [getRowDataPacket<HitCountData>({hits: previousValue + 1})],
           }),
@@ -108,12 +113,12 @@ describe('hitCountBehavior', () => {
           );
         }
 
-        expect(selectId).toHaveBeenCalledTimes(1);
-        expect(insertCounter).toHaveBeenCalledTimes(
+        expect(mockSelectId).toHaveBeenCalledTimes(1);
+        expect(mockInsertCounter).toHaveBeenCalledTimes(
           previousValue === 0 ? 1 : 0,
         );
-        expect(insertCounterHit).toHaveBeenCalledTimes(1);
-        expect(selectHitCountById).toHaveBeenCalledTimes(1);
+        expect(mockInsertCounterHit).toHaveBeenCalledTimes(1);
+        expect(mockSelectHitCountById).toHaveBeenCalledTimes(1);
         expect(mockConnectionPool_End).toHaveBeenCalledTimes(1);
       },
     );
