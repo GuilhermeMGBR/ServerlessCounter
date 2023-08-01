@@ -14,6 +14,7 @@ import type {
   IGetQueryHandler,
   IQueryConnection,
   PoolHandler,
+  SQLValues,
 } from './mysqlHelper.types';
 
 export const getConnectionConfig = (
@@ -36,7 +37,10 @@ export const createDbConnectionPool = (
 
 export const query: IGetQueryHandler<IQueryConnection> =
   (connection: IQueryConnection) =>
-  async <TQueryResult extends RowDataPacket>(sql: string, values: string[]) => {
+  async <TQueryResult extends RowDataPacket>(
+    sql: string,
+    values: SQLValues,
+  ) => {
     await connection.connect();
 
     return await connection.query<TQueryResult[]>(sql, values);
@@ -44,7 +48,10 @@ export const query: IGetQueryHandler<IQueryConnection> =
 
 export const getQueryHandler: IGetQueryHandler<IConnection> =
   (connection: IConnection) =>
-  async <TQueryResult extends RowDataPacket>(sql: string, values: string[]) => {
+  async <TQueryResult extends RowDataPacket>(
+    sql: string,
+    values: SQLValues,
+  ) => {
     const result = await query<TQueryResult>(connection)(sql, values);
 
     await connection.end();
@@ -53,7 +60,10 @@ export const getQueryHandler: IGetQueryHandler<IConnection> =
 
 export const getPooledQueryHandler =
   async (pool: PoolHandler) =>
-  async <TQueryResult extends RowDataPacket>(sql: string, values: string[]) => {
+  async <TQueryResult extends RowDataPacket>(
+    sql: string,
+    values: SQLValues,
+  ) => {
     const connection = await pool.getConnection();
 
     const result = await query<TQueryResult>(connection)(sql, values);
@@ -64,7 +74,7 @@ export const getPooledQueryHandler =
 
 export const executeSingle =
   (connection: IExecuteSingleConnection) =>
-  async (sql: string, values: string[]): IExecuteSingleResult => {
+  async (sql: string, values: SQLValues): IExecuteSingleResult => {
     await connection.connect();
     await connection.beginTransaction();
 
@@ -83,7 +93,10 @@ export const getExecuteSingleHandler: (
   connection: IConnection,
 ) => IExecuteHandler =
   (connection: IConnection) =>
-  async (sql: string, values: string[]): Promise<[OkPacket, FieldPacket[]]> => {
+  async (
+    sql: string,
+    values: SQLValues,
+  ): Promise<[OkPacket, FieldPacket[]]> => {
     const result = await executeSingle(connection)(sql, values);
 
     await connection.end();
@@ -93,7 +106,10 @@ export const getExecuteSingleHandler: (
 
 export const getPooledExecuteSingleHandler =
   async (pool: PoolHandler) =>
-  async (sql: string, values: string[]): Promise<[OkPacket, FieldPacket[]]> => {
+  async (
+    sql: string,
+    values: SQLValues,
+  ): Promise<[OkPacket, FieldPacket[]]> => {
     const connection = await pool.getConnection();
 
     const result = await executeSingle(connection)(sql, values);

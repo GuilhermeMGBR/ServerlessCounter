@@ -16,6 +16,7 @@ import {
   getQueryConnectionMock,
   getTestResult,
 } from './mysqlHelper.mocks';
+import {SQLValues} from './mysqlHelper.types';
 
 describe('mysqlHelper', () => {
   const testSql = 'select 1';
@@ -36,7 +37,7 @@ describe('mysqlHelper', () => {
   const expectToExecuteOnceWithValues = (
     mockConnection: ReturnType<typeof getExecuteSingleConnectionMock>,
     sql: string,
-    values: string[],
+    values: SQLValues,
   ) => {
     expect(mockConnection.execute).toHaveBeenCalledWith(sql, values);
 

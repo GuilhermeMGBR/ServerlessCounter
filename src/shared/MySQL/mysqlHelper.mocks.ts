@@ -17,6 +17,7 @@ import {
   IPoolConnection,
   IQueryConnection,
   PoolHandler,
+  SQLValues,
 } from './mysqlHelper.types';
 
 export type GetQueryHandlerMockProps<TResult> = {
@@ -38,7 +39,7 @@ export const getQueryHandlerMock =
     fieldPacket,
   }: GetQueryHandlerMockProps<TResult>): typeof getQueryHandler<TResult> =>
   (_connection: IQueryConnection) =>
-  async (_sql: string, _values: string[]) => {
+  async (_sql: string, _values: SQLValues) => {
     if (rows) return Promise.resolve([rows, fieldPacket ?? []]);
 
     return Promise.reject(errorMessage);
@@ -51,7 +52,7 @@ export const getExecuteSingleHandlerMock =
     fieldPacket,
   }: GetExecuteSingleHandlerMockProps): typeof getExecuteSingleHandler =>
   (_connection: IConnection) =>
-  async (_sql: string, _values: string[]) => {
+  async (_sql: string, _values: SQLValues) => {
     if (okPacket) return Promise.resolve([okPacket, fieldPacket ?? []]);
 
     return Promise.reject(errorMessage);

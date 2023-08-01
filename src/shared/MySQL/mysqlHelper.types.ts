@@ -18,6 +18,8 @@ type ExecuteSingleProps =
   | 'rollback'
   | 'commit';
 
+export type SQLValues = unknown[] | {[param: string]: unknown};
+
 export type IConnection = Pick<
   Connection,
   QueryProps | ExecuteSingleProps | 'end'
@@ -43,7 +45,7 @@ export type IGetQueryHandler<TConnection extends IQueryConnection> = <
 
 export type IQueryHandler<TDataRow extends RowDataPacket> = (
   sql: string,
-  values: string[],
+  values: SQLValues,
 ) => Promise<[TDataRow[], FieldPacket[]]>;
 
 export type IQueryResult = Awaited<
@@ -52,7 +54,7 @@ export type IQueryResult = Awaited<
 
 export type IExecuteHandler = (
   sql: string,
-  values: string[],
+  values: SQLValues,
 ) => Promise<[OkPacket, FieldPacket[]]>;
 
 export type IExecuteSingleResult = Promise<[OkPacket, FieldPacket[]]>;
