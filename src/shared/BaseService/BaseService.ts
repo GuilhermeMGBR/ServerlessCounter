@@ -1,22 +1,24 @@
 import {hasInvalidParams} from './BaseService.utils';
 
 import type {IServiceBehavior} from './BaseServiceBehavior/BaseServiceBehavior.types';
-import type {Context, HttpRequest} from './BaseService.types';
+import type {Context, HttpRequest, Invalid} from './BaseService.types';
 
-export const behaviorWrapper = async function <TValid, TInvalid>(
+export const behaviorWrapper = async function <TParams>(
   context: Context,
-  req: HttpRequest & {params: TValid | TInvalid},
-  behavior: IServiceBehavior<TValid, TInvalid>,
+  req: HttpRequest & {params: TParams | Invalid<TParams>},
+  behavior: IServiceBehavior<TParams>,
 ): Promise<void> {
   try {
     const validation = behavior.validateParams(req.params, context.log);
 
     if (hasInvalidParams(validation)) {
       context.res = validation.invalidParamsResponse;
+
       return;
     }
 
     context.res = await behavior.run(validation.validParams, context.log);
+
     return;
   } catch (err) {
     context.log.error(err);

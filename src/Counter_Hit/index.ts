@@ -1,14 +1,9 @@
 import {hitCount} from '../CounterService';
-
 import type {AzureFunction, Context, HttpRequest} from '@azure/functions';
-import type {
-  InvalidHitCountParams,
-  ValidHitCountParams,
-} from '../CounterService/CounterService.types';
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
-  req: HttpRequest & {params: ValidHitCountParams | InvalidHitCountParams},
+  req: HttpRequest,
 ): Promise<void> {
   await hitCount(context, req);
 };

@@ -30,8 +30,7 @@ describe('behaviorWrapper', () => {
       const context: Context = {log: mockLogger};
 
       const mockServiceBehavior = createServiceBehaviorMock<
-        Required<TestParams>,
-        Partial<TestParams>
+        Required<TestParams>
       >({
         mockValidateParams: jest.fn().mockReturnValueOnce(validationResult),
         mockRun: jest.fn().mockReturnValueOnce(runResultWhenValid),
@@ -77,8 +76,7 @@ describe('behaviorWrapper', () => {
       const expectedError = errorOnValidation ? validateParamsError : runError;
 
       const mockServiceBehavior = createServiceBehaviorMock<
-        Required<TestParams>,
-        Partial<TestParams>
+        Required<TestParams>
       >({
         mockValidateParams: jest.fn().mockImplementationOnce(() => {
           if (errorOnValidation) throw validateParamsError;

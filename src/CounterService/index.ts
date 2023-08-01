@@ -1,2 +1,1 @@
-export {getCount} from './CounterService';
-export {hitCount} from './CounterService';
+export * from './CounterService';

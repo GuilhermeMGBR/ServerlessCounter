@@ -1,2 +1,2 @@
-export * from './GetCount.behavior';
-export * from './HitCount.behavior';
+export * from './GetCount';
+export * from './HitCount';

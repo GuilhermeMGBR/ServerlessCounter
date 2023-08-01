@@ -2,34 +2,20 @@ import {
   getPooledExecuteSingleHandler,
   getPooledQueryHandler,
 } from '@shared/MySQL';
-import {unwrapInvalidData} from '@shared/types';
 import {
   insertCounter,
   insertCounterHit,
   selectHitCountById,
   selectId,
-} from '../CounterRepository';
-import {createCounterDbConnectionPool} from '../CounterRepository/CounterRepository.utils';
-import {counterParamsSchema} from '../CounterService.types';
-import {getCounterValueResponse} from '../CounterService.utils';
-
+} from '../../CounterRepository';
+import {createCounterDbConnectionPool} from '../../CounterRepository/CounterRepository.utils';
+import {getCounterValueResponse} from '../../CounterService.utils';
+import {unwrapInvalidParams, type HitCountParams} from './HitCount.types';
 import type {IServiceBehavior} from '@shared/BaseService/BaseServiceBehavior/BaseServiceBehavior.types';
-import type {ParamValidationResponse} from '@shared/BaseService/BaseService.types';
-import type {ILogger} from '@shared/logger.types';
-import type {
-  InvalidHitCountParams,
-  ValidHitCountParams,
-} from '../CounterService.types';
 
-export const hitCountBehavior: IServiceBehavior<
-  ValidHitCountParams,
-  InvalidHitCountParams
-> = {
-  validateParams: (
-    params: ValidHitCountParams | InvalidHitCountParams,
-    logger: ILogger,
-  ): ParamValidationResponse<ValidHitCountParams> => {
-    if (unwrapInvalidData(counterParamsSchema)(params)) {
+export const hitCountBehavior: IServiceBehavior<HitCountParams> = {
+  validateParams: (params, logger) => {
+    if (unwrapInvalidParams(params)) {
       logger.warn(`Invalid hit params: ${JSON.stringify(params)}`);
 
       return {
@@ -41,7 +27,7 @@ export const hitCountBehavior: IServiceBehavior<
     return {valid: true, validParams: params};
   },
 
-  run: async (params: ValidHitCountParams, logger: ILogger) => {
+  run: async (params, logger) => {
     const pool = createCounterDbConnectionPool();
 
     const [current] = await selectId(
@@ -79,3 +65,7 @@ export const hitCountBehavior: IServiceBehavior<
     return getCounterValueResponse(result[0].hits);
   },
 };
+
+// salt + password + creation yyyyMMDDhour + pepper
+// Hit token with sha256 and ability to change + config password (reset count + change hit token)
+// hash with bcrypt and complexity parameter

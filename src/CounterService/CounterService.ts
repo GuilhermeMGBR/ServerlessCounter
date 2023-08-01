@@ -1,24 +1,16 @@
 import {behaviorWrapper} from '@shared/BaseService';
 import {getCountBehavior, hitCountBehavior} from './CounterBehaviors';
+import type {GetCountParams} from './CounterBehaviors/GetCount/GetCount.types';
+import type {HitCountParams} from './CounterBehaviors/HitCount/HitCount.types';
 
 import type {AzureFunction, Context, HttpRequest} from '@azure/functions';
-import type {
-  InvalidGetCountParams,
-  InvalidHitCountParams,
-  ValidGetCountParams,
-  ValidHitCountParams,
-} from './CounterService.types';
 
-export const getCount: AzureFunction = async function (
+export const getCount: AzureFunction = async (
   context: Context,
-  req: HttpRequest & {params: ValidGetCountParams | InvalidGetCountParams},
-): Promise<void> {
-  return await behaviorWrapper(context, req, getCountBehavior);
-};
+  req: HttpRequest,
+) => await behaviorWrapper<GetCountParams>(context, req, getCountBehavior);
 
-export const hitCount: AzureFunction = async function (
+export const hitCount: AzureFunction = async (
   context: Context,
-  req: HttpRequest & {params: ValidHitCountParams | InvalidHitCountParams},
-): Promise<void> {
-  return await behaviorWrapper(context, req, hitCountBehavior);
-};
+  req: HttpRequest,
+) => await behaviorWrapper<HitCountParams>(context, req, hitCountBehavior);

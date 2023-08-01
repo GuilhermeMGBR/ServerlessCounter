@@ -1,15 +1,16 @@
 import type {ILogger} from '@shared/logger.types';
 import type {
-  InvalidValidationResponse,
   HttpResponse,
+  InvalidValidationResponse,
+  Invalid,
   ValidValidationResponse,
 } from '../BaseService.types';
 
-export interface IServiceBehavior<TValidParams, TInvalidParams> {
+export interface IServiceBehavior<TParams> {
   validateParams: (
-    params: TValidParams | TInvalidParams,
+    params: TParams | Invalid<TParams>,
     logger: ILogger,
-  ) => ValidValidationResponse<TValidParams> | InvalidValidationResponse;
+  ) => ValidValidationResponse<TParams> | InvalidValidationResponse;
 
-  run: (params: TValidParams, logger: ILogger) => Promise<HttpResponse>;
+  run: (params: TParams, logger: ILogger) => Promise<HttpResponse>;
 }

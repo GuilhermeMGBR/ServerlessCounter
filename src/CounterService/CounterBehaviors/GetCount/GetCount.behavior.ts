@@ -1,25 +1,11 @@
 import {selectHitCount} from '@CounterService/CounterRepository';
 import {getCounterValueResponse} from '@CounterService/CounterService.utils';
-import {unwrapInvalidData} from '@shared/types';
-import {counterParamsSchema} from '../CounterService.types';
-
+import {unwrapInvalidParams, type GetCountParams} from './GetCount.types';
 import type {IServiceBehavior} from '@shared/BaseService/BaseServiceBehavior/BaseServiceBehavior.types';
-import type {ParamValidationResponse} from '@shared/BaseService/BaseService.types';
-import type {ILogger} from '@shared/logger.types';
-import type {
-  InvalidGetCountParams,
-  ValidGetCountParams,
-} from '../CounterService.types';
 
-export const getCountBehavior: IServiceBehavior<
-  ValidGetCountParams,
-  InvalidGetCountParams
-> = {
-  validateParams: (
-    params: ValidGetCountParams | InvalidGetCountParams,
-    logger: ILogger,
-  ): ParamValidationResponse<ValidGetCountParams> => {
-    if (unwrapInvalidData(counterParamsSchema)(params)) {
+export const getCountBehavior: IServiceBehavior<GetCountParams> = {
+  validateParams: (params, logger) => {
+    if (unwrapInvalidParams(params)) {
       logger.warn(`Invalid get params: ${JSON.stringify(params)}`);
 
       return {
@@ -31,7 +17,7 @@ export const getCountBehavior: IServiceBehavior<
     return {valid: true, validParams: params};
   },
 
-  run: async function (params: ValidGetCountParams, logger: ILogger) {
+  run: async function (params, logger) {
     const [result] = await selectHitCount(params.namespace, params.name);
 
     if (!result || result.length === 0) {

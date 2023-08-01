@@ -1,25 +1,22 @@
 import type {RowDataPacket} from 'mysql2/promise';
 
-export interface SelectIdResult extends RowDataPacket {
+export interface SelectIdData {
   id: number;
 }
 
-export interface HitCountResult extends RowDataPacket {
+export interface HitCountData {
   hits: number;
 }
 
-export function getSelectIdResult(id: number): SelectIdResult {
+export interface SelectIdResult extends RowDataPacket, SelectIdData {}
+
+export interface HitCountResult extends RowDataPacket, HitCountData {}
+
+export function getRowDataPacket<TData>(data: TData) {
   return {
     constructor: {
       name: 'RowDataPacket',
-    },
-    id,
+    } as const,
+    ...data,
   };
 }
-
-export const getHitCountResult = (hits: number): HitCountResult => ({
-  constructor: {
-    name: 'RowDataPacket',
-  },
-  hits,
-});

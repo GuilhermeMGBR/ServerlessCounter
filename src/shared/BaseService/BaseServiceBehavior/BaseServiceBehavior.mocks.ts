@@ -1,20 +1,14 @@
 import {IServiceBehavior} from './BaseServiceBehavior.types';
 
-interface CreateServiceBehaviorMockProps<TValidParams, TInvalidParams> {
-  mockValidateParams: IServiceBehavior<
-    TValidParams,
-    TInvalidParams
-  >['validateParams'];
-  mockRun: IServiceBehavior<TValidParams, TInvalidParams>['run'];
+interface CreateServiceBehaviorMockProps<TParams> {
+  mockValidateParams: IServiceBehavior<TParams>['validateParams'];
+  mockRun: IServiceBehavior<TParams>['run'];
 }
 
-export const createServiceBehaviorMock = <TValidParams, TInvalidParams>({
+export const createServiceBehaviorMock = <TParams>({
   mockValidateParams,
   mockRun,
-}: CreateServiceBehaviorMockProps<
-  TValidParams,
-  TInvalidParams
->): IServiceBehavior<TValidParams, TInvalidParams> => ({
+}: CreateServiceBehaviorMockProps<TParams>): IServiceBehavior<TParams> => ({
   validateParams: mockValidateParams,
   run: mockRun,
 });
