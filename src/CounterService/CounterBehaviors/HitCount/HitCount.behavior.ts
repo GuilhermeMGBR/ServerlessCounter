@@ -1,4 +1,10 @@
 import {
+  getBadRequestResponse,
+  getInvalidParamsResult,
+  getOkResponse,
+  getValidParamsResult,
+} from '@shared/BaseService/BaseService.types';
+import {
   getPooledExecuteSingleHandler,
   getPooledQueryHandler,
 } from '@shared/MySQL';
@@ -9,22 +15,23 @@ import {
   selectId,
 } from '../../CounterRepository';
 import {createCounterDbConnectionPool} from '../../CounterRepository/CounterRepository.utils';
-import {getCounterValueResponse} from '../../CounterService.utils';
+import {getCounterValueResponse} from '../../CounterService.types';
 import {unwrapInvalidParams, type HitCountParams} from './HitCount.types';
 import type {IServiceBehavior} from '@shared/BaseService/BaseServiceBehavior/BaseServiceBehavior.types';
+
+const INVALID_PARAMS_MESSAGE = 'Invalid hit params';
 
 export const hitCountBehavior: IServiceBehavior<HitCountParams> = {
   validateParams: (params, logger) => {
     if (unwrapInvalidParams(params)) {
       logger.warn(`Invalid hit params: ${JSON.stringify(params)}`);
 
-      return {
-        valid: false,
-        invalidParamsResponse: {body: 'Invalid hit params', status: 400},
-      };
+      return getInvalidParamsResult(
+        getBadRequestResponse(INVALID_PARAMS_MESSAGE),
+      );
     }
 
-    return {valid: true, validParams: params};
+    return getValidParamsResult(params);
   },
 
   run: async (params, logger) => {
@@ -62,10 +69,6 @@ export const hitCountBehavior: IServiceBehavior<HitCountParams> = {
 
     await pool.end();
 
-    return getCounterValueResponse(result[0].hits);
+    return getOkResponse(getCounterValueResponse(result[0].hits));
   },
 };
-
-// salt + password + creation yyyyMMDDhour + pepper
-// Hit token with sha256 and ability to change + config password (reset count + change hit token)
-// hash with bcrypt and complexity parameter

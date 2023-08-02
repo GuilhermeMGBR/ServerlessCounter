@@ -12,3 +12,11 @@ export const counterIdentificationParamsSchema = z.object({
 export type CounterIdentificationParams = z.infer<
   typeof counterIdentificationParamsSchema
 >;
+
+export interface CounterValueResponse {
+  value: number;
+}
+
+export const getCounterValueResponse = (
+  value: number,
+): CounterValueResponse => ({value});

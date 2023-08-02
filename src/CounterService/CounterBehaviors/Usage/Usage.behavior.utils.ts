@@ -38,7 +38,5 @@ export const consolidateUsage = async (
   const activeCounters = await consolidateActiveCounters(namespace, name);
   const status = await consolidateStatus(namespace, name);
 
-  return {
-    body: getUsageResponse(activeCounters, status),
-  };
+  return getUsageResponse(activeCounters, status);
 };

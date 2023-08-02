@@ -19,8 +19,8 @@ import {
 } from './Usage.types';
 import type {
   Invalid,
-  InvalidValidationResponse,
-  ValidValidationResponse,
+  InvalidValidationResult,
+  ValidValidationResult,
 } from '@shared/BaseService/BaseService.types';
 
 jest.mock('@CounterService/CounterRepository', () => ({
@@ -88,7 +88,7 @@ describe('UsageBehavior', () => {
         expect(mockLogger.warn).not.toHaveBeenCalled();
 
         expect(
-          (validation as ValidValidationResponse<UsageParams>).validParams,
+          (validation as ValidValidationResult<UsageParams>).validParams,
         ).toStrictEqual(params);
       },
     );
@@ -111,7 +111,7 @@ describe('UsageBehavior', () => {
         );
 
         expect(
-          (validation as InvalidValidationResponse).invalidParamsResponse,
+          (validation as InvalidValidationResult).invalidParamsHttpResponse,
         ).toStrictEqual({
           body: 'Invalid usage summary params',
           status: 400,
@@ -185,7 +185,10 @@ describe('UsageBehavior', () => {
           params.name ?? null,
         );
 
-        expect(httpResponse).toStrictEqual({body: expectedResponse});
+        expect(httpResponse).toStrictEqual({
+          body: expectedResponse,
+          status: 200,
+        });
       },
     );
   });

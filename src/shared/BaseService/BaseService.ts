@@ -12,7 +12,7 @@ export const behaviorWrapper = async function <TParams>(
     const validation = behavior.validateParams(req.params, context.log);
 
     if (hasInvalidParams(validation)) {
-      context.res = validation.invalidParamsResponse;
+      context.res = validation.invalidParamsHttpResponse;
 
       return;
     }

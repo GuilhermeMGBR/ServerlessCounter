@@ -2,7 +2,7 @@ import {createLoggerMock} from '@shared/logger.mocks';
 import {behaviorWrapper} from './BaseService';
 import {createServiceBehaviorMock} from './BaseServiceBehavior/BaseServiceBehavior.mocks';
 
-import type {Context} from './BaseService.types';
+import type {Context, ParamValidationResult} from './BaseService.types';
 
 type TestParams = {param1: string};
 
@@ -11,18 +11,18 @@ describe('behaviorWrapper', () => {
     ['allows', 'valid', true, {param1: 'valid'}],
     ['blocks', 'invalid', false, {param1: 'invalid'}],
   ])(
-    '%s behavior execution when unwraping %s params (%s)',
+    '%s behavior execution when unwrapping %s params (%s)',
     async (
       _case0: string,
       _case1: string,
       valid: boolean,
       params: TestParams,
     ): Promise<void> => {
-      const invalidParamsResponse = 'params1 is invalid';
+      const invalidParamsHttpResponse = {body: 'params1 is invalid'};
 
-      const validationResult = valid
+      const validationResult: ParamValidationResult<TestParams> = valid
         ? {valid, validParams: params}
-        : {valid, invalidParamsResponse};
+        : {valid, invalidParamsHttpResponse};
 
       const runResultWhenValid = {a: 'xyz'};
 
@@ -38,6 +38,7 @@ describe('behaviorWrapper', () => {
 
       await behaviorWrapper(context, {params}, mockServiceBehavior);
 
+      expect(mockServiceBehavior.validateParams).toHaveBeenCalledTimes(1);
       expect(mockServiceBehavior.validateParams).toHaveBeenCalledWith(
         params,
         mockLogger,
@@ -57,7 +58,7 @@ describe('behaviorWrapper', () => {
 
       expect(mockServiceBehavior.run).not.toHaveBeenCalled();
 
-      expect(context.res).toBe(invalidParamsResponse);
+      expect(context.res).toBe(invalidParamsHttpResponse);
       expect(mockLogger.verbose).toHaveBeenCalledTimes(1);
     },
   );
@@ -75,9 +76,7 @@ describe('behaviorWrapper', () => {
       const runError = new Error('run Error');
       const expectedError = errorOnValidation ? validateParamsError : runError;
 
-      const mockServiceBehavior = createServiceBehaviorMock<
-        Required<TestParams>
-      >({
+      const mockServiceBehavior = createServiceBehaviorMock({
         mockValidateParams: jest.fn().mockImplementationOnce(() => {
           if (errorOnValidation) throw validateParamsError;
           return {valid: true, validParams: {result: 'runResultWhenValid'}};

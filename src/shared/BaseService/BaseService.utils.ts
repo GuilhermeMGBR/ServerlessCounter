@@ -1,10 +1,10 @@
 import type {
-  InvalidValidationResponse,
-  ParamValidationResponse,
+  InvalidValidationResult,
+  ParamValidationResult,
 } from './BaseService.types';
 
 export const hasInvalidParams = <TValid>(
-  validation: ParamValidationResponse<TValid>,
-): validation is InvalidValidationResponse => {
+  validation: ParamValidationResult<TValid>,
+): validation is InvalidValidationResult => {
   return !validation.valid;
 };

@@ -7,7 +7,7 @@ import type {
   HitCountData,
   HitCountResult,
 } from '@CounterService/CounterRepository/CounterRepository.types';
-import type {InvalidValidationResponse} from '@shared/BaseService/BaseService.types';
+import type {InvalidValidationResult} from '@shared/BaseService/BaseService.types';
 
 jest.mock('@CounterService/CounterRepository', () => ({
   selectHitCount: jest.fn(),
@@ -32,11 +32,13 @@ describe('getCountBehavior', () => {
         );
 
         expect(validation.valid).toBe(false);
+
         expect(mockLogger.warn).toHaveBeenCalledWith(
           expect.stringContaining('Invalid get params:'),
         );
+
         expect(
-          (validation as InvalidValidationResponse).invalidParamsResponse,
+          (validation as InvalidValidationResult).invalidParamsHttpResponse,
         ).toStrictEqual({
           body: 'Invalid get params',
           status: 400,
@@ -61,8 +63,6 @@ describe('getCountBehavior', () => {
         mockLogger,
       );
 
-      expect(result).toStrictEqual({body: {value: expectedValue}});
-
       if (expectedValue === 0) {
         expect(mockLogger.warn).toHaveBeenCalledWith(
           'Not Found: {"namespace":"namespaceXYZ","name":"nameXYZ"}',
@@ -70,6 +70,11 @@ describe('getCountBehavior', () => {
       }
 
       expect(mockSelectHitCount).toHaveBeenCalledTimes(1);
+
+      expect(result).toStrictEqual({
+        body: {value: expectedValue},
+        status: 200,
+      });
     });
   });
 });

@@ -7,18 +7,44 @@ export type Context = Pick<AzureContext, 'res' | 'log'>;
 export type HttpRequest = Pick<AzureHttpRequest, 'params'>;
 export type HttpResponse = AzureContext['res'];
 
+export const getBadRequestResponse = (body: unknown): HttpResponse => ({
+  body,
+  status: 400,
+});
+
+export const getOkResponse = (body: unknown): HttpResponse => ({
+  body,
+  status: 200,
+});
+
 export type Invalid<T> = Partial<T>;
 
-export type ValidValidationResponse<TValidParams> = {
+export type ValidValidationResult<TParams> = {
   valid: true;
-  validParams: TValidParams;
+  validParams: TParams;
 };
 
-export type InvalidValidationResponse = {
+export const getValidParamsResult = <TParams>(
+  validParams: TParams,
+): ValidValidationResult<TParams> => ({
+  valid: true,
+  validParams,
+});
+
+type InvalidParamsHttpResponse = Required<HttpResponse>;
+
+export type InvalidValidationResult = {
   valid: false;
-  invalidParamsResponse: Required<HttpResponse>;
+  invalidParamsHttpResponse: InvalidParamsHttpResponse;
 };
 
-export type ParamValidationResponse<TValidParams> =
-  | ValidValidationResponse<TValidParams>
-  | InvalidValidationResponse;
+export const getInvalidParamsResult = (
+  httpResponse: InvalidParamsHttpResponse,
+): InvalidValidationResult => ({
+  valid: false,
+  invalidParamsHttpResponse: httpResponse,
+});
+
+export type ParamValidationResult<TValidParams> =
+  | ValidValidationResult<TValidParams>
+  | InvalidValidationResult;

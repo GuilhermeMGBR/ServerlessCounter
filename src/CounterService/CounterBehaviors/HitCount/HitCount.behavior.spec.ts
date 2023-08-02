@@ -18,7 +18,7 @@ import type {
   HitCountData,
   SelectIdResult,
 } from '@CounterService/CounterRepository/CounterRepository.types';
-import type {InvalidValidationResponse} from '@shared/BaseService/BaseService.types';
+import type {InvalidValidationResult} from '@shared/BaseService/BaseService.types';
 
 jest.mock('@CounterService/CounterRepository', () => ({
   selectId: jest.fn(),
@@ -58,11 +58,13 @@ describe('hitCountBehavior', () => {
         );
 
         expect(validation.valid).toBe(false);
+
         expect(mockLogger.warn).toHaveBeenCalledWith(
           expect.stringContaining('Invalid hit params:'),
         );
+
         expect(
-          (validation as InvalidValidationResponse).invalidParamsResponse,
+          (validation as InvalidValidationResult).invalidParamsHttpResponse,
         ).toStrictEqual({
           body: 'Invalid hit params',
           status: 400,
@@ -105,8 +107,6 @@ describe('hitCountBehavior', () => {
           mockLogger,
         );
 
-        expect(result).toStrictEqual({body: {value: previousValue + 1}});
-
         if (previousValue === 0) {
           expect(mockLogger.info).toHaveBeenCalledWith(
             'Creating namespaceXYZ/nameXYZ',
@@ -120,6 +120,11 @@ describe('hitCountBehavior', () => {
         expect(mockInsertCounterHit).toHaveBeenCalledTimes(1);
         expect(mockSelectHitCountById).toHaveBeenCalledTimes(1);
         expect(mockConnectionPool_End).toHaveBeenCalledTimes(1);
+
+        expect(result).toStrictEqual({
+          body: {value: previousValue + 1},
+          status: 200,
+        });
       },
     );
   });
