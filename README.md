@@ -232,7 +232,7 @@ Getting the value of a non-existent counter will return 0.
 Request:
 
 ```bash
-curl -X GET http://localhost:7071/api/hit/namespace1/key1?code=XYZ --header 'Accept: */*'
+curl -X GET http://localhost:7071/api/hit/namespace1/key1?code=DEF --header 'Accept: */*'
 ```
 
 Response:
@@ -244,6 +244,139 @@ Response:
 ```
 
 Raising the count of a non-existent counter will create the counter and raise the count to 1.
+
+</details>
+
+<details><summary>Inspect API usage</summary>
+
+Lists counter usage data and overall _active_ x _deleted_ status count.
+
+```bash
+curl -X GET http://localhost:7071/api/usage?code=XYZ --header 'Accept: */*'
+OR
+curl -X GET http://localhost:7071/api/usage/namespace1?code=XYZ --header 'Accept: */*'
+OR
+curl -X GET http://localhost:7071/api/usage/namespace1/key1?code=XYZ --header 'Accept: */*'
+```
+
+<details><summary>Inspect all namespace/key pairs</summary>
+
+Request:
+
+```bash
+curl -X GET http://localhost:7071/api/usage?code=XYZ --header 'Accept: */*'
+```
+
+Response:
+
+```json
+{
+  "activeCounters": [
+    {
+      "namespace": "namespace1",
+      "key": "key1",
+      "hits": 123,
+      "createdAt": "2023-08-01T01:48:50.000Z",
+      "lastHit": "2023-08-01T15:53:14.000Z"
+    },
+    {
+      "namespace": "namespace1",
+      "key": "key2",
+      "hits": 456,
+      "createdAt": "2023-08-01T02:50:50.000Z",
+      "lastHit": "2023-08-01T16:55:14.000Z"
+    },
+    {
+      "namespace": "namespace2",
+      "key": "key1",
+      "hits": 789,
+      "createdAt": "2023-08-01T02:48:50.000Z",
+      "lastHit": "2023-08-01T16:53:14.000Z"
+    },
+    ...
+    {
+      "namespace": "namespace1000",
+      "key": "key1",
+      "hits": 101112,
+      "createdAt": "2023-08-01T04:48:50.000Z",
+      "lastHit": "2023-08-01T17:53:14.000Z"
+    }
+  ],
+  "status": {
+    "active": "1285",
+    "deleted": "25"
+  }
+}
+```
+
+</details>
+
+<details><summary>Inspect all keys from one namespace</summary>
+
+Request:
+
+```bash
+curl -X GET http://localhost:7071/api/usage/namespace1?code=XYZ --header 'Accept: */*'
+```
+
+Response:
+
+```json
+{
+  "activeCounters": [
+    {
+      "namespace": "namespace1",
+      "key": "key1",
+      "hits": 123,
+      "createdAt": "2023-08-01T01:48:50.000Z",
+      "lastHit": "2023-08-01T15:53:14.000Z"
+    },
+    {
+      "namespace": "namespace1",
+      "key": "key2",
+      "hits": 456,
+      "createdAt": "2023-08-01T02:50:50.000Z",
+      "lastHit": "2023-08-01T16:55:14.000Z"
+    }
+  ],
+  "status": {
+    "active": "2",
+    "deleted": "1"
+  }
+}
+```
+
+</details>
+
+<details><summary>Inspect a single namespace/key pair</summary>
+
+Request:
+
+```bash
+curl -X GET http://localhost:7071/api/usage/namespace1/key1?code=XYZ --header 'Accept: */*'
+```
+
+Response:
+
+```json
+{
+  "activeCounters": [
+    {
+      "namespace": "namespace1",
+      "key": "key1",
+      "hits": 123,
+      "createdAt": "2023-08-01T01:48:50.000Z",
+      "lastHit": "2023-08-01T15:53:14.000Z"
+    }
+  ],
+  "status": {
+    "active": "1",
+    "deleted": "0"
+  }
+}
+```
+
+</details>
 
 </details>
 
@@ -429,7 +562,7 @@ Set environment variables with sonar server connection details:
 - SVRLSSCTR_SONARQUBE_LOCAL_LOGIN
 
 > They can be set inline, before the run command:
-> 
+>
 > ```bash
 > SVRLSSCTR_SONARQUBE_LOCAL_HOSTURL=https://your.local.url; SVRLSSCTR_SONARQUBE_LOCAL_LOGIN=sqp_yourtokenXYZ; yarn sonar
 > ```

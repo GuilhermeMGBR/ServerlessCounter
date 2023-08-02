@@ -1,19 +1,25 @@
 import {
   insertCounterHitSql,
   insertCounterSql,
+  selectActiveCountersSql,
   selectHitCountSql,
   selectIdSql,
+  selectStatusSummarySql,
 } from './CounterRepository.consts';
 import {
   counterExecuteSingleHandler,
   counterQueryHandler,
 } from './CounterRepository.utils';
-
 import type {
   IExecuteHandler,
   IQueryHandler,
 } from '@shared/MySQL/mysqlHelper.types';
-import type {HitCountResult, SelectIdResult} from './CounterRepository.types';
+import type {
+  ActiveCountersResult,
+  HitCountResult,
+  SelectIdResult,
+  StatusSummaryResult,
+} from './CounterRepository.types';
 
 export const selectId = async (
   namespace: string,
@@ -35,6 +41,34 @@ export const selectHitCountById = async (
   id: number,
   queryHandler: Promise<IQueryHandler<HitCountResult>> = counterQueryHandler(),
 ) => (await queryHandler)(selectHitCountSql + ' AND C.id = ?', [id.toString()]);
+
+export const selectActiveCounters = async (
+  namespace: string | null,
+  name: string | null,
+  queryHandler: Promise<
+    IQueryHandler<ActiveCountersResult>
+  > = counterQueryHandler(),
+) =>
+  (await queryHandler)(selectActiveCountersSql, [
+    namespace,
+    namespace,
+    name,
+    name,
+  ]);
+
+export const selectStatusSummary = async (
+  namespace: string | null,
+  name: string | null,
+  queryHandler: Promise<
+    IQueryHandler<StatusSummaryResult>
+  > = counterQueryHandler(),
+) =>
+  (await queryHandler)(selectStatusSummarySql, [
+    namespace,
+    namespace,
+    name,
+    name,
+  ]);
 
 export const insertCounter = async (
   namespace: string,
