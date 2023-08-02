@@ -577,6 +577,22 @@ yarn s
 
 </details>
 
+<details><summary>Pre-commit hook</summary>
+
+> The `pre-commit` hook should run automatically before every commit through `Husky`.
+
+To manually run all pre-commit checks:
+
+```bash
+yarn pre-commit
+OR
+yarn pc
+```
+
+This hook does type checking, linting, format checking and runs all tests, stopping and showing errors from the first one to fail, if any.
+
+</details>
+
 <details><summary>Pipeline validation</summary>
 
 We can run pipeline workflows/ jobs/ steps locally with the help of [Nektos/act](https://github.com/nektos/act):
