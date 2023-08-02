@@ -16,7 +16,7 @@ export type ValidValidationResponse<TValidParams> = {
 
 export type InvalidValidationResponse = {
   valid: false;
-  invalidParamsResponse: HttpResponse;
+  invalidParamsResponse: Required<HttpResponse>;
 };
 
 export type ParamValidationResponse<TValidParams> =
