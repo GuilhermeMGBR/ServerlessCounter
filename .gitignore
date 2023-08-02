@@ -21,6 +21,7 @@ project.lock.json
 .secrets
 appsettings.json
 local.settings.json
+.env.sonar-server.local
 
 node_modules
 dist
