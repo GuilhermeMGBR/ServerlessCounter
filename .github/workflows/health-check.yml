@@ -20,7 +20,7 @@ jobs:
         if: ${{ env.ACT }} # runs this step only when testing locally with 'act'
         run: |
           apt update
-          apt upgrade
+          apt -y upgrade
           apt install sudo
 
       - name: Update
