@@ -29,6 +29,7 @@
     "act:sonarcloud": "cd ../; act -j sonarcloud --secret-file .secrets",
     "act:deploy": "cd ../; act -j build-and-deploy --secret-file .secrets",
     "act:health-check": "cd ../; act -j health-check --secret-file .secrets",
+    "node:env": "node ./.scripts/node-env.js",
     "act": "yarn act:sonarcloud",
     "fmt": "yarn format",
     "fc": "yarn format-check",
@@ -45,6 +46,7 @@
     "s": "yarn sonar",
     "ss": "yarn sonar-server:start",
     "ssp": "yarn sonar-server:start-persistent",
+    "ne": "yarn node:env",
     "base:prettier": "yarn prettier --ignore-path .gitignore '!coverage'"
   },
   "dependencies": {

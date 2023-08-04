@@ -612,6 +612,26 @@ yarn act:health-check
 
 </details>
 
+<details><summary>[optional] Source .secrets to local environment</summary>
+
+> The secrets will be sourced from a `.secrets` file at this repository's root folder (same folder as the Readme)
+
+To source local environment secrets on terminal open, add this to your `.bashrc` or `.zshrc`:
+
+```sh
+#
+# Allow parent to initialize shell
+#
+if [[ -n $ZSH_INIT_COMMAND_SVRLSSCTR ]]; then
+  echo "Running: $ZSH_INIT_COMMAND_SVRLSSCTR"
+  eval "$ZSH_INIT_COMMAND_SVRLSSCTR"
+fi
+```
+
+This will trigger a [dev-environment-init.sh](./.vscode/dev-environment-init.sh) run when using `Visual Studio Code` on `macOS`.
+
+</details>
+
 <sup><a href="#index" title="Return to index">&UpArrowBar;</a></sup>
 
 ## Continuous integration
