@@ -589,7 +589,7 @@ OR
 yarn pc
 ```
 
-This hook does type checking, linting, format checking and runs all tests, stopping and showing errors from the first one to fail, if any.
+This hook does type checking, linting, format checking, runs all tests and checks for blocked terms, stopping and showing errors from the first one to fail, if any.
 
 </details>
 
