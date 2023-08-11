@@ -1,9 +1,11 @@
 import {
+  deleteSql,
   insertCounterHitSql,
   insertCounterSql,
   selectActiveCountersSql,
   selectHitCountSql,
   selectIdSql,
+  selectSql,
   selectStatusSummarySql,
 } from './CounterRepository.consts';
 import {
@@ -17,9 +19,18 @@ import type {
 import type {
   ActiveCountersResult,
   HitCountResult,
+  SelectCounterResult,
   SelectIdResult,
   StatusSummaryResult,
 } from './CounterRepository.types';
+
+export const select = async (
+  namespace: string,
+  name: string,
+  queryHandler: Promise<
+    IQueryHandler<SelectCounterResult>
+  > = counterQueryHandler(),
+) => (await queryHandler)(selectSql, [namespace, name]);
 
 export const selectId = async (
   namespace: string,
@@ -80,3 +91,9 @@ export const insertCounterHit = async (
   counterId: number,
   executeSingleHandler: Promise<IExecuteHandler> = counterExecuteSingleHandler(),
 ) => (await executeSingleHandler)(insertCounterHitSql, [counterId.toString()]);
+
+export const deleteCounter = async (
+  namespace: string,
+  name: string,
+  executeSingleHandler: Promise<IExecuteHandler> = counterExecuteSingleHandler(),
+) => (await executeSingleHandler)(deleteSql, [namespace, name]);

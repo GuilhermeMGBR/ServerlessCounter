@@ -1,4 +1,24 @@
+import {z} from 'zod';
+import {
+  nameSchema,
+  namespaceSchema,
+} from '@CounterService/CounterService.types';
+import {unwrapInvalidData} from '@shared/types';
 import type {RowDataPacket} from 'mysql2/promise';
+
+const counterTableSchema = z.object({
+  id: z.number().min(1),
+  namespace: namespaceSchema,
+  name: nameSchema,
+  createdAtUtc: z.coerce.date(),
+  deleted: z.coerce.date().nullable(),
+  deletedAtUtc: z.coerce.date().nullable(),
+});
+
+export const hasInvalidCounterData = (row: unknown) =>
+  unwrapInvalidData(counterTableSchema)(row);
+
+export type CounterData = z.infer<typeof counterTableSchema>;
 
 export interface SelectIdData {
   id: number;
@@ -20,6 +40,8 @@ export interface StatusSummaryData {
   active: number | null;
   deleted: number | null;
 }
+
+export interface SelectCounterResult extends RowDataPacket, CounterData {}
 
 export interface SelectIdResult extends RowDataPacket, SelectIdData {}
 

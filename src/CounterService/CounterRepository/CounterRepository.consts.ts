@@ -1,3 +1,8 @@
+export const selectSql = `
+SELECT * FROM Counter C
+WHERE namespace = ? AND name = ?
+`;
+
 export const selectIdSql = `
 SELECT id
 FROM Counter C
@@ -14,13 +19,19 @@ WHERE (ISNULL(C.deleted) OR C.deleted = FALSE)
 `;
 
 export const insertCounterSql = `
-INSERT INTO Counter (namespace, name, createdAt)
+INSERT INTO Counter (namespace, name, createdAtUtc)
   VALUES (?, ?, UTC_TIMESTAMP())
 `;
 
 export const insertCounterHitSql = `
-INSERT INTO CounterHit (counterId, hitAt)
+INSERT INTO CounterHit (counterId, hitAtUtc)
   VALUES (?, UTC_TIMESTAMP())
+`;
+
+export const deleteSql = `
+UPDATE Counter
+SET deleted = true, deletedAtUtc = UTC_TIMESTAMP()
+WHERE namespace = ? AND name = ?;
 `;
 
 export const selectStatusSummarySql = `
@@ -37,8 +48,8 @@ SELECT
   C.namespace,
   C.name,
   COUNT(CH.id) AS hits,
-  C.createdAt,
-  MAX(CH.hitAt) as lastHit
+  C.createdAtUtc,
+  MAX(CH.hitAtUtc) as lastHit
 FROM Counter C
   LEFT JOIN CounterHit CH ON C.id = CH.counterId
 WHERE (ISNULL(C.deleted) OR C.deleted = FALSE)

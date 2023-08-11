@@ -5,8 +5,10 @@
   "azureFunctions.preDeployTask": "Build with yarn",
   "azureFunctions.deploySubpath": "dist",
   "cSpell.words": [
+    "AUTOINCREMENT",
     "CONNECTIONSTRING",
     "consts",
+    "datetime",
     "devcontainers",
     "funcignore",
     "JDBC",
