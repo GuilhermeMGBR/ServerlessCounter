@@ -119,8 +119,9 @@ A simple serverless counting API with Azure functions in Typescript. Proof of co
 
 - [Yarn](https://yarnpkg.com) as package manager
 - [Babel](https://babeljs.io) for high performance javascript compilation
-- [Prettier](http://prettier.io) for code formatting and better commits/diffs
-- [Jest](http://jestjs.io) for testing
+- [Prettier](https://prettier.io) for code formatting and better commits/diffs
+- [Jest](https://jestjs.io) for testing
+- [SQLite](https://www.sqlite.org) for in memory SQL testing environment
 - [Sonar](https://www.sonarsource.com) for code analysis
 - [Husky](https://typicode.github.io/husky/) for git hooks
 - [Docker](https://www.docker.com) for local testing and simulation
