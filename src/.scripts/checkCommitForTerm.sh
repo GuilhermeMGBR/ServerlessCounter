@@ -8,9 +8,9 @@ checkCommitForTerm() {
   
   getGitCache() { git diff --cached ':(exclude)../yarn.lock' ':(exclude)yarn.lock'; }
   filterAdditions() { grep '^+' $1; }
-  ignoreFilenames() { grep -v '+++ b/' $1; }
+  ignoreFilenames() { grep --invert-match '+++ b/' $1; }
   ignoreFirstChar() { cut -c 2- $1; }
-  findBlockedTerm() { grep -i $1 $2; }
+  findBlockedTerm() { grep --ignore-case $1 $2; }
   printError() {
     # Define colors
     local RED='\033[0;31m'
