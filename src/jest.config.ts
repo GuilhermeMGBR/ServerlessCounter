@@ -10,6 +10,7 @@ const jestConfig: JestConfigWithTsJest = {
   modulePaths: [compilerOptions.baseUrl],
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths),
   testMatch: ['**/*.spec.ts'],
+  testResultsProcessor: 'jest-sonar-reporter',
 };
 
 export default jestConfig;
