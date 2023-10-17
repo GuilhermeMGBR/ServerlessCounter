@@ -1,7 +1,7 @@
 import type {
   Connection,
   FieldPacket,
-  OkPacket,
+  ResultSetHeader,
   Pool,
   PoolConnection,
   RowDataPacket,
@@ -55,6 +55,6 @@ export type IQueryResult = Awaited<
 export type IExecuteHandler = (
   sql: string,
   values: SQLValues,
-) => Promise<[OkPacket, FieldPacket[]]>;
+) => Promise<[ResultSetHeader, FieldPacket[]]>;
 
-export type IExecuteSingleResult = Promise<[OkPacket, FieldPacket[]]>;
+export type IExecuteSingleResult = Promise<[ResultSetHeader, FieldPacket[]]>;

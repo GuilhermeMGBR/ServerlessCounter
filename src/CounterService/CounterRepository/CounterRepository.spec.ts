@@ -1,4 +1,4 @@
-import {FieldPacket, OkPacket, RowDataPacket} from 'mysql2/promise';
+import {FieldPacket, ResultSetHeader, RowDataPacket} from 'mysql2/promise';
 import {
   deleteCounter,
   insertCounter,
@@ -11,7 +11,7 @@ import {
   selectStatusSummary,
 } from '@CounterService/CounterRepository';
 import {
-  getOkPacketMock,
+  getResultSetHeaderMock,
   prepareExecuteSingleHandlerMock,
   prepareQueryHandlerMock,
 } from '@shared/MySQL/mysqlHelper.mocks';
@@ -92,16 +92,16 @@ describe('CounterRepository', () => {
     },
   );
 
-  it.each<[string, () => Promise<[OkPacket, FieldPacket[]]>]>([
+  it.each<[string, () => Promise<[ResultSetHeader, FieldPacket[]]>]>([
     ['insertCounter', () => insertCounter(TEST_NAMESPACE, TEST_NAME)],
     ['insertCounterHit', () => insertCounterHit(TEST_ID)],
   ])(
     'delegates %p calls to the counterExecuteSingleHandler',
     async (_case, callback) => {
-      const mockResult = getOkPacketMock({});
+      const mockResult = getResultSetHeaderMock({});
 
       prepareExecuteSingleHandlerMock(mockCounterExecuteSingleHandler, {
-        okPacket: mockResult,
+        resultSetHeader: mockResult,
       });
 
       const [result] = await callback();

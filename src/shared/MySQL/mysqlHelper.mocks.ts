@@ -8,7 +8,7 @@ import {
 import type {
   ConnectionOptions,
   FieldPacket,
-  OkPacket,
+  ResultSetHeader,
   RowDataPacket,
 } from 'mysql2/promise';
 import {
@@ -27,7 +27,7 @@ export type GetQueryHandlerMockProps<TResult> = {
 };
 
 export type GetExecuteSingleHandlerMockProps = {
-  okPacket?: OkPacket;
+  resultSetHeader?: ResultSetHeader;
   errorMessage?: string;
   fieldPacket?: FieldPacket[];
 };
@@ -47,13 +47,14 @@ export const getQueryHandlerMock =
 
 export const getExecuteSingleHandlerMock =
   ({
-    okPacket,
+    resultSetHeader,
     errorMessage,
     fieldPacket,
   }: GetExecuteSingleHandlerMockProps): typeof getExecuteSingleHandler =>
   (_connection: IConnection) =>
   async (_sql: string, _values: SQLValues) => {
-    if (okPacket) return Promise.resolve([okPacket, fieldPacket ?? []]);
+    if (resultSetHeader)
+      return Promise.resolve([resultSetHeader, fieldPacket ?? []]);
 
     return Promise.reject(errorMessage);
   };
@@ -93,22 +94,21 @@ export const getTestResult = (value: string): TestResult => ({
   value,
 });
 
-export const getOkPacketMock = ({
+export const getResultSetHeaderMock = ({
   affectedRows = 1,
 }: {
   affectedRows?: number;
-}): OkPacket => ({
+}): ResultSetHeader => ({
   constructor: {
-    name: 'OkPacket',
+    name: 'ResultSetHeader',
   },
   fieldCount: 1,
   affectedRows,
   changedRows: 0,
   insertId: 123,
   serverStatus: 2,
-  warningCount: 0,
-  message: 'Executed successfully',
-  procotol41: true,
+  warningStatus: 0,
+  info: 'Executed successfully',
 });
 
 export const prepareQueryHandlerMock = <T extends RowDataPacket[] | undefined>(

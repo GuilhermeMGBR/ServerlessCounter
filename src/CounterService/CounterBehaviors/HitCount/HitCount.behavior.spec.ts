@@ -12,7 +12,7 @@ import {
 import {getRowDataPacket} from '@CounterService/CounterRepository/CounterRepository.types';
 import {createLoggerMock} from '@shared/logger.mocks';
 import {hitCountBehavior} from './HitCount.behavior';
-import type {ConnectionOptions, OkPacket} from 'mysql2/promise';
+import type {ConnectionOptions, ResultSetHeader} from 'mysql2/promise';
 import type {
   SelectIdData,
   HitCountData,
@@ -86,11 +86,11 @@ describe('hitCountBehavior', () => {
           .mockClear()
           .mockImplementationOnce(getSelectIdMock({rows: currentDbCounterId}));
 
-        mockInsertCounter
-          .mockClear()
-          .mockImplementationOnce(
-            getInsertCounterMock({okPacket: {insertId: 12345} as OkPacket}),
-          );
+        mockInsertCounter.mockClear().mockImplementationOnce(
+          getInsertCounterMock({
+            resultSetHeader: {insertId: 12345} as ResultSetHeader,
+          }),
+        );
 
         mockInsertCounterHit.mockClear();
 

@@ -1,5 +1,5 @@
 import {getExecuteSingleHandler, getQueryHandler} from '@shared/MySQL';
-import {getOkPacketMock} from '@shared/MySQL/mysqlHelper.mocks';
+import {getResultSetHeaderMock} from '@shared/MySQL/mysqlHelper.mocks';
 import {IConnection, SQLValues} from '@shared/MySQL/mysqlHelper.types';
 import Database from 'better-sqlite3';
 import fs from 'fs';
@@ -52,5 +52,5 @@ export const getTestExecuteSingleHandler =
 
     const result = executeParam(db, sqliteSql)(values);
 
-    return [getOkPacketMock({affectedRows: result.changes}), []];
+    return [getResultSetHeaderMock({affectedRows: result.changes}), []];
   };

@@ -10,7 +10,7 @@ import {
 import {
   getConnectionMock,
   getExecuteSingleConnectionMock,
-  getOkPacketMock,
+  getResultSetHeaderMock,
   getPoolConnectionMock,
   getPoolHandlerMock,
   getQueryConnectionMock,
@@ -27,7 +27,7 @@ describe('mysqlHelper', () => {
   }: {
     affectedRows: number;
   }) => {
-    const queryResult = getOkPacketMock({affectedRows});
+    const queryResult = getResultSetHeaderMock({affectedRows});
 
     const mockConnection = getExecuteSingleConnectionMock();
     mockConnection.execute.mockResolvedValueOnce([queryResult, []]);

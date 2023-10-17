@@ -3,7 +3,7 @@ import {createConnection, createPool} from 'mysql2/promise';
 import type {
   ConnectionOptions,
   FieldPacket,
-  OkPacket,
+  ResultSetHeader,
   RowDataPacket,
 } from 'mysql2/promise';
 import type {
@@ -78,7 +78,7 @@ export const executeSingle =
     await connection.connect();
     await connection.beginTransaction();
 
-    const result = await connection.execute<OkPacket>(sql, values);
+    const result = await connection.execute<ResultSetHeader>(sql, values);
 
     if (result[0].affectedRows > 1) {
       await connection.rollback();
@@ -96,7 +96,7 @@ export const getExecuteSingleHandler: (
   async (
     sql: string,
     values: SQLValues,
-  ): Promise<[OkPacket, FieldPacket[]]> => {
+  ): Promise<[ResultSetHeader, FieldPacket[]]> => {
     const result = await executeSingle(connection)(sql, values);
 
     await connection.end();
@@ -109,7 +109,7 @@ export const getPooledExecuteSingleHandler =
   async (
     sql: string,
     values: SQLValues,
-  ): Promise<[OkPacket, FieldPacket[]]> => {
+  ): Promise<[ResultSetHeader, FieldPacket[]]> => {
     const connection = await pool.getConnection();
 
     const result = await executeSingle(connection)(sql, values);
