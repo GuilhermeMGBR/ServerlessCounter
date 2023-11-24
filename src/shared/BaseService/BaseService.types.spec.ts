@@ -1,4 +1,6 @@
 import {
+  DefinedBody,
+  HttpResponse,
   getBadRequestResponse,
   getInvalidParamsResult,
   getOkResponse,
@@ -9,14 +11,32 @@ describe('BaseService:Types', () => {
   it.each([
     ['Ok', 'string content', getOkResponse, 200],
     ['Ok', {value: 10}, getOkResponse, 200],
-    ['BadRequest', 'string content', getBadRequestResponse, 400],
-    ['BadRequest', {value: 10}, getBadRequestResponse, 400],
   ])(
     'constructs a %s response with `%s`',
     (
       _case: string,
       body: unknown,
       constructor: (body: unknown) => unknown,
+      httpStatusCode: number,
+    ) => {
+      const response = constructor(body);
+
+      expect(response).toStrictEqual({
+        body: JSON.stringify(body),
+        status: httpStatusCode,
+      });
+    },
+  );
+
+  it.each([
+    ['BadRequest', 'string content', getBadRequestResponse, 400],
+    ['BadRequest', '{value: 10}', getBadRequestResponse, 400],
+  ])(
+    'constructs a %s response with `%s`',
+    (
+      _case: string,
+      body: DefinedBody,
+      constructor: (body: DefinedBody) => HttpResponse,
       httpStatusCode: number,
     ) => {
       const response = constructor(body);

@@ -1,19 +1,29 @@
 import type {
-  Context as AzureContext,
+  InvocationContext as AzureContext,
   HttpRequest as AzureHttpRequest,
+  HttpResponseInit,
 } from '@azure/functions';
 
-export type Context = Pick<AzureContext, 'res' | 'log'>;
-export type HttpRequest = Pick<AzureHttpRequest, 'params'>;
-export type HttpResponse = AzureContext['res'];
+export type Context = Pick<
+  AzureContext,
+  'log' | 'trace' | 'debug' | 'error' | 'info' | 'warn'
+>;
 
-export const getBadRequestResponse = (body: unknown): HttpResponse => ({
+export type HttpRequest = Pick<AzureHttpRequest, 'params'>;
+export type HttpResponse = HttpResponseInit;
+
+export type DefinedBody = NonNullable<HttpResponse['body']>;
+type InvalidParamsHttpResponse = HttpResponse & {body: DefinedBody};
+
+export const getBadRequestResponse = (
+  body: DefinedBody,
+): InvalidParamsHttpResponse => ({
   body,
   status: 400,
 });
 
 export const getOkResponse = (body: unknown): HttpResponse => ({
-  body,
+  body: JSON.stringify(body),
   status: 200,
 });
 
@@ -30,8 +40,6 @@ export const getValidParamsResult = <TParams>(
   valid: true,
   validParams,
 });
-
-type InvalidParamsHttpResponse = Required<HttpResponse>;
 
 export type InvalidValidationResult = {
   valid: false;

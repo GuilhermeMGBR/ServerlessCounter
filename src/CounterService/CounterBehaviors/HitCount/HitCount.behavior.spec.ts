@@ -122,7 +122,7 @@ describe('hitCountBehavior', () => {
         expect(mockConnectionPool_End).toHaveBeenCalledTimes(1);
 
         expect(result).toStrictEqual({
-          body: {value: previousValue + 1},
+          body: JSON.stringify({value: previousValue + 1}),
           status: 200,
         });
       },

@@ -27,7 +27,7 @@ describe('behaviorWrapper', () => {
       const runResultWhenValid = {a: 'xyz'};
 
       const mockLogger = createLoggerMock();
-      const context: Context = {log: mockLogger};
+      const context: Context = mockLogger;
 
       const mockServiceBehavior = createServiceBehaviorMock<
         Required<TestParams>
@@ -36,7 +36,10 @@ describe('behaviorWrapper', () => {
         mockRun: jest.fn().mockReturnValueOnce(runResultWhenValid),
       });
 
-      await behaviorWrapper(context, {params}, mockServiceBehavior);
+      const response = await behaviorWrapper(mockServiceBehavior)(
+        {params},
+        context,
+      );
 
       expect(mockServiceBehavior.validateParams).toHaveBeenCalledTimes(1);
       expect(mockServiceBehavior.validateParams).toHaveBeenCalledWith(
@@ -51,15 +54,15 @@ describe('behaviorWrapper', () => {
         );
         expect(mockServiceBehavior.run).toHaveBeenCalledTimes(1);
 
-        expect(context.res).toBe(runResultWhenValid);
-        expect(mockLogger.verbose).toHaveBeenCalledTimes(1);
+        expect(response).toBe(runResultWhenValid);
+        expect(mockLogger.log).toHaveBeenCalledTimes(1);
         return;
       }
 
       expect(mockServiceBehavior.run).not.toHaveBeenCalled();
 
-      expect(context.res).toBe(invalidParamsHttpResponse);
-      expect(mockLogger.verbose).toHaveBeenCalledTimes(1);
+      expect(response).toBe(invalidParamsHttpResponse);
+      expect(mockLogger.log).toHaveBeenCalledTimes(1);
     },
   );
 
@@ -69,7 +72,7 @@ describe('behaviorWrapper', () => {
   ])(
     'logs behavior errors (%s)',
     async (_desc0: string, errorOnValidation: boolean): Promise<void> => {
-      const context: Context = {log: createLoggerMock()};
+      const context: Context = createLoggerMock();
       const params = {};
 
       const validateParamsError = new Error('validateParams Error');
@@ -87,10 +90,10 @@ describe('behaviorWrapper', () => {
       });
 
       await expect(
-        behaviorWrapper(context, {params}, mockServiceBehavior),
+        behaviorWrapper(mockServiceBehavior)({params}, context),
       ).rejects.toThrow(expectedError);
 
-      expect(context.log.error).toHaveBeenCalledWith(expectedError);
+      expect(context.error).toHaveBeenCalledWith(expectedError);
     },
   );
 });

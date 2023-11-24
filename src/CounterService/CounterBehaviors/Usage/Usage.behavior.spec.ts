@@ -186,7 +186,7 @@ describe('UsageBehavior', () => {
         );
 
         expect(httpResponse).toStrictEqual({
-          body: expectedResponse,
+          body: JSON.stringify(expectedResponse),
           status: 200,
         });
       },
