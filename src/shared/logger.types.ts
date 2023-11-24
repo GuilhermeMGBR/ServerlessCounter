@@ -1,5 +1,3 @@
-// import type {Logger as AzureLogger} from '@azure/functions';
-
 export type ILogger = {
   log(...args: unknown[]): void;
   trace(...args: unknown[]): void;
