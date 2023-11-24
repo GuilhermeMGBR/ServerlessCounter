@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "license": "MIT",
+  "main": "./app.js",
   "scripts": {
     "format": "yarn base:prettier --write .",
     "format-check": "yarn base:prettier --check .",
@@ -38,24 +39,25 @@
     "pc": "yarn pre-commit",
     "cbt": "yarn check-commit-blocked-terms",
     "bo": "yarn build:only",
+    "s": "yarn start",
     "so": "yarn start:only",
     "t": "yarn test",
     "wtc": "yarn watch:type-check",
     "wb": "yarn watch:build",
     "wt": "yarn watch:test",
     "wtoc": "yarn watch:test-onlyChanged",
-    "s": "yarn sonar",
+    "sn": "yarn sonar",
     "ss": "yarn sonar-server:start",
     "ssp": "yarn sonar-server:start-persistent",
     "ne": "yarn node:env",
     "base:prettier": "yarn prettier --ignore-path .gitignore '!coverage'"
   },
   "dependencies": {
+    "@azure/functions": "^4.1.0",
     "mysql2": "^3.3.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@azure/functions": "^3.5.1",
     "@babel/cli": "^7.21.5",
     "@babel/core": "^7.21.8",
     "@babel/preset-env": "^7.21.5",

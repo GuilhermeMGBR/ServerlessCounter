@@ -72,7 +72,7 @@ describe('getCountBehavior', () => {
       expect(mockSelectHitCount).toHaveBeenCalledTimes(1);
 
       expect(result).toStrictEqual({
-        body: {value: expectedValue},
+        body: JSON.stringify({value: expectedValue}),
         status: 200,
       });
     });

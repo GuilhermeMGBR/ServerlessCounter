@@ -1,0 +1,20 @@
+@localUrl = http://localhost:7071
+@endpoint = api/usage
+@test_namespace = test
+@test_name = test
+
+### No params
+GET {{localUrl}}/{{endpoint}}
+
+### Filter by namespace
+GET {{localUrl}}/{{endpoint}}/{{test_namespace}}
+
+### Filter by namespace and name
+GET {{localUrl}}/{{endpoint}}/{{test_namespace}}/{{test_name}}
+
+### Remote call
+### Prepare this call by adding 'SVRLSSCTR_REMOTE_URL' and 'SVRLSSCTR_API_USAGE_CODE' values to a local .env file
+@remoteUrl = {{$processEnv SVRLSSCTR_REMOTE_URL}}{{$dotenv SVRLSSCTR_REMOTE_URL}}
+@authenticationCode = {{$processEnv SVRLSSCTR_API_USAGE_CODE}}{{$dotenv SVRLSSCTR_API_USAGE_CODE}}
+
+GET {{remoteUrl}}/{{endpoint}}/{{test_namespace}}/{{test_name}}?code={{authenticationCode}}

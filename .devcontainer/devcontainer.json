@@ -22,7 +22,7 @@
         "esbenp.prettier-vscode",
         "eamodio.gitlens",
         "cweijan.vscode-mysql-client2",
-        "rangav.vscode-thunder-client"
+        "humao.rest-client"
       ]
     }
   },

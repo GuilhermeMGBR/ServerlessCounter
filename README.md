@@ -178,7 +178,7 @@ yarn
 - [ES Lint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) - JavaScript linting
 - [Pretty TypeScript Errors](https://marketplace.visualstudio.com/items?itemName=yoavbls.pretty-ts-errors) - Prettier and human-readable TypeScript errors
 - [Error Lens](https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens) - Highlighting of errors and other language diagnostics
-- [Thunder Client](https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client) - Lightweight Rest API Client
+- [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) - Lightweight Rest Client
 - [MySQL client](https://marketplace.visualstudio.com/items?itemName=cweijan.vscode-mysql-client2) - MySQL database client
 - [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens) - Git extensions
 - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) - Code formatter
