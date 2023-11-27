@@ -8,6 +8,8 @@
     "esbenp.prettier-vscode",
     "eamodio.gitlens",
     "cweijan.vscode-mysql-client2",
-    "humao.rest-client"
+    "humao.rest-client",
+    "streetsidesoftware.code-spell-checker",
+    "mike-co.import-sorter"
   ]
 }

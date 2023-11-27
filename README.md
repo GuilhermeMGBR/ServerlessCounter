@@ -182,6 +182,8 @@ yarn
 - [MySQL client](https://marketplace.visualstudio.com/items?itemName=cweijan.vscode-mysql-client2) - MySQL database client
 - [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens) - Git extensions
 - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) - Code formatter
+- [TypeScript Import Sorter](https://marketplace.visualstudio.com/items?itemName=mike-co.import-sorter) - Sort imports and lowers merge conflicts
+- [Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker) - Spell checker
 
 </details>
 
