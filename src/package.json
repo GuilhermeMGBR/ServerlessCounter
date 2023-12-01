@@ -96,6 +96,11 @@
     "singleQuote": true,
     "trailingComma": "all"
   },
+  "jestSonar": {
+    "reportPath": "../test-reports",
+    "reportFile": "test-report.xml",
+    "indent": 2
+  },
   "eslintConfig": {
     "env": {
       "browser": true,
