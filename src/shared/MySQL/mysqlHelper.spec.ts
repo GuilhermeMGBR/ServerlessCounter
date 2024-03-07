@@ -79,7 +79,7 @@ describe('mysqlHelper', () => {
 
     await expect(
       executeSingle(mockConnection)(testSql, testValues),
-    ).rejects.toThrowError();
+    ).rejects.toThrow();
 
     expect(mockConnection.rollback).toHaveBeenCalledTimes(1);
     expect(mockConnection.commit).not.toHaveBeenCalled();
