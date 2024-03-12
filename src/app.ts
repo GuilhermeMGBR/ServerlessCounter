@@ -1,7 +1,10 @@
 import {app} from '@azure/functions';
 import {getCount, hitCount, usage} from '@CounterService/CounterService';
+import {validateEnv} from 'env.types';
 
 export const initialize = () => {
+  if (!validateEnv()) return;
+
   app.http('getCount', {
     methods: ['GET'],
     route: 'get/{namespace}/{name}',

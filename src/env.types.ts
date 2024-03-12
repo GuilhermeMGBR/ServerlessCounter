@@ -1,6 +1,6 @@
-import {z} from 'zod';
+import {ZodIssue, z} from 'zod';
 
-export const envSchema = z.object({
+const envSchema = z.object({
   DB_COUNTER_CONNECTIONSTRING: z.string().min(1),
   DB_COUNTER_REJECTUNAUTHORIZED: z.enum(['true', 'false']).default('true'),
   DB_COUNTER_CA: z
@@ -11,4 +11,22 @@ export const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production']),
 });
 
-export type Env = Required<z.infer<typeof envSchema>>;
+export type Env = z.infer<typeof envSchema>;
+export type RawEnv = Partial<{
+  DB_COUNTER_CONNECTIONSTRING: string;
+  DB_COUNTER_REJECTUNAUTHORIZED: string;
+  DB_COUNTER_CA: string;
+  NODE_ENV: string;
+}>;
+
+export type EnvIssue = ZodIssue;
+
+export const validateEnv = (env: RawEnv = process.env) => {
+  const envResult = envSchema.safeParse(env);
+
+  if (!envResult.success) {
+    console.error('Environment Error', envResult.error.issues);
+  }
+
+  return envResult.success;
+};

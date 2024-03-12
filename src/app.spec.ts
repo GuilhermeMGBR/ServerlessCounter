@@ -7,6 +7,8 @@ jest.mock('@azure/functions', () => ({
   },
 }));
 
+jest.mock('env.types', () => ({validateEnv: () => true}));
+
 describe('app', () => {
   beforeEach(() => {
     (app.http as jest.Mock).mockReset();
