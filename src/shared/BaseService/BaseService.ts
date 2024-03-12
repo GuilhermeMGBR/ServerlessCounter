@@ -7,6 +7,7 @@ import type {
   HttpResponse,
   Invalid,
 } from './BaseService.types';
+import {getEnvIssues} from 'env.types';
 
 export const behaviorWrapper = <TParams>(behavior: IServiceBehavior<TParams>) =>
   async function (
@@ -26,5 +27,11 @@ export const behaviorWrapper = <TParams>(behavior: IServiceBehavior<TParams>) =>
       throw err;
     } finally {
       context.log('HTTP trigger function processed a request.');
+
+      const issues = getEnvIssues();
+
+      if (issues.length) {
+        context.error('Environment Error', issues);
+      }
     }
   };

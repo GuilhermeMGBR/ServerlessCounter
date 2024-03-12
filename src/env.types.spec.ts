@@ -1,4 +1,4 @@
-import {Env, EnvIssue, RawEnv, validateEnv} from 'env.types';
+import {Env, EnvIssue, RawEnv, getEnvIssues} from 'env.types';
 
 const VALID_ENV: Env = {
   DB_COUNTER_CONNECTIONSTRING: 'mysql://[user]:@[url]:[port]/counter',
@@ -14,7 +14,7 @@ describe('env', () => {
   ])(
     'accepts valid environment parameters (%s)',
     (_case, environmentParams) => {
-      expect(validateEnv(environmentParams)).toBe(true);
+      expect(getEnvIssues(environmentParams)).toStrictEqual([]);
     },
   );
 
@@ -94,17 +94,6 @@ describe('env', () => {
       ],
     ],
   ])('rejects %s', (_case, environmentParams, issues) => {
-    const defaultConsoleError = console.error;
-    try {
-      console.error = jest.fn();
-
-      const valid = validateEnv(environmentParams);
-
-      expect(console.error).toHaveBeenCalledTimes(1);
-      expect(console.error).toHaveBeenCalledWith('Environment Error', issues);
-      expect(valid).toBe(false);
-    } finally {
-      console.error = defaultConsoleError;
-    }
+    expect(getEnvIssues(environmentParams)).toStrictEqual(issues);
   });
 });

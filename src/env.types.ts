@@ -21,12 +21,12 @@ export type RawEnv = Partial<{
 
 export type EnvIssue = ZodIssue;
 
-export const validateEnv = (env: RawEnv = process.env) => {
+export const getEnvIssues = (env: RawEnv = process.env) => {
   const envResult = envSchema.safeParse(env);
 
   if (!envResult.success) {
-    console.error('Environment Error', envResult.error.issues);
+    return envResult.error.issues;
   }
 
-  return envResult.success;
+  return [];
 };
