@@ -6,8 +6,7 @@ const envSchema = z.object({
   DB_COUNTER_CA: z
     .string()
     .startsWith('-----BEGIN CERTIFICATE-----')
-    .endsWith('-----END CERTIFICATE-----')
-    .optional(),
+    .endsWith('-----END CERTIFICATE-----'),
   NODE_ENV: z.enum(['development', 'production']),
 });
 

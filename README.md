@@ -144,7 +144,8 @@ A simple serverless counting API with Azure functions in Typescript. Proof of co
     "FUNCTIONS_WORKER_RUNTIME": "node",
     "NODE_ENV": "development",
     "DB_COUNTER_CONNECTIONSTRING": "{{YOUR_CONNECTIONSTRING}}",
-    "DB_COUNTER_REJECTUNAUTHORIZED": "true"
+    "DB_COUNTER_REJECTUNAUTHORIZED": "true",
+    "DB_COUNTER_CA": "{{YOUR_CA}}"
   }
 }
 ```

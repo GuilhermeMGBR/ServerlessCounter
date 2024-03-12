@@ -8,15 +8,9 @@ const VALID_ENV: Env = {
 };
 
 describe('env', () => {
-  it.each([
-    ['all valid', VALID_ENV],
-    ['CA undefined', {...VALID_ENV, DB_COUNTER_CA: undefined}],
-  ])(
-    'accepts valid environment parameters (%s)',
-    (_case, environmentParams) => {
-      expect(getEnvIssues(environmentParams)).toStrictEqual([]);
-    },
-  );
+  it('accepts valid environment parameters', () => {
+    expect(getEnvIssues(VALID_ENV)).toStrictEqual([]);
+  });
 
   it.each<[string, RawEnv, EnvIssue[]]>([
     [
