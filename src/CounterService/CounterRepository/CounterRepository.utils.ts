@@ -12,6 +12,7 @@ const connectionConfig = () =>
   getConnectionConfig(
     process.env.DB_COUNTER_CONNECTIONSTRING,
     process.env.DB_COUNTER_REJECTUNAUTHORIZED,
+    process.env.DB_COUNTER_CA,
   );
 
 const getCounterDbConnection = async () =>

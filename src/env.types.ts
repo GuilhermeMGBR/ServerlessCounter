@@ -3,6 +3,11 @@ import {z} from 'zod';
 export const envSchema = z.object({
   DB_COUNTER_CONNECTIONSTRING: z.string().min(1),
   DB_COUNTER_REJECTUNAUTHORIZED: z.enum(['true', 'false']).default('true'),
+  DB_COUNTER_CA: z
+    .string()
+    .startsWith('-----BEGIN CERTIFICATE-----')
+    .endsWith('-----END CERTIFICATE-----')
+    .optional(),
   NODE_ENV: z.enum(['development', 'production']),
 });
 

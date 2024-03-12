@@ -5,6 +5,7 @@ import type {
   FieldPacket,
   ResultSetHeader,
   RowDataPacket,
+  SslOptions,
 } from 'mysql2/promise';
 import type {
   IConnection,
@@ -20,10 +21,12 @@ import type {
 export const getConnectionConfig = (
   connectionString: string,
   rejectUnauthorized?: string,
-) => ({
+  ca?: SslOptions['ca'],
+): ConnectionOptions => ({
   uri: connectionString,
   ssl: {
     rejectUnauthorized: rejectUnauthorized !== 'false',
+    ca,
   },
 });
 
