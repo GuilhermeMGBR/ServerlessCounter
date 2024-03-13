@@ -23,12 +23,6 @@ jobs:
           apt -y upgrade
           apt install sudo
 
-      - name: Update
-        if: ${{ !env.ACT }} # skips this step when testing locally with 'act'
-        run: |
-          sudo apt-get update
-          sudo apt-get upgrade
-
       - name: Install curl
         run: |
           sudo apt-get -y install curl
