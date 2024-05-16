@@ -42,7 +42,7 @@ export const getQueryHandlerMock =
   async (_sql: string, _values: SQLValues) => {
     if (rows) return Promise.resolve([rows, fieldPacket ?? []]);
 
-    return Promise.reject(errorMessage);
+    return Promise.reject(Error(errorMessage));
   };
 
 export const getExecuteSingleHandlerMock =
@@ -56,7 +56,7 @@ export const getExecuteSingleHandlerMock =
     if (resultSetHeader)
       return Promise.resolve([resultSetHeader, fieldPacket ?? []]);
 
-    return Promise.reject(errorMessage);
+    return Promise.reject(Error(errorMessage));
   };
 
 export const mockConnectionPool_End = jest.fn();
