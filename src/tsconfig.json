@@ -2,17 +2,18 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "es6",
-    "noEmit": true,
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
     "outDir": "../dist",
     "rootDir": ".",
+    "baseUrl": ".",
+    "noEmit": true,
+    "resolveJsonModule": true,
     "sourceMap": true,
     "strict": true,
-    "baseUrl": ".",
     "paths": {
       "@CounterService/*": ["CounterService/*"],
       "@shared/*": ["shared/*"]
-    }
+    },
+    "esModuleInterop": true,
+    "skipLibCheck": true
   }
 }
