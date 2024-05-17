@@ -7,7 +7,7 @@ on:
 
 env:
   APP_NAME: "serverless-counter" # Function app name on Azure
-  NODE_VERSION: "18.x"
+  NODE_VERSION: "20.x"
   PACKAGE_JSON_PATH: "src"
   BUILD_PATH: "dist"
   PUBLISH_PROFILE: ${{secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE}}

@@ -2,7 +2,7 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
 {
   "name": "Node.js with Typescript",
-  "image": "mcr.microsoft.com/devcontainers/typescript-node:0-18-bullseye",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:0-20-bullseye",
 
   // Features to add to the dev container. More info: https://containers.dev/features.
   "features": {
@@ -30,5 +30,5 @@
 
   "forwardPorts": [7071],
 
-  "postCreateCommand": "npx --yes husky install; cd src; yarn install"
+  "postCreateCommand": "npx --yes husky; cd src; yarn install"
 }

@@ -35,7 +35,7 @@
     "pre-commit": "yarn type-check && yarn lint && yarn format-check && yarn test && yarn check-commit-blocked-terms",
     "check-commit-blocked-terms": "../.scripts/checkCommitBlockedTerms.sh",
     "node:env": "node ../.scripts/node-env.js",
-    "act:run-workflow": "run_workflow () { act --platform ubuntu-latest=node:18-bullseye-slim --directory ../ --secret-file ./.secrets --workflows ./.github/workflows/$1 --job $2 --quiet ${@:3}; }; run_workflow",
+    "act:run-workflow": "run_workflow () { act --platform ubuntu-latest=node:20-bullseye-slim --container-architecture linux/amd64 --directory ../ --secret-file ./.secrets --workflows ./.github/workflows/$1 --job $2 --quiet ${@:3}; }; run_workflow",
     "act:sonarcloud": "yarn a:r sonarcloud-coverage.yml sonarcloud --container-architecture linux/amd64",
     "act:deploy": "yarn a:r deploy.yml build-and-deploy",
     "act:health-check": "yarn a:r health-check.yml health-check",
