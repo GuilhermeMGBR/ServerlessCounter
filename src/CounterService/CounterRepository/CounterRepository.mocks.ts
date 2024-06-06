@@ -4,9 +4,12 @@ import {
 } from '@shared/MySQL/mysqlHelper.mocks';
 import {
   insertCounter,
+  insertCounterHit,
+  selectActiveCounters,
   selectHitCount,
   selectHitCountById,
   selectId,
+  selectStatusSummary,
 } from './CounterRepository';
 
 import type {Connection} from 'mysql2/promise';
@@ -15,8 +18,10 @@ import type {
   GetQueryHandlerMockProps,
 } from '@shared/MySQL/mysqlHelper.mocks';
 import type {
+  ActiveCountersResult,
   HitCountResult,
   SelectIdResult,
+  StatusSummaryResult,
 } from '@CounterService/CounterRepository/CounterRepository.types';
 
 export const DEFAULT_MOCK_ID = 10;
@@ -32,9 +37,7 @@ export const getSelectIdMock =
     selectId(
       namespace,
       name,
-      Promise.resolve(
-        getQueryHandlerMock<SelectIdResult>(mockProps)({} as Connection),
-      ),
+      Promise.resolve(getQueryHandlerMock(mockProps)({} as Connection)),
     );
 
 export const getSelectHitCountMock =
@@ -49,9 +52,7 @@ export const getSelectHitCountMock =
     selectHitCount(
       namespace,
       name,
-      Promise.resolve(
-        getQueryHandlerMock<HitCountResult>(mockProps)({} as Connection),
-      ),
+      Promise.resolve(getQueryHandlerMock(mockProps)({} as Connection)),
     );
 
 export const getSelectHitCountByIdMock =
@@ -64,9 +65,37 @@ export const getSelectHitCountByIdMock =
   ) =>
     selectHitCountById(
       id,
-      Promise.resolve(
-        getQueryHandlerMock<HitCountResult>(mockProps)({} as Connection),
-      ),
+      Promise.resolve(getQueryHandlerMock(mockProps)({} as Connection)),
+    );
+
+export const getSelectActiveCountersMock =
+  (
+    mockProps: GetQueryHandlerMockProps<ActiveCountersResult>,
+  ): typeof selectActiveCounters =>
+  async (
+    namespace: Parameters<typeof selectActiveCounters>[0],
+    name: Parameters<typeof selectActiveCounters>[1],
+    _ignoredQueryHandler: Parameters<typeof selectActiveCounters>[2],
+  ) =>
+    selectActiveCounters(
+      namespace,
+      name,
+      Promise.resolve(getQueryHandlerMock(mockProps)({} as Connection)),
+    );
+
+export const getSelectStatusSummaryMock =
+  (
+    mockProps: GetQueryHandlerMockProps<StatusSummaryResult>,
+  ): typeof selectStatusSummary =>
+  async (
+    namespace: Parameters<typeof selectStatusSummary>[0],
+    name: Parameters<typeof selectStatusSummary>[1],
+    _ignoredQueryHandler: Parameters<typeof selectStatusSummary>[2],
+  ) =>
+    selectStatusSummary(
+      namespace,
+      name,
+      Promise.resolve(getQueryHandlerMock(mockProps)({} as Connection)),
     );
 
 export const getInsertCounterMock =
@@ -79,6 +108,17 @@ export const getInsertCounterMock =
     insertCounter(
       namespace,
       name,
+      Promise.resolve(getExecuteSingleHandlerMock(mockProps)({} as Connection)),
+    );
+
+export const getInsertCounterHitMock =
+  (mockProps: GetExecuteSingleHandlerMockProps): typeof insertCounterHit =>
+  async (
+    counterId: Parameters<typeof insertCounterHit>[0],
+    _ignoredQueryHandler: Parameters<typeof insertCounter>[2],
+  ) =>
+    insertCounterHit(
+      counterId,
       Promise.resolve(getExecuteSingleHandlerMock(mockProps)({} as Connection)),
     );
 

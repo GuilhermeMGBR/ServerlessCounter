@@ -5,6 +5,7 @@ import {
   selectId,
 } from '@CounterService/CounterRepository';
 import {
+  getInsertCounterHitMock,
   getInsertCounterMock,
   getSelectHitCountByIdMock,
   getSelectIdMock,
@@ -14,8 +15,8 @@ import {createLoggerMock} from '@shared/logger.mocks';
 import {hitCountBehavior} from './HitCount.behavior';
 import type {ConnectionOptions, ResultSetHeader} from 'mysql2/promise';
 import type {
-  SelectIdData,
   HitCountData,
+  SelectIdData,
   SelectIdResult,
 } from '@CounterService/CounterRepository/CounterRepository.types';
 import type {InvalidValidationResult} from '@shared/BaseService/BaseService.types';
@@ -86,11 +87,13 @@ describe('hitCountBehavior', () => {
           .mockClear()
           .mockImplementationOnce(getSelectIdMock({rows: currentDbCounterId}));
 
-        mockInsertCounter.mockClear().mockImplementationOnce(
-          getInsertCounterMock({
-            resultSetHeader: {insertId: 12345} as ResultSetHeader,
-          }),
-        );
+        if (previousValue === 0) {
+          mockInsertCounter.mockClear().mockImplementationOnce(
+            getInsertCounterMock({
+              resultSetHeader: {insertId: 123456} as ResultSetHeader,
+            }),
+          );
+        }
 
         mockInsertCounterHit.mockClear();
 
@@ -127,5 +130,67 @@ describe('hitCountBehavior', () => {
         });
       },
     );
+
+    it.each<[string, 0 | 1 | 2 | 3]>([
+      ['selectId', 0],
+      ['insertCounter', 1],
+      ['insertCounterHit', 2],
+      ['selectHitCountById', 3],
+    ])('throws promise rejections (%s)', async (errorMethod, errorStep) => {
+      const mockLogger = createLoggerMock();
+
+      mockSelectId
+        .mockClear()
+        .mockImplementationOnce(
+          getSelectIdMock(
+            errorStep === 0 ? {errorMessage: 'selectId'} : {rows: []},
+          ),
+        );
+
+      if (errorStep > 0) {
+        mockInsertCounter
+          .mockClear()
+          .mockImplementationOnce(
+            getInsertCounterMock(
+              errorStep === 1
+                ? {errorMessage: 'insertCounter'}
+                : {resultSetHeader: {insertId: 123} as ResultSetHeader},
+            ),
+          );
+      }
+
+      if (errorStep > 1) {
+        mockInsertCounterHit
+          .mockClear()
+          .mockImplementationOnce(
+            getInsertCounterHitMock(
+              errorStep === 2
+                ? {errorMessage: 'insertCounterHit'}
+                : {resultSetHeader: {insertId: 456} as ResultSetHeader},
+            ),
+          );
+      }
+
+      if (errorStep > 2) {
+        mockSelectHitCountById
+          .mockClear()
+          .mockImplementationOnce(
+            getSelectHitCountByIdMock(
+              errorStep === 3
+                ? {errorMessage: 'selectHitCountById'}
+                : {rows: [getRowDataPacket<HitCountData>({hits: 1})]},
+            ),
+          );
+      }
+
+      mockConnectionPool_End.mockClear();
+
+      expect(
+        hitCountBehavior.run(
+          {namespace: 'namespaceXYZ', name: 'nameXYZ'},
+          mockLogger,
+        ),
+      ).rejects.toStrictEqual(Error(errorMethod));
+    });
   });
 });

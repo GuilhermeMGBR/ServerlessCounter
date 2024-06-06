@@ -76,5 +76,25 @@ describe('getCountBehavior', () => {
         status: 200,
       });
     });
+
+    it.each<[string]>([['selectHitCount']])(
+      'throws promise rejections (%s)',
+      async errorMethod => {
+        const mockLogger = createLoggerMock();
+
+        mockSelectHitCount
+          .mockClear()
+          .mockImplementationOnce(
+            getSelectHitCountMock({errorMessage: 'selectHitCount'}),
+          );
+
+        expect(
+          getCountBehavior.run(
+            {namespace: 'namespaceXYZ', name: 'nameXYZ'},
+            mockLogger,
+          ),
+        ).rejects.toStrictEqual(Error(errorMethod));
+      },
+    );
   });
 });

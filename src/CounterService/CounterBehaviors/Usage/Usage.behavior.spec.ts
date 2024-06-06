@@ -22,6 +22,10 @@ import type {
   InvalidValidationResult,
   ValidValidationResult,
 } from '@shared/BaseService/BaseService.types';
+import {
+  getSelectActiveCountersMock,
+  getSelectStatusSummaryMock,
+} from '@CounterService/CounterRepository/CounterRepository.mocks';
 
 jest.mock('@CounterService/CounterRepository', () => ({
   selectActiveCounters: jest.fn(),
@@ -191,5 +195,37 @@ describe('UsageBehavior', () => {
         });
       },
     );
+
+    it.each<[string, 0 | 1]>([
+      ['selectActiveCounters', 0],
+      ['selectStatusSummary', 1],
+    ])('throws promise rejections (%s)', async (errorMethod, errorStep) => {
+      const mockLogger = createLoggerMock();
+
+      mockSelectActiveCounters
+        .mockClear()
+        .mockImplementationOnce(
+          getSelectActiveCountersMock(
+            errorStep === 0
+              ? {errorMessage: 'selectActiveCounters'}
+              : {rows: []},
+          ),
+        );
+
+      if (errorStep > 0) {
+        mockSelectStatusSummary
+          .mockClear()
+          .mockImplementationOnce(
+            getSelectStatusSummaryMock({errorMessage: 'selectStatusSummary'}),
+          );
+      }
+
+      expect(
+        usageBehavior.run(
+          {namespace: 'namespaceXYZ', name: 'nameXYZ'},
+          mockLogger,
+        ),
+      ).rejects.toStrictEqual(Error(errorMethod));
+    });
   });
 });
