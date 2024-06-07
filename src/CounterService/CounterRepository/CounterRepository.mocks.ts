@@ -12,7 +12,6 @@ import {
   selectStatusSummary,
 } from './CounterRepository';
 
-import type {Connection} from 'mysql2/promise';
 import type {
   GetExecuteSingleHandlerMockProps,
   GetQueryHandlerMockProps,
