@@ -45,6 +45,10 @@ export const getQueryHandlerMock =
     return Promise.reject(Error(errorMessage));
   };
 
+export const resolveQueryHandlerMock = <TResult extends RowDataPacket>(
+  mockProps: GetQueryHandlerMockProps<TResult>,
+) => Promise.resolve(getQueryHandlerMock(mockProps)({} as IConnection));
+
 export const getExecuteSingleHandlerMock =
   ({
     resultSetHeader,
@@ -58,6 +62,10 @@ export const getExecuteSingleHandlerMock =
 
     return Promise.reject(Error(errorMessage));
   };
+
+export const resolveExecuteSingleHandlerMock = (
+  mockProps: GetExecuteSingleHandlerMockProps,
+) => Promise.resolve(getExecuteSingleHandlerMock(mockProps)({} as IConnection));
 
 export const mockConnectionPool_End = jest.fn();
 export const mockConnectionPool_getConnection = jest.fn();

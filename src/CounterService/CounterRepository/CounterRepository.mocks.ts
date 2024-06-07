@@ -1,6 +1,6 @@
 import {
-  getExecuteSingleHandlerMock,
-  getQueryHandlerMock,
+  resolveExecuteSingleHandlerMock,
+  resolveQueryHandlerMock,
 } from '@shared/MySQL/mysqlHelper.mocks';
 import {
   insertCounter,
@@ -28,99 +28,51 @@ export const DEFAULT_MOCK_ID = 10;
 export const DEFAULT_MOCK_HIT_COUNT = 12345678910;
 
 export const getSelectIdMock =
-  (mockProps: GetQueryHandlerMockProps<SelectIdResult>): typeof selectId =>
-  async (
-    namespace: Parameters<typeof selectId>[0],
-    name: Parameters<typeof selectId>[1],
-    _ignoredQueryHandler: Parameters<typeof selectId>[2],
-  ) =>
-    selectId(
-      namespace,
-      name,
-      Promise.resolve(getQueryHandlerMock(mockProps)({} as Connection)),
-    );
+  (mockProps: GetQueryHandlerMockProps<SelectIdResult>) =>
+  async (...params: Parameters<typeof selectId>) =>
+    selectId(params[0], params[1], resolveQueryHandlerMock(mockProps));
 
 export const getSelectHitCountMock =
-  (
-    mockProps: GetQueryHandlerMockProps<HitCountResult>,
-  ): typeof selectHitCount =>
-  async (
-    namespace: Parameters<typeof selectHitCount>[0],
-    name: Parameters<typeof selectHitCount>[1],
-    _ignoredQueryHandler: Parameters<typeof selectHitCount>[2],
-  ) =>
-    selectHitCount(
-      namespace,
-      name,
-      Promise.resolve(getQueryHandlerMock(mockProps)({} as Connection)),
-    );
+  (mockProps: GetQueryHandlerMockProps<HitCountResult>) =>
+  async (...params: Parameters<typeof selectHitCount>) =>
+    selectHitCount(params[0], params[1], resolveQueryHandlerMock(mockProps));
 
 export const getSelectHitCountByIdMock =
-  (
-    mockProps: GetQueryHandlerMockProps<HitCountResult>,
-  ): typeof selectHitCountById =>
-  async (
-    id: Parameters<typeof selectHitCountById>[0],
-    _ignoredQueryHandler: Parameters<typeof selectHitCountById>[1],
-  ) =>
-    selectHitCountById(
-      id,
-      Promise.resolve(getQueryHandlerMock(mockProps)({} as Connection)),
-    );
+  (mockProps: GetQueryHandlerMockProps<HitCountResult>) =>
+  async (...params: Parameters<typeof selectHitCountById>) =>
+    selectHitCountById(params[0], resolveQueryHandlerMock(mockProps));
 
 export const getSelectActiveCountersMock =
-  (
-    mockProps: GetQueryHandlerMockProps<ActiveCountersResult>,
-  ): typeof selectActiveCounters =>
-  async (
-    namespace: Parameters<typeof selectActiveCounters>[0],
-    name: Parameters<typeof selectActiveCounters>[1],
-    _ignoredQueryHandler: Parameters<typeof selectActiveCounters>[2],
-  ) =>
+  (mockProps: GetQueryHandlerMockProps<ActiveCountersResult>) =>
+  async (...params: Parameters<typeof selectActiveCounters>) =>
     selectActiveCounters(
-      namespace,
-      name,
-      Promise.resolve(getQueryHandlerMock(mockProps)({} as Connection)),
+      params[0],
+      params[1],
+      resolveQueryHandlerMock(mockProps),
     );
 
 export const getSelectStatusSummaryMock =
-  (
-    mockProps: GetQueryHandlerMockProps<StatusSummaryResult>,
-  ): typeof selectStatusSummary =>
-  async (
-    namespace: Parameters<typeof selectStatusSummary>[0],
-    name: Parameters<typeof selectStatusSummary>[1],
-    _ignoredQueryHandler: Parameters<typeof selectStatusSummary>[2],
-  ) =>
+  (mockProps: GetQueryHandlerMockProps<StatusSummaryResult>) =>
+  async (...params: Parameters<typeof selectStatusSummary>) =>
     selectStatusSummary(
-      namespace,
-      name,
-      Promise.resolve(getQueryHandlerMock(mockProps)({} as Connection)),
+      params[0],
+      params[1],
+      resolveQueryHandlerMock(mockProps),
     );
 
 export const getInsertCounterMock =
-  (mockProps: GetExecuteSingleHandlerMockProps): typeof insertCounter =>
-  async (
-    namespace: Parameters<typeof insertCounter>[0],
-    name: Parameters<typeof insertCounter>[1],
-    _ignoredQueryHandler: Parameters<typeof insertCounter>[2],
-  ) =>
+  (mockProps: GetExecuteSingleHandlerMockProps) =>
+  async (...params: Parameters<typeof insertCounter>) =>
     insertCounter(
-      namespace,
-      name,
-      Promise.resolve(getExecuteSingleHandlerMock(mockProps)({} as Connection)),
+      params[0],
+      params[1],
+      resolveExecuteSingleHandlerMock(mockProps),
     );
 
 export const getInsertCounterHitMock =
-  (mockProps: GetExecuteSingleHandlerMockProps): typeof insertCounterHit =>
-  async (
-    counterId: Parameters<typeof insertCounterHit>[0],
-    _ignoredQueryHandler: Parameters<typeof insertCounter>[2],
-  ) =>
-    insertCounterHit(
-      counterId,
-      Promise.resolve(getExecuteSingleHandlerMock(mockProps)({} as Connection)),
-    );
+  (mockProps: GetExecuteSingleHandlerMockProps) =>
+  async (...params: Parameters<typeof insertCounterHit>) =>
+    insertCounterHit(params[0], resolveExecuteSingleHandlerMock(mockProps));
 
 export const getCounterRepositoryMock = () => ({
   selectId: jest.fn(),
