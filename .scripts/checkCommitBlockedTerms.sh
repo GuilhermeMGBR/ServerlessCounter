@@ -1,4 +1,4 @@
-# !/bin/sh
+#!/bin/bash
 
 # Checks the git diff cache for blocked terms.
 #
