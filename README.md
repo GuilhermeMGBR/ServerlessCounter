@@ -562,13 +562,13 @@ yarn ssp
 
 Set environment variables with sonar server connection details:
 
-- SVRLSSCTR_SONARQUBE_LOCAL_HOSTURL
-- SVRLSSCTR_SONARQUBE_LOCAL_LOGIN
+- SONAR_HOST_URL
+- SONAR_LOGIN
 
 > They can be set inline, before the run command:
 >
 > ```bash
-> SVRLSSCTR_SONARQUBE_LOCAL_HOSTURL=https://your.local.url; SVRLSSCTR_SONARQUBE_LOCAL_LOGIN=sqp_yourTokenXYZ; yarn sonar
+> SONAR_HOST_URL=https://your.local.url; SONAR_LOGIN=sqp_yourTokenXYZ; yarn sonar
 > ```
 
 ### Run Sonar Scanner

@@ -13,6 +13,9 @@ jobs:
     defaults:
       run:
         working-directory: ./src
+    env:
+      SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
+      SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -28,13 +31,15 @@ jobs:
       - name: Sonarqube Local Scan
         if: ${{ env.ACT }} # runs this step only when testing locally with 'act'
         run: |
-          yarn sonar
+          yarn sonar -Dsonar.login=$SONAR_LOGIN
+        env:
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_LOGIN: ${{ secrets.SONAR_LOGIN }}
 
       - name: SonarCloud Scan
         if: ${{ !env.ACT }} # skips this step when testing locally with 'act'
         run: |
-          yarn sonar \
-            -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.organization=${{ secrets.SONARCLOUD_ORGANIZATION }} \
-            -Dsonar.projectKey=${{ secrets.SONARCLOUD_PROJECT_KEY }} \
-            -Dsonar.token=${{ secrets.SONARCLOUD_TOKEN }}
+          yarn sonar -Dsonar.token=$SONAR_TOKEN
+        env:
+          SONAR_HOST_URL: ${{ secrets.SONARCLOUD_HOST_URL }}
+          SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
