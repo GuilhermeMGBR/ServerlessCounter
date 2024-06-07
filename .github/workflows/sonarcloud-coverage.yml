@@ -21,6 +21,12 @@ jobs:
         with:
           fetch-depth: 0
 
+      - uses: actions/setup-java@v4
+        if: ${{ env.ACT }} # runs this step only when testing locally with 'act'
+        with:
+          distribution: 'zulu' # See 'Supported distributions' for available options
+          java-version: '17'
+
       - name: Install Yarn
         if: ${{ !env.ACT }} # skips this step when testing locally with 'act'
         run: npm install --global yarn

@@ -19,7 +19,7 @@
     "start:only": "cd ../dist; func start --typescript",
     "test": "jest --verbose",
     "coverage": "jest --coverage",
-    "sonar:only": "npx sonarqube-scanner  -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.projectKey=$SONAR_PROJECT_KEY",
+    "sonar:only": "npx sonar-scanner  -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.projectKey=$SONAR_PROJECT_KEY",
     "sonar": "yarn coverage; yarn sonar:only",
     "sonar-server:start": "docker run --name sonarqube-server -p 127.0.0.1:9000:9000 --detach --rm sonarqube:lts-community",
     "sonar-server:start-persistent": "docker run --name sonarqube-server -p 127.0.0.1:9000:9000 --detach --rm --env-file .env.sonar-server.local sonarqube:lts-community",
