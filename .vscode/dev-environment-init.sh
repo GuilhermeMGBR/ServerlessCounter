@@ -2,7 +2,9 @@
 
 secretsPath="../.secrets"
 
-foundSecretsFile() {[ -f $secretsPath ]}
+foundSecretsFile() {
+  [ -f $secretsPath ]
+}
 enableExport() { set -a; }
 disableExport() { set +a; }
 

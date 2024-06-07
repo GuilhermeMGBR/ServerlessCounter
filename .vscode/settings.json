@@ -47,17 +47,34 @@
     "yoavbls"
   ],
   "terminal.integrated.cwd": "${workspaceFolder}/src",
-  "terminal.integrated.env.osx": {
-    "ZSH_INIT_COMMAND_SVRLSSCTR": "source ../.vscode/dev-environment-init.sh"
-  },
-  "terminal.integrated.profiles.osx": {
-    "zsh": {
-      "path": "zsh",
-      "args": ["-l"],
-      "icon": "flame"
+  "terminal.integrated.env": {
+    "osx": {
+      "ZSH_INIT_COMMAND_SVRLSSCTR": "source ../.vscode/dev-environment-init.sh"
+    },
+    "linux": {
+      "ZSH_INIT_COMMAND_SVRLSSCTR": "source ../.vscode/dev-environment-init.sh"
     }
   },
-  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.profiles": {
+    "osx": {
+      "zsh": {
+        "path": "zsh",
+        "args": ["-l"],
+        "icon": "flame"
+      }
+    },
+    "linux": {
+      "bash": {
+        "path": "bash",
+        "args": ["-l"],
+        "icon": "flame"
+      }
+    }
+  },
+  "terminal.integrated.defaultProfile": {
+    "osx": "zsh",
+    "linux": "bash"
+  },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
