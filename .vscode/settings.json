@@ -63,5 +63,9 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "jest.rootPath": "src",
-  "jest.runMode": "on-demand"
+  "jest.runMode": "on-demand",
+  "sonarlint.connectedMode.project": {
+    "connectionId": "${env.SONAR_ORGANIZATION}",
+    "projectKey": "${env.SONAR_PROJECT_KEY}"
+  }
 }
