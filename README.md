@@ -646,10 +646,10 @@ Automatic code analysis with Sonarcloud. To include code coverage, follows the t
 
 The following secrets must be configured on GitHub:
 
+- SONAR_HOST_URL
 - SONAR_ORGANIZATION
 - SONAR_PROJECT_KEY
-- SONARCLOUD_HOST_URL
-- SONARCLOUD_TOKEN
+- SONAR_TOKEN
 
 This also follows the properties defined inside the `sonar-project.properties` file, overwriting duplicates.
 

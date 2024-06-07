@@ -13,9 +13,6 @@ jobs:
     defaults:
       run:
         working-directory: ./src
-    env:
-      SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
-      SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -23,8 +20,8 @@ jobs:
 
       - uses: actions/setup-java@v4
         with:
-          distribution: 'zulu' # See 'Supported distributions' for available options
-          java-version: '17'
+          distribution: "zulu" # See 'Supported distributions' for available options
+          java-version: "17"
 
       - name: Install Yarn
         if: ${{ !env.ACT }} # skips this step when testing locally with 'act'
@@ -33,18 +30,11 @@ jobs:
       - name: Install dependencies
         run: yarn
 
-      - name: Sonarqube Local Scan
-        if: ${{ env.ACT }} # runs this step only when testing locally with 'act'
+      - name: Sonar Scan
         run: |
-          yarn sonar -Dsonar.login=$SONAR_LOGIN
+          yarn sonar
         env:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-          SONAR_LOGIN: ${{ secrets.SONAR_LOGIN }}
-
-      - name: SonarCloud Scan
-        if: ${{ !env.ACT }} # skips this step when testing locally with 'act'
-        run: |
-          yarn sonar -Dsonar.token=$SONAR_TOKEN
-        env:
-          SONAR_HOST_URL: ${{ secrets.SONARCLOUD_HOST_URL }}
-          SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
+          SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
+          SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
