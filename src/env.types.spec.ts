@@ -22,11 +22,10 @@ describe('env', () => {
       [
         {
           code: 'too_small',
-          minimum: 1,
-          type: 'string',
           inclusive: true,
-          exact: false,
-          message: 'String must contain at least 1 character(s)',
+          message: 'Too small: expected string to have >=1 characters',
+          minimum: 1,
+          origin: 'string',
           path: ['DB_COUNTER_CONNECTIONSTRING'],
         },
       ],
@@ -39,12 +38,10 @@ describe('env', () => {
       },
       [
         {
-          received: 'undefined',
-          code: 'invalid_enum_value',
-          options: ['true', 'false'],
+          code: 'invalid_value',
+          message: 'Invalid option: expected one of "true"|"false"',
           path: ['DB_COUNTER_REJECTUNAUTHORIZED'],
-          message:
-            "Invalid enum value. Expected 'true' | 'false', received 'undefined'",
+          values: ['true', 'false'],
         },
       ],
     ],
@@ -56,17 +53,21 @@ describe('env', () => {
       },
       [
         {
-          code: 'invalid_string',
-          validation: {startsWith: '-----BEGIN CERTIFICATE-----'},
+          code: 'invalid_format',
+          format: 'starts_with',
           message:
-            'Invalid input: must start with "-----BEGIN CERTIFICATE-----"',
+            'Invalid string: must start with "-----BEGIN CERTIFICATE-----"',
+          origin: 'string',
           path: ['DB_COUNTER_CA'],
+          prefix: '-----BEGIN CERTIFICATE-----',
         },
         {
-          code: 'invalid_string',
-          validation: {endsWith: '-----END CERTIFICATE-----'},
-          message: 'Invalid input: must end with "-----END CERTIFICATE-----"',
+          code: 'invalid_format',
+          format: 'ends_with',
+          message: 'Invalid string: must end with "-----END CERTIFICATE-----"',
+          origin: 'string',
           path: ['DB_COUNTER_CA'],
+          suffix: '-----END CERTIFICATE-----',
         },
       ],
     ],
@@ -78,12 +79,10 @@ describe('env', () => {
       },
       [
         {
-          code: 'invalid_enum_value',
-          message:
-            "Invalid enum value. Expected 'development' | 'production', received 'dev'",
-          options: ['development', 'production'],
+          code: 'invalid_value',
+          message: 'Invalid option: expected one of "development"|"production"',
           path: ['NODE_ENV'],
-          received: 'dev',
+          values: ['development', 'production'],
         },
       ],
     ],

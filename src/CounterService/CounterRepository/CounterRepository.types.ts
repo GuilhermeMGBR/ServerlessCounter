@@ -48,8 +48,7 @@ export interface SelectIdResult extends RowDataPacket, SelectIdData {}
 export interface HitCountResult extends RowDataPacket, HitCountData {}
 
 export interface ActiveCountersResult
-  extends RowDataPacket,
-    ActiveCountersData {}
+  extends RowDataPacket, ActiveCountersData {}
 
 export interface StatusSummaryResult extends RowDataPacket, StatusSummaryData {}
 

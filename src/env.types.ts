@@ -1,4 +1,4 @@
-import {ZodIssue, z} from 'zod';
+import {z} from 'zod';
 
 const envSchema = z.object({
   DB_COUNTER_CONNECTIONSTRING: z.string().min(1),
@@ -18,7 +18,14 @@ export type RawEnv = Partial<{
   NODE_ENV: string;
 }>;
 
-export type EnvIssue = ZodIssue;
+// Current ZodIssueInvalidStringFormat is missing some props that fails `toStrictEqual`
+export type EnvIssue =
+  | z.core.$ZodIssue
+  | (z.core.$ZodIssueInvalidStringFormat & {
+      origin: string;
+      prefix: string;
+      suffix: string;
+    });
 
 export const getEnvIssues = (env: RawEnv = process.env) => {
   const envResult = envSchema.safeParse(env);
