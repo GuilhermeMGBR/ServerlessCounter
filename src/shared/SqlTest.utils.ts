@@ -2,15 +2,15 @@ import {getExecuteSingleHandler, getQueryHandler} from '@shared/MySQL';
 import {getResultSetHeaderMock} from '@shared/MySQL/mysqlHelper.mocks';
 import {IConnection, SQLValues} from '@shared/MySQL/mysqlHelper.types';
 import Database from 'better-sqlite3';
-import fs from 'fs';
+import fs from 'node:fs';
 import {RowDataPacket} from 'mysql2/promise';
-import path from 'path';
+import path from 'node:path';
 
 export const replaceUtcTimestamp = (sql: string) =>
-  sql.replace(/UTC_TIMESTAMP\(\)/g, "datetime('now')");
+  sql.replaceAll('UTC_TIMESTAMP()', "datetime('now')");
 
 export const replaceIsNullFunction = (sql: string) =>
-  sql.replace(/ISNULL\(([^)]*)\)/g, '$1 IS NULL');
+  sql.replaceAll(/ISNULL\(([^)]*)\)/g, '$1 IS NULL');
 
 export type DbInstance = ReturnType<typeof Database>;
 

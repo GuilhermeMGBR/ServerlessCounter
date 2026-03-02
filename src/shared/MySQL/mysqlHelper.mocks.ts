@@ -40,9 +40,9 @@ export const getQueryHandlerMock =
   }: GetQueryHandlerMockProps<TResult>): typeof getQueryHandler<TResult> =>
   (_connection: IQueryConnection) =>
   async (_sql: string, _values: SQLValues) => {
-    if (rows) return Promise.resolve([rows, fieldPacket ?? []]);
+    if (rows) return [rows, fieldPacket ?? []];
 
-    return Promise.reject(Error(errorMessage));
+    throw new Error(errorMessage);
   };
 
 export const resolveQueryHandlerMock = <TResult extends RowDataPacket>(
@@ -57,10 +57,9 @@ export const getExecuteSingleHandlerMock =
   }: GetExecuteSingleHandlerMockProps): typeof getExecuteSingleHandler =>
   (_connection: IConnection) =>
   async (_sql: string, _values: SQLValues) => {
-    if (resultSetHeader)
-      return Promise.resolve([resultSetHeader, fieldPacket ?? []]);
+    if (resultSetHeader) return [resultSetHeader, fieldPacket ?? []];
 
-    return Promise.reject(Error(errorMessage));
+    throw new Error(errorMessage);
   };
 
 export const resolveExecuteSingleHandlerMock = (
