@@ -1,4 +1,4 @@
-import {z, ZodSchema} from 'zod';
+import {z} from 'zod';
 import type {Invalid} from './BaseService/BaseService.types';
 
 const lettersOrNumbers = /^[a-zA-Z0-9]*$/;
@@ -14,6 +14,6 @@ export const zodNonEmptyStringWithUpto255LettersOrNumbers =
   zodStringWithLettersOrNumbers.min(1).max(255);
 
 export const unwrapInvalidData =
-  (schema: ZodSchema) =>
+  (schema: z.ZodTypeAny) =>
   <T>(data: unknown): data is Invalid<T> =>
     !schema.safeParse(data).success;
