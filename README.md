@@ -204,8 +204,8 @@ _`{{BaseURL}}`_`/api/`_`{{Action}}`_`/`_`{{Namespace}}`_`/`_`{{Key}}`_`?code=`_`
 Where:
 
 - {{BaseURL}} => URL to where the Azure function app is hosted
-  - Azure (example): https://counter.azurewebsites.net
-  - Local: http://localhost:7071
+  - Azure (example): [https://counter.azurewebsites.net]
+  - Local: [http://localhost:7071]
 - {{Action}} => `get` to get the current value or `hit` to raise the count by 1
 - {{Namespace}} => namespace of the desired counter
 - {{Key}} => key of the desired counter
@@ -390,7 +390,7 @@ Response:
 
 <details><summary>Running locally</summary>
 
-### Build and run the App:
+### Build and run the App
 
 This will install the required dependencies, build and start!
 
@@ -412,7 +412,7 @@ yarn so
 
 <details><summary>Manual build</summary>
 
-### Run the build command:
+### Run the build command
 
 This will install the dependencies and run a build
 
@@ -440,7 +440,7 @@ yarn wb
 
 <details><summary>Linting</summary>
 
-### Run the lint command:
+### Run the lint command
 
 ```bash
 yarn lint
@@ -452,7 +452,7 @@ yarn lt
 
 <details><summary>Formatting</summary>
 
-### Run the format command:
+### Run the format command
 
 This will automatically fix errors where possible
 
@@ -476,7 +476,7 @@ yarn fc
 
 Make sure to have installed dependencies from the initial setup
 
-### Run type check:
+### Run type check
 
 ```bash
 yarn type-check
@@ -498,7 +498,7 @@ yarn wtc
 
 Make sure to have installed dependencies from the initial setup
 
-### Build and run tests:
+### Build and run tests
 
 ```bash
 yarn test
@@ -520,7 +520,7 @@ yarn wt
 
 To run an analysis locally with SonarQube and Docker:
 
-### Start a local SonarQube instance:
+### Start a local SonarQube instance
 
 ```bash
 yarn sonar-server:start
@@ -548,7 +548,7 @@ Replace placeholders with the connection values to your PostgreSQL instance:
 
 > It is possible to run an instance of PostgreSQL inside another docker container!
 
-### Start a local SonarQube instance with persistence:
+### Start a local SonarQube instance with persistence
 
 ```bash
 yarn sonar-server:start-persistent
