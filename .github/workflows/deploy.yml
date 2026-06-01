@@ -1,6 +1,7 @@
 name: Deploy CI # Deploy Node.js project to Azure Function App
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -45,12 +46,14 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - uses: azure/appservice-settings@v1
+      - uses: azure/CLI@v3
         if: ${{ !env.ACT }} # skips this step when testing locally with 'act'
         with:
-          app-name: ${{ env.APP_NAME }}
-          app-settings-json: '[{ "name": "WEBSITE_RUN_FROM_PACKAGE", "value": "1" }]'
-        id: settings
+          inlineScript: |
+            az webapp config appsettings set \
+              --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
+              --name ${{ env.APP_NAME }} \
+              --settings WEBSITE_RUN_FROM_PACKAGE=1
 
       - name: "Az CLI logout"
         if: ${{ !env.ACT }} # skips this step when testing locally with 'act'

@@ -6,6 +6,7 @@
   "azureFunctions.deploySubpath": "dist",
   "cSpell.words": [
     "appservice",
+    "appsettings",
     "AUTOINCREMENT",
     "CONNECTIONSTRING",
     "consts",
