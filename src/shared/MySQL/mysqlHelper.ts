@@ -2,7 +2,9 @@ import {createConnection, createPool} from 'mysql2/promise';
 
 import type {
   ConnectionOptions,
+  ExecuteValues,
   FieldPacket,
+  QueryValues,
   ResultSetHeader,
   RowDataPacket,
   SslOptions,
@@ -46,7 +48,7 @@ export const query: IGetQueryHandler<IQueryConnection> =
   ) => {
     await connection.connect();
 
-    return await connection.query<TQueryResult[]>(sql, values);
+    return await connection.query<TQueryResult[]>(sql, values as QueryValues);
   };
 
 export const getQueryHandler: IGetQueryHandler<IConnection> =
@@ -81,7 +83,10 @@ export const executeSingle =
     await connection.connect();
     await connection.beginTransaction();
 
-    const result = await connection.execute<ResultSetHeader>(sql, values);
+    const result = await connection.execute<ResultSetHeader>(
+      sql,
+      values as ExecuteValues,
+    );
 
     if (result[0].affectedRows > 1) {
       await connection.rollback();

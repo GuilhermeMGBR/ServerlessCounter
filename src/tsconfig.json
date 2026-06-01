@@ -1,18 +1,21 @@
 {
   "compilerOptions": {
     "module": "nodenext",
-    "target": "es2021",
+    "target": "es2024",
     "outDir": "../dist",
     "rootDir": ".",
-    "baseUrl": ".",
     "noEmit": true,
     "resolveJsonModule": true,
+    "isolatedModules": true,
     "sourceMap": true,
     "strict": true,
     "paths": {
-      "@CounterService/*": ["CounterService/*"],
-      "@shared/*": ["shared/*"]
+      "app": ["./app"],
+      "env.types": ["./env.types"],
+      "@CounterService/*": ["./CounterService/*"],
+      "@shared/*": ["./shared/*"]
     },
+    "types": ["jest", "node"],
     "esModuleInterop": true,
     "skipLibCheck": true
   }
