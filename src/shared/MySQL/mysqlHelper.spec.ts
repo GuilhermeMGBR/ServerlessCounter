@@ -1,6 +1,7 @@
-import {PoolConnection} from 'mysql2/promise';
+import {PoolConnection, SslOptions} from 'mysql2/promise';
 import {
   executeSingle,
+  getConnectionConfig,
   getExecuteSingleHandler,
   getPooledExecuteSingleHandler,
   getPooledQueryHandler,
@@ -10,10 +11,10 @@ import {
 import {
   getConnectionMock,
   getExecuteSingleConnectionMock,
-  getResultSetHeaderMock,
   getPoolConnectionMock,
   getPoolHandlerMock,
   getQueryConnectionMock,
+  getResultSetHeaderMock,
   getTestResult,
 } from './mysqlHelper.mocks';
 import {SQLValues} from './mysqlHelper.types';
@@ -127,4 +128,22 @@ describe('mysqlHelper', () => {
       expect(mockPoolConnection.release).toHaveBeenCalledTimes(1);
     },
   );
+
+  it('normalizes escaped newlines in the CA certificate', (): void => {
+    const config = getConnectionConfig(
+      'mysql://user:password@example.com:3306/database',
+      'true',
+      '-----BEGIN CERTIFICATE-----\\ncertificate-content\\n-----END CERTIFICATE-----',
+    );
+
+    expect(config.ssl).toBeDefined();
+
+    const sslConfig = config.ssl as SslOptions;
+
+    expect(sslConfig.ca).toBe(
+      '-----BEGIN CERTIFICATE-----\ncertificate-content\n-----END CERTIFICATE-----',
+    );
+
+    expect(sslConfig.rejectUnauthorized).toBe(true);
+  });
 });

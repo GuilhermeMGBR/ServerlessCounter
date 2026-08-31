@@ -28,7 +28,7 @@ export const getConnectionConfig = (
   uri: connectionString,
   ssl: {
     rejectUnauthorized: rejectUnauthorized !== 'false',
-    ca,
+    ca: typeof ca === 'string' ? ca.replace(/\\r\\n|\\n/g, '\n') : ca,
   },
 });
 
