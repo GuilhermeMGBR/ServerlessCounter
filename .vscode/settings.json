@@ -36,6 +36,7 @@
     "postbuild",
     "prestart",
     "REJECTUNAUTHORIZED",
+    "scannerwork",
     "serverlesscounter",
     "sonarcloud",
     "sonarlint",

@@ -127,9 +127,9 @@ describe('CounterRepository', () => {
       expect(rows[0].id).toBe(1);
       expect(rows[0].name).toBe(name);
       expect(rows[0].namespace).toBe(namespace);
-      expect(rows[0].createdAtUtc).not.toBe(null);
-      expect(rows[0].deleted).toBe(null);
-      expect(rows[0].deletedAtUtc).toBe(null);
+      expect(rows[0].createdAtUtc).not.toBeNull();
+      expect(rows[0].deleted).toBeNull();
+      expect(rows[0].deletedAtUtc).toBeNull();
 
       expect(hasInvalidCounterData(rows[0])).toBe(false);
     });
@@ -141,8 +141,8 @@ describe('CounterRepository', () => {
       const [rows1] = await selectId('namespace1', 'name1');
       const [rows2] = await selectId('namespace2', 'name2');
 
-      expect(rows1.length).toBe(1);
-      expect(rows2.length).toBe(1);
+      expect(rows1).toHaveLength(1);
+      expect(rows2).toHaveLength(1);
 
       expect(rows1[0].id).toBe(1);
       expect(rows2[0].id).toBe(2);
@@ -152,15 +152,15 @@ describe('CounterRepository', () => {
       await insertCounter('namespace1', 'name1');
 
       const [rows1] = await select('namespace1', 'name1');
-      expect(rows1[0].deleted).toBe(null);
-      expect(rows1[0].deletedAtUtc).toBe(null);
+      expect(rows1[0].deleted).toBeNull();
+      expect(rows1[0].deletedAtUtc).toBeNull();
 
       const [result] = await deleteCounter('namespace1', 'name1');
       expect(result.affectedRows).toBe(1);
 
       const [rows2] = await select('namespace1', 'name1');
       expect(rows2[0].deleted).toBe(1);
-      expect(rows2[0].deletedAtUtc).not.toBe(null);
+      expect(rows2[0].deletedAtUtc).not.toBeNull();
     });
 
     it('creates a status summary', async () => {
@@ -191,8 +191,8 @@ describe('CounterRepository', () => {
       const [rows] = await selectHitCount(namespace, name);
       const [rowsId] = await selectHitCountById(1);
 
-      expect(rows.length).toBe(1);
-      expect(rowsId.length).toBe(1);
+      expect(rows).toHaveLength(1);
+      expect(rowsId).toHaveLength(1);
 
       expect(rows[0].hits).toBe(1);
       expect(rowsId[0].hits).toBe(1);
@@ -224,7 +224,7 @@ describe('CounterRepository', () => {
       const [rows2] = await selectActiveCounters('namespace1', null);
       const [rows3] = await selectActiveCounters('namespace2', 'name3');
 
-      expect(rows1.length).toBe(2);
+      expect(rows1).toHaveLength(2);
       expect(rows1).toEqual([
         {
           namespace: 'namespace1',
@@ -242,7 +242,7 @@ describe('CounterRepository', () => {
         },
       ]);
 
-      expect(rows2.length).toBe(1);
+      expect(rows2).toHaveLength(1);
       expect(rows2).toEqual([
         {
           namespace: 'namespace1',
@@ -253,7 +253,7 @@ describe('CounterRepository', () => {
         },
       ]);
 
-      expect(rows3.length).toBe(1);
+      expect(rows3).toHaveLength(1);
       expect(rows3).toEqual([
         {
           namespace: 'namespace2',
