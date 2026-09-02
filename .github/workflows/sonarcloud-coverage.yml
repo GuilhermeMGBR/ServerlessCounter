@@ -10,13 +10,29 @@ jobs:
   sonarcloud:
     name: SonarCloud
     runs-on: ubuntu-latest
+    env:
+      PROJECT_DIR: ./src
     defaults:
       run:
-        working-directory: ./src
+        working-directory: ${{ env.PROJECT_DIR }}
     steps:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
+
+      - name: Check required environment variables
+        env:
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
+          SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          for var in SONAR_HOST_URL SONAR_ORGANIZATION SONAR_PROJECT_KEY SONAR_TOKEN; do
+            if test -z "${!var}"; then
+              echo "::error::$var is not defined"
+              exit 1
+            fi
+          done
 
       - name: Install Yarn
         if: ${{ !env.ACT }} # skips this step when testing locally with 'act'
@@ -25,9 +41,14 @@ jobs:
       - name: Install dependencies
         run: yarn
 
-      - name: Sonar Scan
+      - name: Run tests with coverage
         run: |
-          yarn sonar
+          yarn coverage
+
+      - name: Sonar Scan
+        uses: SonarSource/sonarqube-scan-action@v6
+        with:
+          projectBaseDir: ${{ env.PROJECT_DIR }}
         env:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
